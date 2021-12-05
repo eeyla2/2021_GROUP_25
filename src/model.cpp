@@ -7,6 +7,8 @@
 
 class model 
 {
+    private:
+    
     public:
 
 };
