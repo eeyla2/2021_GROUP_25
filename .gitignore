@@ -53,6 +53,9 @@
 *.dylib
 *.dll
 
+# Added json files
+*.json
+
 # Fortran module files
 *.smod
 
