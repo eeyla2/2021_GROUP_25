@@ -1,0 +1,20 @@
+Use format within visual studio - right click > format document
+
+camelCase for variable names
+
+class names are capital, e.g. Model
+
+classes, private data then public data.
+
+make sure to initalise your variables. They don't default to zero!!!!
+
+comments - everywhere. Anyone in the group should be able to read you code and understand whats going on.
+comments - function arguments etc. like in software CW.
+
+accessor functions - should be formatted      get_variableName()
+
+Some things to remember:
+Passing by reference
+Const arguments so we don’t accidently change data
+error checking where sensible
+if allocating memory dynamically, freeing it after use
