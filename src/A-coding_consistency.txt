@@ -4,14 +4,26 @@ camelCase for variable names
 
 class names are capital, e.g. Model
 
-classes, private data then public data.
+classes, public then private.
 
 make sure to initalise your variables. They don't default to zero!!!!
+
+Conditional statements, put braces on new line, helps with debugging and avoids silly mistakes
+e.g. 
+if(some condition)
+{
+    doSomething();
+}
 
 comments - everywhere. Anyone in the group should be able to read you code and understand whats going on.
 comments - function arguments etc. like in software CW.
 
 accessor functions - should be formatted      get_variableName()
+
+If your accessor only returns one thing, use the one line format:     int Model::get_numVectors() { return this->numVectors; }
+
+
+
 
 Some things to remember:
 Passing by reference

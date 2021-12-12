@@ -7,3 +7,8 @@
 #include "cell.hpp"
 
 
+class Materivoid loop()
+{
+    
+};
+
