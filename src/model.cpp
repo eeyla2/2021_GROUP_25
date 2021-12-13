@@ -22,6 +22,7 @@ Save this data to a new file in the required format
 
 using namespace std;
 
+//##################################################
 //actual classes will be defined in header files but doing it here for testing purposes
 class Material
 {
@@ -60,14 +61,123 @@ int Material::get_materialIndex() { return this->materialIndex; }
 float Material::get_materialDensity() { return this->materialDensity; }
 string Material::get_materialColour() { return this->materialColour; }
 string Material::get_materialName() { return this->materialName; }
+//###########################################################
+
+/*
+class Vector3d
+{
+
+};
+*/
 
 class Vector3d
 {
+public:
+  //constructor
+  Vector3d();
+  Vector3d(int &vectorID, float &x, float &y, float &z);
+  ~Vector3d();
+  //public here for ease of use
+
+  int get_vectorID();
+  float get_x();
+  float get_y();
+  float get_z();
+
+private:
+  int vectorID;
+  float x;
+  float y;
+  float z;
 };
+
+Vector3d::Vector3d() {}
+
+Vector3d::Vector3d(int &vectorID, float &x, float &y, float &z)
+{
+  this->vectorID = vectorID;
+  this->x = x;
+  this->y = y;
+  this->z = z;
+}
+
+//accessor functions
+int Vector3d::get_vectorID() { return this->vectorID; }
+float Vector3d::get_x() { return this->x; }
+float Vector3d::get_y() { return this->y; }
+float Vector3d::get_z() { return this->z; }
+
+Vector3d::~Vector3d() {}
 
 class Cell
 {
+public:
+  Cell();
+  Cell(char &cellLetter, int &cellIndex);
+  ~Cell();
+
+  //Cell constructor with number of arguments for creating tetrahedron
+
+  int get_cellIndex();
+  char get_cellLetter();
+
+private:
+  int cellIndex;
+  char cellLetter;
 };
+
+Cell::Cell()
+{
+}
+
+Cell::Cell(char &cellLetter, int &cellIndex)
+{
+  this->cellLetter = cellLetter;
+  this->cellIndex = cellIndex;
+}
+
+int Cell::get_cellIndex() { return this->cellIndex; }
+char Cell::get_cellLetter() { return this->cellLetter; }
+
+Cell::~Cell() {}
+
+//The Tetrahedron class is a child of the Cell class
+
+class Tetrahedron : public Cell
+{
+public:
+  Tetrahedron();
+  ~Tetrahedron();
+
+  Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3);
+  
+  customFunction() { return 3; }
+  //cellIndex materialIndex  vectorIndexP0  vectorIndexP1 vectorIndexP2  vectorIndexP3
+private:
+  int cellIndex;
+  char cellLetter;
+  Material theMaterial;
+  Vector3d p0;
+  Vector3d p1;
+  Vector3d p2;
+  Vector3d p3;
+};
+
+Tetrahedron::Tetrahedron() {}
+
+Tetrahedron::Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3) 
+            : Cell(cellLetter, cellIndex)
+{
+  this->cellIndex = cellIndex;
+  this->cellLetter = cellLetter;
+  this->theMaterial = theMaterial;
+  this->p0 = p0;
+  this->p1 = p1;
+  this->p2 = p2;
+  this->p3 = p3;
+}
+
+Tetrahedron::~Tetrahedron() {}
 
 //####################################################
 class Model
@@ -160,9 +270,11 @@ int Model::readFile(string &filePath) //arguments - file name/path as a string)
         break;
       case 'v':
         numVectors++;
+        vectorLineIndexes.push_back(currentLine);
         break;
       case 'c':
         numCells++;
+        cellLineIndexes.push_back(currentLine);
         break;
       }
     }
@@ -183,6 +295,7 @@ int Model::readFile(string &filePath) //arguments - file name/path as a string)
   return 0;
 }
 
+//Function to declare materials
 int Model::declareMaterials(string &filePath)
 {
   ifstream inputFile(filePath); //Open file
@@ -216,21 +329,21 @@ int Model::declareMaterials(string &filePath)
           cout << "\nLine " << currentLine << " contains material\n"; //displays line on which materials are
 
           istringstream iss(line);
-          char materialLetter;
+          char lineLetter;
           int materialIndex;
           float materialDensity;
           string materialColour;
           string materialName;
 
           //currently assuming that the file is in the specified format - TODO?: Make it very robust to random whitespaces etc.?
-          if (!(iss >> materialLetter >> materialIndex >> materialDensity >> materialColour >> materialName))
+          if (!(iss >> lineLetter >> materialIndex >> materialDensity >> materialColour >> materialName))
           {
             cout << "File formatting is wrong\n";
             return (-1);
           }
           else
           {
-            cout << "We have: " << materialLetter << " " << materialIndex << " " << materialDensity << " " << materialColour << " " << materialName << "\n";
+            cout << "We have: " << lineLetter << " " << materialIndex << " " << materialDensity << " " << materialColour << " " << materialName << "\n";
             //call the constructor for the material class
             listOfMaterials.at(i) = Material(materialIndex, materialDensity, materialColour, materialName);
           }
@@ -242,16 +355,168 @@ int Model::declareMaterials(string &filePath)
   return 0;
 }
 
+//Function to declare vectors
 int Model::declareVectors(string &filePath)
 {
+  ifstream inputFile(filePath); //Open file
+
+  string line; //declare string to represent each line in the file
+
+  if (currentLine != 1)
+  {
+    currentLine = 1; //ensure we are reading from the beginning of the file
+  }
+
+  if (!inputFile.is_open())
+  {
+    cout << "Failed to open file";
+    return (-1);
+  }
+
+  while (getline(inputFile, line))
+  {
+    //cout << "\nCurrent line: " << currentLine << "\n";
+
+    if (!line.empty())
+    {
+      //cout
+      for (int i = 0; i < int(vectorLineIndexes.size()); i++)
+      {
+        //cout <<
+
+        if (int(vectorLineIndexes.at(i)) == currentLine) //if the current line is one we previously determined was a vectorline
+        {
+          //cout << "\nLine " << currentLine << " contains vector\n"; //displays line on which vectors are
+
+          istringstream iss(line);
+          char lineLetter;
+          int vectorID;
+          float x, y, z;
+
+          //currently assuming that the file is in the specified format - TODO?: Make it very robust to random whitespaces etc.?
+          if (!(iss >> lineLetter >> vectorID >> x >> y >> z))
+          {
+            cout << "File formatting is wrong\n";
+            return (-1);
+          }
+          else
+          {
+            //cout << "We have: " << lineLetter << " " << vectorID << " "
+            //                    << x  << " " << y << " " << z << "\n";
+            //call the constructor for the vector class
+            listOfVectors.at(i) = Vector3d(vectorID, x, y, z);
+          }
+        }
+      }
+    }
+    currentLine++; //we have completed a line, increment for next loop round
+  }
+
   return 0;
 }
 
+//Function to declare cells
 int Model::declareCells(string &filePath)
 {
+  ifstream inputFile(filePath); //Open file
+
+  string line; //declare string to represent each line in the file
+
+  if (currentLine != 1)
+  {
+    currentLine = 1; //ensure we are reading from the beginning of the file
+  }
+
+  if (!inputFile.is_open())
+  {
+    cout << "Failed to open file";
+    return (-1);
+  }
+
+  while (getline(inputFile, line))
+  {
+    //cout << "\nCurrent line: " << currentLine << "\n";
+
+    if (!line.empty())
+    {
+      //cout
+      for (int i = 0; i < int(cellLineIndexes.size()); i++)
+      {
+        //cout <<
+
+        if (int(cellLineIndexes.at(i)) == currentLine) //if the current line is one we previously determined was a cell line
+        {
+          //cout << "\nLine " << currentLine << " contains cell\n"; //displays lines on which cels are
+
+          istringstream iss(line);
+          char lineLetter;
+          int cellIndex;
+          char cellLetter;
+          int materialIndex;
+
+          //currently assuming that the file is in the specified format - TODO?: Make it very robust to random whitespaces etc.?
+          if (!(iss >> lineLetter >> cellIndex >> cellLetter))
+          {
+            cout << "File formatting is wrong\n";
+            return (-1);
+          }
+          else
+          {
+            cout << "We have: " << cellLetter << " with index " << cellIndex << "\n";
+
+            switch (cellLetter) //how many verticies we need to read depends on shape
+            {
+            case 't':
+              cout << "t\n";
+              int vectorIndexP0, vectorIndexP1, vectorIndexP2, vectorIndexP3;
+              if (!(iss >> materialIndex >> vectorIndexP0 >> vectorIndexP1 >> vectorIndexP2 >> vectorIndexP3))
+              {
+                cout << "File formatting is wrong\n";
+                return (-1);
+              }
+              else
+              {
+                cout << "We have: " << cellIndex << " " << cellLetter << " " << materialIndex << " "
+                     << vectorIndexP0 << " " << vectorIndexP1 << " " << vectorIndexP2 << " " << vectorIndexP3 << "\n";
+
+                //call constructor for tetrahedron
+                //store tetrahedron in list of cells
+
+                //Tetrahedron(int &cellIndex, Material &materialIndex, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3);
+                //cellIndex materialIndex  vectorIndexP0  vectorIndexP1 vectorIndexP2  vectorIndexP3
+                listOfCells.at(i) = Tetrahedron(cellIndex,
+                                                cellLetter,
+                                                listOfMaterials.at(materialIndex),
+                                                listOfVectors.at(vectorIndexP0),
+                                                listOfVectors.at(vectorIndexP1),
+                                                listOfVectors.at(vectorIndexP2),
+                                                listOfVectors.at(vectorIndexP3));
+              }
+              break;
+
+            case 'p':
+              cout << "p\n";
+              break;
+            case 'h':
+              cout << "h\n";
+              break;
+            }
+
+            //call the constructor for the cell class
+            //will actually be calling constructors for individual shapes first
+            //listOfCells.at(i) = Cell(cellLetter, cellIndex);
+          }
+        }
+      }
+    }
+    currentLine++; //we have completed a line, increment for next loop round
+  }
+
   return 0;
 }
 
+//Function for saving read data to file
+//TODO: write vector and cell data to the file
 int Model::saveToFile(string &newFilePath)
 {
   ofstream outputFile(newFilePath);
@@ -279,7 +544,7 @@ int main()
 {
   Model myModel;
 
-  string filePath = "../model_files/ExampleModel2.mod"; //  ExampleModel1.mod  //  testFile.mod
+  string filePath = "../model_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
 
   int fileResult = myModel.readFile(filePath);
   if (fileResult) //if the file is not read successfully
@@ -287,13 +552,28 @@ int main()
     cout << "Now what?\n";
   }
 
-  int modelResult = myModel.declareMaterials(filePath);
+  //------------------------------------------
+  int modelResultM = myModel.declareMaterials(filePath);
 
   string nameOfMaterial1 = myModel.get_listOfMaterials().at(0).get_materialName();
   cout << "\n\nName of material 0: " << nameOfMaterial1 << "\n\n";
 
   int numberOfMaterials = myModel.get_numMaterials();
   cout << "Number of materials: " << numberOfMaterials << "\n\n";
+
+  //--------------------------------------
+  //declaring vectors
+  int modelResultV = myModel.declareVectors(filePath);
+  float vector_idk_xValue = myModel.get_listOfVectors().at(10).get_x();
+  cout << "The vector at index idk (currently 10) has x value: " << vector_idk_xValue << "\n";
+  //----------------------------------
+
+  //declaring cells
+  int modelResultC = myModel.declareCells(filePath);
+  char cell_idk_letter = myModel.get_listOfCells().at(1).get_cellLetter();
+  cout << "\nThe cell at index idk (currently 1) has the letter " << cell_idk_letter << "\n";
+  //int test = myModel.get_listOfCells().at(1).
+//
 
   //Saving data to file
   string newFilePath = "../model_files/saveFile.mod";

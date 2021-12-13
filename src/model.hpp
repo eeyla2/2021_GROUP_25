@@ -2,13 +2,10 @@
 
 
 //Other classes of library
-#include "material.hpp"
-#include "vector.hpp"
-#include "cell.hpp"
 
+//Commented for the time being so they don't interfere with my tests
+//#include "material.hpp"
+//#include "vector.hpp"
+//#include "cell.hpp"
 
-class Materivoid loop()
-{
-    
-};
 
