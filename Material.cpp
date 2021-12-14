@@ -29,3 +29,7 @@ public:
 int material :: getMaterialIndex() {
     return this-> materialIndex;
 }
+
+void material :: setMaterialIndex( int i ) {
+    this->materialIndex = i;
+}
