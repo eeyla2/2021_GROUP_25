@@ -33,3 +33,7 @@ int material :: getMaterialIndex() {
 void material :: setMaterialIndex( int i ) {
     this->materialIndex = i;
 }
+
+float material :: getDensity() {
+    return this->density;
+}
