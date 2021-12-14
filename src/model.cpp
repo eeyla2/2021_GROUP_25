@@ -19,6 +19,7 @@ Save this data to a new file in the required format
 #include <sstream>
 #include <string>
 #include <vector>
+#include <memory> //for managing vector list of different classes for shared_ptr
 
 using namespace std;
 
@@ -121,7 +122,10 @@ public:
   int get_cellIndex();
   char get_cellLetter();
 
-private:
+  //virtual function allows the correct version of calculateVolume to be called for each shape
+  virtual double calculateVolume();
+
+protected:
   int cellIndex;
   char cellLetter;
 };
@@ -139,10 +143,14 @@ Cell::Cell(char &cellLetter, int &cellIndex)
 int Cell::get_cellIndex() { return this->cellIndex; }
 char Cell::get_cellLetter() { return this->cellLetter; }
 
+double Cell::calculateVolume()
+{
+  return 0.;
+}
+
 Cell::~Cell() {}
 
 //The Tetrahedron class is a child of the Cell class
-
 class Tetrahedron : public Cell
 {
 public:
@@ -150,8 +158,9 @@ public:
   ~Tetrahedron();
 
   Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3);
-  
-  customFunction() { return 3; }
+
+  double calculateVolume();
+
   //cellIndex materialIndex  vectorIndexP0  vectorIndexP1 vectorIndexP2  vectorIndexP3
 private:
   int cellIndex;
@@ -165,8 +174,9 @@ private:
 
 Tetrahedron::Tetrahedron() {}
 
-Tetrahedron::Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3) 
-            : Cell(cellLetter, cellIndex)
+// Tetrahedron class calling apporopraite Cell constructor to initialise the inherited variables
+Tetrahedron::Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
+    : Cell(cellLetter, cellIndex)
 {
   this->cellIndex = cellIndex;
   this->cellLetter = cellLetter;
@@ -175,6 +185,11 @@ Tetrahedron::Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial
   this->p1 = p1;
   this->p2 = p2;
   this->p3 = p3;
+}
+
+double Tetrahedron::calculateVolume()
+{
+  return 11.3;
 }
 
 Tetrahedron::~Tetrahedron() {}
@@ -200,11 +215,14 @@ public:
   //Format get_
   vector<Material> get_listOfMaterials();
   vector<Vector3d> get_listOfVectors();
-  vector<Cell> get_listOfCells();
-
+  //vector<Cell> get_listOfCells();
+  vector<shared_ptr<Cell>> get_listOfCells();
+  
   int get_numMaterials();
   int get_numVectors();
   int get_numCells();
+
+  Tetrahedron myTet = Tetrahedron();
 
 private:
   int currentLine = 1;
@@ -218,7 +236,10 @@ private:
   //List to store the objects that are created once data is read from file
   vector<Material> listOfMaterials;
   vector<Vector3d> listOfVectors;
-  vector<Cell> listOfCells;
+  //vector<Cell> listOfCells;
+  //vector<Cell*> listOfCells;
+  vector<shared_ptr<Cell>> listOfCells;
+  //use shared pointer for this
 
   //Once we have read file and know how many of each object there are, we will need to resize above vector
   int numMaterials = 0, numVectors = 0, numCells = 0;
@@ -227,7 +248,8 @@ private:
 //Accessor functions
 vector<Material> Model::get_listOfMaterials() { return this->listOfMaterials; }
 vector<Vector3d> Model::get_listOfVectors() { return this->listOfVectors; }
-vector<Cell> Model::get_listOfCells() { return this->listOfCells; }
+vector<shared_ptr<Cell>> Model::get_listOfCells() { return this->listOfCells; }
+//vector<Cell> Model::get_listOfCells() { return this->listOfCells; }
 
 int Model::get_numMaterials() { return this->numMaterials; }
 int Model::get_numVectors() { return this->numVectors; }
@@ -484,13 +506,18 @@ int Model::declareCells(string &filePath)
 
                 //Tetrahedron(int &cellIndex, Material &materialIndex, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3);
                 //cellIndex materialIndex  vectorIndexP0  vectorIndexP1 vectorIndexP2  vectorIndexP3
-                listOfCells.at(i) = Tetrahedron(cellIndex,
-                                                cellLetter,
-                                                listOfMaterials.at(materialIndex),
-                                                listOfVectors.at(vectorIndexP0),
-                                                listOfVectors.at(vectorIndexP1),
-                                                listOfVectors.at(vectorIndexP2),
-                                                listOfVectors.at(vectorIndexP3));
+                
+                //listOfCells.push_back(shared_ptr<Cell>(new Tetrahedron(arguments)));
+                auto it = listOfCells.begin()+i;
+                
+                listOfCells.insert(it, shared_ptr<Cell>(new Tetrahedron(cellIndex,
+                            cellLetter,
+                            listOfMaterials.at(materialIndex),
+                            listOfVectors.at(vectorIndexP0),
+                            listOfVectors.at(vectorIndexP1),
+                            listOfVectors.at(vectorIndexP2),
+                            listOfVectors.at(vectorIndexP3))));
+
               }
               break;
 
@@ -534,7 +561,7 @@ int Model::saveToFile(string &newFilePath)
   }
   //write vector data
   //write cell data
-  cout << "\nSaved to file\n";
+  cout << "\nSaved to file\n\n";
   return 0;
 }
 
@@ -570,10 +597,22 @@ int main()
 
   //declaring cells
   int modelResultC = myModel.declareCells(filePath);
-  char cell_idk_letter = myModel.get_listOfCells().at(1).get_cellLetter();
+  
+  
+  //char cell_idk_letter = myModel.get_listOfCells().at(1).get_cellLetter();
+  char cell_idk_letter = myModel.get_listOfCells().at(1)->get_cellLetter();
   cout << "\nThe cell at index idk (currently 1) has the letter " << cell_idk_letter << "\n";
-  //int test = myModel.get_listOfCells().at(1).
-//
+
+  cout << modelResultM << " " << modelResultV << " " << modelResultC << "\n";
+  //Testing inheritance
+
+  
+  double tetVol = myModel.get_listOfCells().at(1)->calculateVolume();
+  //double tetVol = myModel.get_listOfCells().at(1).calculateVolume();
+  cout << "Vol: " << tetVol << "\n";
+
+  //double tetVol = myModel.myTet.calculateVolume();
+  //cout << "Vol: " << tetVol << "\n";  //this gives expected tetrahedron volume
 
   //Saving data to file
   string newFilePath = "../model_files/saveFile.mod";
