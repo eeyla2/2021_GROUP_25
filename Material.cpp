@@ -26,3 +26,6 @@ public:
     void setColour(string c);
   };
 
+int material :: getMaterialIndex() {
+    return this-> materialIndex;
+}
