@@ -49,3 +49,11 @@ string material :: getMaterialName() {
 void material :: setMaterialName( string n ) {
     this->materialName = n;
 }
+
+string materials :: getColour() {
+    return this-> colour;
+}
+
+void material :: setColour( string c ) {
+    this->colour = c;
+}
