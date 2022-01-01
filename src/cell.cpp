@@ -1,11 +1,10 @@
-//Cell class - Laith
 #include <vector>
 
 //classes are capital letters
 
 //ONLY AN ABSTRACT FOR CLARITY
 //this will be class material and i will inherit the characteristics to different types of material according to the indexID it has
-class shapes
+class Shapes
 {
 private:
     //indexID
@@ -18,14 +17,14 @@ public:
 }
 
 //tetrahedron class declared and has its contents defined
-class Tetrahedron : public shapes
+class Tetrahedron : public Shapes
 {
 
     //private variables and functions of the tetrahedron class
 private:
     vector<int> Tpoints; // instance of vectors
 
-    volume(vector<int> Tpoints); //volume of a tetrahedron
+    float Tvolume(vector<int> Tpoints); //volume of a tetrahedron
 
 public:
     Tetrahedron(vector<int> &CTpoints); //constructor for tetrahedron vectors is called
@@ -52,15 +51,30 @@ Tetrahedron ::Tetrahedron(vector<int> &CTpoints)
 Tetrahedron ::~Tetrahedron() {}
 
 //definition of the volume of a tetrahedron
-Tetrahedron::volume(vector<int> &CTpoints)
+float Tetrahedron::Tvolume(vector<int> &CTpoints)
 {
 
     //the edges coming out of the same vector are calcualted(still abstract)
-    a = p1 - p2; //first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
-    b = p1 - p3; //second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
-    c = p1 - p4; //third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    float a = Tpoints[1] - Tpoints[2]; //first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    float b = Tpoints[1] - Tpoints[3]; //second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    float c = Tpoints[1] - Tpoints[4]; //third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
 
-} //continued later##########
+float crossmult=bxc;//cross multiplication which is set up by pisit
+
+float dotmult=a.crossmult;//dot multiplication which is set up by pisit
+
+//apply absolute value on the variable
+if (dotmult<0) 
+dotmult= -dotmult;//if the variable is negative make it +ve otherwise keep it as is
+
+
+//calculate the volume by dividing the absolut value of the dot multiplication result 
+//by dividing by 3 factorial which is 6
+float volume=dotmult/6;
+
+//return the volume as a float
+return volume;
+} //not 100% sure if its all right#############
 
 //an accessor/get function to access the data for the vectors in the private part of the Tetrahedron class
 vector<int> Tetrahedron::get_Tpoints(unsigned int i) return Tpoints[i];
@@ -95,7 +109,7 @@ const Tetrahedron &operator=(const Tetrahedron &instance)
 }
 
 //hexahedron class declared and has its contents defined
-class Hexahedron : public shapes
+class Hexahedron : public Shapes
 {
 private:
     vector<int> Hpoints; //instances of vectors
@@ -160,7 +174,7 @@ const Hexahedron &operator=(const Hexahedron &instance)
 }
 
 //pyramid class declared and has its contents defined
-class Pyramid : public shapes
+class Pyramid : public Shapes
 {
 
 private:
