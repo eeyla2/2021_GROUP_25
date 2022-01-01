@@ -4,27 +4,79 @@
 
 //ONLY AN ABSTRACT FOR CLARITY
 //this will be class material and i will inherit the characteristics to different types of material according to the indexID it has
-class Shapes
+class Cell
 {
-private:
-    //indexID
-    //Name
-    //colour
-    //density
-
 public:
-    //the weight function that is currently in the shape classes will actually be inherited
+    //Cell constructor for the cell letter and Index called
+    Cell(char &CcellLetter, int &CcellIndex);
+    ~Cell(); //destructor for the cell called
+
+    //first get returns the value of cell Index, while second get returns the value of cell Letter
+
+    int get_cellIndex();
+    char get_cellLetter();
+
+    //virtual function allows the correct version of volume and center of massto be called for each shape
+    virtual double volume();
+    virtual double centerofMass();
+    double weight();
+
+    //weight of the cell calculated
+
+protected:
+    int cellIndex;   //the cell Index
+    char cellLetter; //the cell letter
+
+    //the weight function that is currently in the Cell classes will actually be inherited
 }
 
+//constructor for the cell letter and cell index
+Cell::Cell(char &CcellLetter, int &CcellIndex)
+{
+    this->cellLetter = CcellLetter;
+    this->cellIndex = CcellIndex;
+}
+
+//an accessor/get function to access the data for Index in the private part of the Cell class
+int Cell::get_cellIndex() { return this->cellIndex; }
+
+//an accessor/get function to access the data for Letter in the private part of the Cell class
+char Cell::get_cellLetter() { return this->cellLetter; }
+
+//volume left empty because it is determined inside the cell that inherit the function
+double Cell::volume()
+{
+}
+
+//center of mass left empty because it is determined inside the cell that inherit the function
+double Cell::centerOfMass()
+{
+}
+
+//center of mass left empty because it is determined inside the cell that inherit the function
+double Cell::weight()
+{
+    float mass=0; //mass is declared
+
+    mass=volume*density; //mass is found by multiplying the volume and the density
+
+    weight=mass*9.81;// the weight is found by multiplying the mass and the gravity of earth
+    
+    return weight;
+}
+
+//destructor for the cell class
+Cell::~Cell() {}
+
 //tetrahedron class declared and has its contents defined
-class Tetrahedron : public Shapes
+class Tetrahedron : public Cell
 {
 
     //private variables and functions of the tetrahedron class
 private:
     vector<int> Tpoints; // instance of vectors
 
-    float Tvolume(vector<int> Tpoints); //volume of a tetrahedron
+    double volume(vector<int> Tpoints); //volume of a tetrahedron
 
 public:
     Tetrahedron(vector<int> &CTpoints); //constructor for tetrahedron vectors is called
@@ -37,7 +89,10 @@ public:
     Tetrahedron(const Tetrahedron &instance); // copying constructor applied (Note: this is the same function
     //as the normal constructor but with an instance argument where a whole instance is supplied)
 
-    const Tetrahedron &operator=(const Tetrahedron &instance);//assignment operator for Pyramid
+    const Tetrahedron &operator=(const Tetrahedron &instance); //assignment operator for Pyramid
+
+    //operators for subtraction, addition, dotmulitplication, cross multiplication
+    //all have to be applied here 
 };
 
 //constructor for tetrahedron vectors declared
@@ -51,29 +106,28 @@ Tetrahedron ::Tetrahedron(vector<int> &CTpoints)
 Tetrahedron ::~Tetrahedron() {}
 
 //definition of the volume of a tetrahedron
-float Tetrahedron::Tvolume(vector<int> &CTpoints)
+double Tetrahedron::volume(vector<int> &CTpoints)
 {
 
     //the edges coming out of the same vector are calcualted(still abstract)
-    float a = Tpoints[1] - Tpoints[2]; //first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
-    float b = Tpoints[1] - Tpoints[3]; //second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
-    float c = Tpoints[1] - Tpoints[4]; //third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    float a = Tpoints[0] - Tpoints[1]; //first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    float b = Tpoints[0] - Tpoints[2]; //second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    float c = Tpoints[0] - Tpoints[3]; //third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
 
-float crossmult=bxc;//cross multiplication which is set up by pisit
+    double crossmult = bxc; //cross multiplication which is set up by pisit
 
-float dotmult=a.crossmult;//dot multiplication which is set up by pisit
+    double dotmult = a.crossmult; //dot multiplication which is set up by pisit
 
-//apply absolute value on the variable
-if (dotmult<0) 
-dotmult= -dotmult;//if the variable is negative make it +ve otherwise keep it as is
+    //apply absolute value on the variable
+    if (dotmult < 0)
+        dotmult = -dotmult; //if the variable is negative make it +ve otherwise keep it as is
 
+    //calculate the volume by dividing the absolut value of the dot multiplication result
+    //by dividing by 3 factorial which is 6
+    double volume = dotmult / 6;
 
-//calculate the volume by dividing the absolut value of the dot multiplication result 
-//by dividing by 3 factorial which is 6
-float volume=dotmult/6;
-
-//return the volume as a float
-return volume;
+    //return the volume as a float
+    return volume;
 } //not 100% sure if its all right#############
 
 //an accessor/get function to access the data for the vectors in the private part of the Tetrahedron class
@@ -105,16 +159,16 @@ const Tetrahedron &operator=(const Tetrahedron &instance)
     for (auto i = instance.Tpoints.begins(); i < instance.Tpoints.ends(); ++i)
         Tpoints[i] = instance.Tpoints[i];
 
-    return (*this);//returns the address of the instance we are in 
+    return (*this); //returns the address of the instance we are in
 }
 
 //hexahedron class declared and has its contents defined
-class Hexahedron : public Shapes
+class Hexahedron : public Cell
 {
 private:
     vector<int> Hpoints; //instances of vectors
 
-    volume(vector<int> Hpoints); //volume of a Hexahedronhedron
+    double volume(vector<int> Hpoints); //volume of a Hexahedronhedron
 
 public:
     Hexahedron(vector<int> &CHpoints); //vector constructor called
@@ -126,8 +180,10 @@ public:
 
     Hexahedron(const Hexahedron &instance); // copying constructor applied
 
-    const Hexahedron &operator=(const Hexahedron &instance);//assignment operator for Pyramid
+    const Hexahedron &operator=(const Hexahedron &instance); //assignment operator for Pyramid
 
+    //operators for subtraction, addition, dotmulitplication, cross multiplication
+    //all have to be applied here
 };
 
 //constructor for hexahedron vectors declared
@@ -170,11 +226,64 @@ const Hexahedron &operator=(const Hexahedron &instance)
     for (auto i = instance.Hpoints.begins(); i < instance.Hpoints.ends(); ++i)
         Hpoints[i] = instance.Hpoints[i];
 
-    return (*this);//returns the address of the instance we are in 
+    return (*this); //returns the address of the instance we are in
 }
 
+//definition of the volume of a tetrahedron
+double Hexahedron::volume(vector<int> &CHpoints)
+{
+
+    //three implementations of a triple product have to be implemented then added
+
+    //implementation of the first triple product
+
+    //a vector is declared to store the three parts of the first triple product inside
+    vector<int> firstTriple;
+
+    firstTriple[0] = Hpoints[7] - Hpoints[0]; //first part is calculated and by subtracting the vertex 0 from the vertex 7
+    firstTriple[1] = Hpoints[1] - Hpoints[0]; //second edge is calculated and by subtracting the vertex 0 from the vertex 1
+    firstTriple[2] = Hpoints[3] - Hpoints[5]; //third edge is calculated and by subtracting the vertex 5 from the vertex 3
+
+    double firstCrossMult = firstTriple[1] x firstTriple[2]; //cross multiplication which is set up by pisit
+
+    double firstDotMult = firstTriple[0].firstCrossMult; //dot multiplication which is set up by pisit
+
+    //implementation of the second triple product
+
+    //a vector is declared to store the three parts of the second triple product inside
+    vector<int> secondTriple;
+
+    secondTriple[0] = Hpoints[7] - Hpoints[0]; //first part is calculated and by subtracting the vertex 0 from the vertex 7
+    secondTriple[1] = Hpoints[4] - Hpoints[0]; //second edge is calculated and by subtracting the vertex 0 from the vertex 4
+    secondTriple[2] = Hpoints[5] - Hpoints[6]; //third edge is calculated and by subtracting the vertex 6 from the vertex 5
+
+    double secondCrossMult = secondTriple[1] x secondTriple[2]; //cross multiplication which is set up by pisit
+
+    double secondDotMult = secondTriple[0].secondCrossMult; //dot multiplication which is set up by pisit
+
+    //implementation of the third triple product
+
+    //a vector is declared to store the three parts of the third triple product inside
+    vector<int> thirdTriple;
+
+    thirdTriple[0] = Hpoints[7] - Hpoints[0]; //first part is calculated and by subtracting the vertex 0 from the vertex 7
+    thirdTriple[1] = Hpoints[2] - Hpoints[0]; //second edge is calculated and by subtracting the vertex 0 from the vertex 2
+    thirdTriple[2] = Hpoints[6] - Hpoints[3]; //third edge is calculated and by subtracting the vertex 3 from the vertex 6
+
+    double thirdCrossMult = thirdTriple[1] x thirdTriple[2]; //cross multiplication which is set up by pisit
+
+    double thirdDotMult = thirdTriple[0].thirdCrossMult; //dot multiplication which is set up by pisit
+
+    //calculate the volume by adding the three Dot multiplication products of the triple products and then
+    //by dividing by 3 factorial which is 6
+    double volume = (firstDotMult + secondDotMult + thirdDotMult) / 6;
+
+    //return the volume as a float
+    return volume;
+} //not 100% sure if its all right#############
+
 //pyramid class declared and has its contents defined
-class Pyramid : public Shapes
+class Pyramid : public Cell
 {
 
 private:
@@ -192,7 +301,10 @@ public:
 
     Pyramid(const Pyramid &instance); // copying constructor applied
 
-    const Pyramid &operator=(const Pyramid &instance);//assignment operator for Pyramid
+    const Pyramid &operator=(const Pyramid &instance); //assignment operator for Pyramid
+
+    //operators for subtraction, addition, dotmulitplication, cross multiplication
+    //all have to be applied here
 
 }
 
@@ -234,5 +346,5 @@ const Pyramid &operator=(const Pyramid &instance)
     for (auto i = instance.Ppoints.begins(); i < instance.Ppoints.ends(); ++i)
         Ppoints[i] = instance.Ppoints[i];
 
-    return (*this);//returns the address of the instance we are in 
+    return (*this); //returns the address of the instance we are in
 }
