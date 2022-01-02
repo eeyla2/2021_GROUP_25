@@ -9,53 +9,53 @@ using namespace std;
 class material{
 private:
     int materialIndex;
-    float density;
+    float materialDensity;
     string materialName;
-    string colour;
+    string materialColour;
 
 public:
-    material(int materialIndex, float density, string colour, string materialName);
+    material(int materialIndex, float materialDensity, string materialColour, string materialName);
     ~material();
 
-    int getMaterialIndex();
-    float getDensity();
-    string getMaterialName();
-    string colour();
+    int get_materialIndex();
+    float get_materialDensity();
+    string get_materialName();
+    string get_materialColour();
 
-    void setMaterialIndex( int i);
-    void setDensity(float d);
-    void setMaterialName(string n);
-    void setColour(string c);
+    void setmaterialIndex( int i);
+    void setmaterialDensity(float d);
+    void setmaterialName(string n);
+    void setmaterialColour(string c);
   };
 
-int material :: getMaterialIndex() {
+int material :: get_materialIndex() {
     return this-> materialIndex;
 }
 
-void material :: setMaterialIndex( int i ) {
+void material :: setmaterialIndex( int i ) {
     this->materialIndex = i;
 }
 
-float material :: getDensity() {
-    return this->density;
+float material :: get_materialDensity() {
+    return this->materialDensity;
 }
 
-void material :: setdensity( float d ) {
-    this->density = d;
+void material :: setmaterialDensity( float d ) {
+    this->materialDensity = d;
 }
 
-string material :: getMaterialName() {
+string material :: get_materialName() {
     return this-> materialName;
 }
 
-void material :: setMaterialName( string n ) {
+void material :: setmaterialName( string n ) {
     this->materialName = n;
 }
 
-string materials :: getColour() {
-    return this-> colour;
+string materials :: get_materialColour() {
+    return this-> materialColour;
 }
 
-void material :: setColour( string c ) {
-    this->colour = c;
+void material :: setmaterialColour( string c ) {
+    this->materialColour = c;
 }
