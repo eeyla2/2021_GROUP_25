@@ -1,47 +1,136 @@
 //Vector class - Best
-
-////Sample
-
+// To be done: Storing 3D Vectors in appropriate format, Scalar Product, Vector Product
 #include <iostream>
+
 #include <vector>
+
+#include <math.h>
 
 using namespace std;
 
-class Vector3d 
+class Vector3d
 {
 public:
-   //constructor
-   Vector3d();
-   vector3d(int &vectorID, float x, float y, float z);
-   //destructor
-   ~vector3d();
 
-private:
-   int vectorID;
+   /// Constructor
+   //Vector3d();
+   //Vector3d(int &vectorID, float x, float y, float z);
    float x;
    float y;
    float z;
+
+   Vector3d(float _x,float _y,float _z)
+   {
+        x=_x;
+        y=_y;
+        z=_z;
+   }
+
+   /// Copy Constructor
+   Vector3d(const Vector3d& V);
+
+   /// Assignment Operator
+   Vector3d& operator=(const Vector3d& V);
+
+   /// Destructor
+//   ~Vector3d();
+
+   /// Addition
+   Vector3d operator+(const Vector3d &V);
+   Vector3d &operator+=(const Vector3d &V);
+
+   /// Subtraction
+   Vector3d operator-(const Vector3d &V);
+   Vector3d &operator-=(const Vector3d &V);
+
+   /// Inner/Scalar Product
+   Vector3d scalarProduct(const Vector3d& V);
+
+   /// Outer/Cross Product
+   Vector3d crossProduct(const Vector3d& V);
+
+   /// Print Result
+   void print();
+
+private:
+   //int vectorID;
+//   float x;
+//   float y;
+//   float z;
 };
 
-Vector3d::Vector3d(int vectorID, float &x, float &y, float &z){
-   this->vectorID = vectorID;
-   this->x = x;
-   this->y = y;
-   this->z = z;
+//Vector3d::Vector3d(int vectorID, float &x, float &y, float &z){
+//   this->vectorID = vectorID;
+//   this->x = x;
+//   this->y = y;
+//   this->z = z;
+//}
+
+Vector3d::Vector3d(const Vector3d &V)
+{
+    x = V.x;
+    y = V.y;
+    z = V.z;
 }
 
 //mutator
-void Vector3d::set_vectorID() {this->vectorID = vectorID; }
-void Vector3d::set_x {this->x = x; }
-void Vector3d::set_y {this->y = y; }
-void Vector3d::set_z {this->z = z; }
+//void Vector3d::set_vectorID() {this->vectorID = vectorID; }
+//void Vector3d::set_x {this->x = x; }
+//void Vector3d::set_y {this->y = y; }
+//void Vector3d::set_z {this->z = z; }
 
-//accessor
-int Vector3d::get_vectorID() { return this->vectorID; }
-float Vector3d::get_x() { return this->x; }
-float Vector3d::get_y() { return this->y; }
-float Vector3d::get_z() { return this->z; }
+// Accessor
+//int Vector3d::get_vectorID() { return this->vectorID; }
+//float Vector3d::get_x() { return this->x; }
+//float Vector3d::get_y() { return this->y; }
+//float Vector3d::get_z() { return this->z; }
 
+/// Addition
+Vector3d Vector3d::operator+(const Vector3d &V)
+{
+    return Vector3d(x+V.x,y+V.y,z+V.z);
+}
+
+Vector3d &Vector3d::operator+=(const Vector3d &V)
+{
+    x+=V.x;
+    y+=V.y;
+    z+=V.z;
+    return *this;
+}
+
+/// Subtraction
+Vector3d Vector3d::operator-(const Vector3d &V)
+{
+    return Vector3d(x-V.x,y-V.y,z-V.z);
+}
+
+Vector3d &Vector3d::operator-=(const Vector3d &V)
+{
+    x-=V.x;
+    y-=V.y;
+    z-=V.z;
+    return *this;
+}
+
+void Vector3d::print()
+{
+    cout<<"["<<x<<","<<y<<","<<z<<"]\n";
+}
+
+// Sample test main
+int main()
+{
+
+    Vector3d x1=Vector3d(6.2,2.8,4.3);
+    Vector3d x2=Vector3d(3.7,8.3,1.7);
+
+    Vector3d add1=x1+x2;
+    add1.print();
+
+    Vector3d sub1=x1-x2;
+    sub1.print();
+}
 
 //        addition()
 //        getSubtraction()
