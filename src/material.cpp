@@ -1,61 +1,38 @@
 //Material class - Afolabi
 
-#include <iostream>
-#include <string>
+#include "material.hpp"
 
-using namespace std;
+Material::Material() {} //constructor for when values arent known and we are creating list of materials
 
-
-class material{
-private:
-    int materialIndex;
-    float materialDensity;
-    string materialName;
-    string materialColour;
-
-public:
-    material(int materialIndex, float materialDensity, string materialColour, string materialName);
-    ~material();
-
-    int get_materialIndex();
-    float get_materialDensity();
-    string get_materialName();
-    string get_materialColour();
-
-    void setmaterialIndex( int i);
-    void setmaterialDensity(float d);
-    void setmaterialName(string n);
-    void setmaterialColour(string c);
-  };
-
-int material :: get_materialIndex() {
-    return this-> materialIndex;
+Material::Material(int &materialIndex, float &materialDensity, string &materialColour, string &materialName)
+{
+    this->materialIndex = materialIndex;
+    this->materialDensity = materialDensity;
+    this->materialColour = materialColour;
+    this->materialName = materialName;
 }
 
-void material :: setmaterialIndex( int i ) {
-    this->materialIndex = i;
-}
+Material::~Material() {} //Destructor code does nothing - good practice
 
-float material :: get_materialDensity() {
-    return this->materialDensity;
-}
+//Accessor functions
+int Material::get_materialIndex() { return this->materialIndex; }
+float Material::get_materialDensity() { return this->materialDensity; }
+string Material::get_materialColour() { return this->materialColour; }
+string Material::get_materialName() { return this->materialName; }
 
-void material :: setmaterialDensity( float d ) {
-    this->materialDensity = d;
-}
+//Mutuator functions
+void Material ::set_materialIndex(int index) { this->materialIndex = index; }
+void Material ::set_materialDensity(float density) { this->materialDensity = density; }
+void Material ::set_materialColour(string colour) { this->materialColour = colour; }
+void Material ::set_materialName(string name) { this->materialName = name; }
 
-string material :: get_materialName() {
-    return this-> materialName;
-}
 
-void material :: setmaterialName( string n ) {
-    this->materialName = n;
+/*
+//Test program to ensure Material class works
+int main()
+{
+    Material myMaterial;
+    myMaterial.set_materialColour("Green");
+    cout << myMaterial.get_materialColour() << "\n";
 }
-
-string materials :: get_materialColour() {
-    return this-> materialColour;
-}
-
-void material :: setmaterialColour( string c ) {
-    this->materialColour = c;
-}
+*/
