@@ -1,5 +1,5 @@
 //Vector class - Best
-
+// To be done: Storing 3D Vectors in appropriate format, Scalar Product, Vector Product
 #include <iostream>
 
 #include <vector>
@@ -19,7 +19,7 @@ public:
    float y;
    float z;
 
-   Vector3d(float _x,float _y,float _z)     //initializing object with values.
+   Vector3d(float _x,float _y,float _z)
    {
         x=_x;
         y=_y;
@@ -131,6 +131,7 @@ int main()
     Vector3d sub1=x1-x2;
     sub1.print();
 }
+
 //        addition()
 //        getSubtraction()
 //        getScalarProduct()
