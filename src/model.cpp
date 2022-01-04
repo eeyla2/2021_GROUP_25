@@ -64,12 +64,6 @@ string Material::get_materialColour() { return this->materialColour; }
 string Material::get_materialName() { return this->materialName; }
 //###########################################################
 
-/*
-class Vector3d
-{
-
-};
-*/
 
 class Vector3d
 {
@@ -114,11 +108,11 @@ class Cell
 {
 public:
   Cell();
-  Cell(char &cellLetter, int &cellIndex); //prev version.
 
   Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //tetrahdron
-  //Cell(char &cellLetter, int &cellIndex, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //pyramid
-  //Cell(char &cellLetter, int &cellIndex, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //hexahedron
+  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); //pyramid
+  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
+       Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); //hexahedron
 
   ~Cell();
 
@@ -153,11 +147,6 @@ Cell::Cell()
 {
 }
 
-Cell::Cell(char &cellLetter, int &cellIndex)
-{
-  this->cellLetter = cellLetter;
-  this->cellIndex = cellIndex;
-}
 
 Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
 {
@@ -170,6 +159,34 @@ Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0
   this->p3 = p3;
 }
 
+Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+{
+  this->cellIndex = cellIndex;
+  this->cellLetter = cellLetter;
+  this->theMaterial = theMaterial;
+  this->p0 = p0;
+  this->p1 = p1;
+  this->p2 = p2;
+  this->p3 = p3;
+  this->p4 = p4;
+}
+
+Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
+          Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
+{
+  this->cellIndex = cellIndex;
+  this->cellLetter = cellLetter;
+  this->theMaterial = theMaterial;
+  this->p0 = p0;
+  this->p1 = p1;
+  this->p2 = p2;
+  this->p3 = p3;
+  this->p4 = p4;
+  this->p5 = p5;
+  this->p6 = p6;
+  this->p7 = p7;
+}
+
 int Cell::get_cellIndex() { return this->cellIndex; }
 char Cell::get_cellLetter() { return this->cellLetter; }
 int Cell::get_cellMaterialIndex() { return theMaterial.get_materialIndex(); }
@@ -177,6 +194,10 @@ int Cell::get_cellp0Index() { return p0.get_vectorID(); }
 int Cell::get_cellp1Index() { return p1.get_vectorID(); }
 int Cell::get_cellp2Index() { return p2.get_vectorID(); }
 int Cell::get_cellp3Index() { return p3.get_vectorID(); }
+int Cell::get_cellp4Index() { return p4.get_vectorID(); }
+int Cell::get_cellp5Index() { return p5.get_vectorID(); }
+int Cell::get_cellp6Index() { return p6.get_vectorID(); }
+int Cell::get_cellp7Index() { return p7.get_vectorID(); }
 
 double Cell::calculateVolume()
 {
@@ -251,7 +272,7 @@ Pyramid::Pyramid() {}
 Pyramid::~Pyramid() {}
 
 Pyramid::Pyramid(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
-    : Cell(cellLetter, cellIndex)
+    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4)
 {
   this->cellIndex = cellIndex;
   this->cellLetter = cellLetter;
@@ -296,7 +317,7 @@ Hexahedron::~Hexahedron() {}
 Hexahedron::Hexahedron(int &cellIndex, char &cellLetter, Material &theMaterial,
                        Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
                        Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
-    : Cell(cellLetter, cellIndex)
+    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4, p5, p6, p7)
 {
   this->cellIndex = cellIndex;
   this->cellLetter = cellLetter;
@@ -758,10 +779,29 @@ int Model::saveToFile(string &newFilePath)
 
       break;
 
+    case 'p':
+      outputFile << listOfCells.at(i)->get_cellIndex() << " "
+                 << listOfCells.at(i)->get_cellLetter() << " "
+                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0Index() << " "
+                 << listOfCells.at(i)->get_cellp1Index() << " "
+                 << listOfCells.at(i)->get_cellp2Index() << " "
+                 << listOfCells.at(i)->get_cellp3Index() << " "
+                 << listOfCells.at(i)->get_cellp4Index() << "\n";
+      break;
+    
     case 'h':
       outputFile << listOfCells.at(i)->get_cellIndex() << " "
-                 << listOfCells.at(i)->get_cellLetter() << "\n";
-      break;
+                 << listOfCells.at(i)->get_cellLetter() << " "
+                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0Index() << " "
+                 << listOfCells.at(i)->get_cellp1Index() << " "
+                 << listOfCells.at(i)->get_cellp2Index() << " "
+                 << listOfCells.at(i)->get_cellp3Index() << " "
+                 << listOfCells.at(i)->get_cellp4Index() << " "
+                 << listOfCells.at(i)->get_cellp5Index() << " "
+                 << listOfCells.at(i)->get_cellp6Index() << " "
+                 << listOfCells.at(i)->get_cellp7Index() << "\n";
     }
   }
 
