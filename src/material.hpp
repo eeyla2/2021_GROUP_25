@@ -1,5 +1,8 @@
 //Material header - Afolabi
 
+#ifndef MATERIAL_HPP
+#define MATERIAL_HPP
+
 //Class definition, class member functions in Material.cpp
 #include <iostream>
 #include <string>
@@ -29,3 +32,5 @@ private:
     string materialName;
     string materialColour;
 };
+
+#endif
