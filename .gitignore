@@ -143,6 +143,7 @@ stamp-*
 
 # ignre .vscode directory (json files)
 *.json
+.vscode/*
 
 
 # Gitnore file from template https://github.com/github/gitignore
