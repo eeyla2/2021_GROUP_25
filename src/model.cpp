@@ -34,7 +34,7 @@ using namespace std;
 
 //###########################################################
 
-
+/*
 class Vector3d
 {
 public:
@@ -55,7 +55,7 @@ private:
   float y;
   float z;
 };
-
+*/
 Vector3d::Vector3d() {}
 
 Vector3d::Vector3d(int &vectorID, float &x, float &y, float &z)
@@ -74,6 +74,8 @@ float Vector3d::get_z() { return this->z; }
 
 Vector3d::~Vector3d() {}
 
+////////////////////////////////////////////////////////////////
+/*
 class Cell
 {
 public:
@@ -90,7 +92,7 @@ public:
 
   int get_cellIndex();
   char get_cellLetter();
-  int get_cellMaterialIndex();
+  int get_cellMaterialIndex();  //replaced below - actually return material
   int get_cellp0Index();
   int get_cellp1Index();
   int get_cellp2Index();
@@ -166,7 +168,9 @@ int Cell::get_cellp3Index() { return p3.get_vectorID(); }
 int Cell::get_cellp4Index() { return p4.get_vectorID(); }
 int Cell::get_cellp5Index() { return p5.get_vectorID(); }
 int Cell::get_cellp6Index() { return p6.get_vectorID(); }
-int Cell::get_cellp7Index() { return p7.get_vectorID(); }
+int Cell::get_cellp7Index() { return p7.get_vectorID(); } //old version - less useful
+
+//Vector3d Cell:get_cellp7() { return p7; }
 
 Material Cell::get_cellMaterial() { return theMaterial; }
 
