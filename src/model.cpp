@@ -11,6 +11,8 @@ Save this data to a new file in the required format
 
 /*
 //TODO:
+Make most things const so we dont accidently change data
+Freeing memory when program ends?
 
 */
 
@@ -21,56 +23,18 @@ Save this data to a new file in the required format
 #include <vector>
 #include <memory> //for managing vector list of different classes for shared_ptr
 
+#include "model.hpp"
+
 using namespace std;
 
 //##################################################
 //actual classes will be defined in header files but doing it here for testing purposes
-class Material
-{
 
-public:
-  Material();                                                                                         //constructor for when we are allocating memory but don't know values
-  Material(int &materialIndex, float &materialDensity, string &materialColour, string &materialName); //example constructor - construcotr overloading
-  ~Material();                                                                                        //Destructor
+//Material Class
 
-  int get_materialIndex();
-  float get_materialDensity();
-  string get_materialColour();
-  string get_materialName();
-
-private:
-  int materialIndex;
-  float materialDensity;
-  string materialColour;
-  string materialName;
-};
-
-Material::Material() {} //constructor for when values arent known and we are creating list of materials
-
-Material::Material(int &materialIndex, float &materialDensity, string &materialColour, string &materialName)
-{
-  this->materialIndex = materialIndex;
-  this->materialDensity = materialDensity;
-  this->materialColour = materialColour;
-  this->materialName = materialName;
-}
-
-Material::~Material() {} //Destructor code does nothing - good practice
-
-//Accessor functions
-int Material::get_materialIndex() { return this->materialIndex; }
-float Material::get_materialDensity() { return this->materialDensity; }
-string Material::get_materialColour() { return this->materialColour; }
-string Material::get_materialName() { return this->materialName; }
 //###########################################################
 
 /*
-class Vector3d
-{
-
-};
-*/
-
 class Vector3d
 {
 public:
@@ -91,7 +55,7 @@ private:
   float y;
   float z;
 };
-
+*/
 Vector3d::Vector3d() {}
 
 Vector3d::Vector3d(int &vectorID, float &x, float &y, float &z)
@@ -110,15 +74,17 @@ float Vector3d::get_z() { return this->z; }
 
 Vector3d::~Vector3d() {}
 
+////////////////////////////////////////////////////////////////
+/*
 class Cell
 {
 public:
   Cell();
-  Cell(char &cellLetter, int &cellIndex); //prev version.
 
   Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //tetrahdron
-  //Cell(char &cellLetter, int &cellIndex, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //pyramid
-  //Cell(char &cellLetter, int &cellIndex, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //hexahedron
+  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); //pyramid
+  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
+       Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); //hexahedron
 
   ~Cell();
 
@@ -126,7 +92,7 @@ public:
 
   int get_cellIndex();
   char get_cellLetter();
-  int get_cellMaterialIndex();
+  int get_cellMaterialIndex();  //replaced below - actually return material
   int get_cellp0Index();
   int get_cellp1Index();
   int get_cellp2Index();
@@ -135,6 +101,8 @@ public:
   int get_cellp5Index();
   int get_cellp6Index();
   int get_cellp7Index(); //this really doesnt feel sensible
+
+  Material get_cellMaterial();
 
   //virtual function allows the correct version of calculateVolume to be called for each shape
   virtual double calculateVolume();
@@ -149,15 +117,7 @@ protected:
   //supposedly i should be able to access the shapes using pointers, not currenly clear how
 };
 
-Cell::Cell()
-{
-}
-
-Cell::Cell(char &cellLetter, int &cellIndex)
-{
-  this->cellLetter = cellLetter;
-  this->cellIndex = cellIndex;
-}
+Cell::Cell(){ }
 
 Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
 {
@@ -170,6 +130,34 @@ Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0
   this->p3 = p3;
 }
 
+Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+{
+  this->cellIndex = cellIndex;
+  this->cellLetter = cellLetter;
+  this->theMaterial = theMaterial;
+  this->p0 = p0;
+  this->p1 = p1;
+  this->p2 = p2;
+  this->p3 = p3;
+  this->p4 = p4;
+}
+
+Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
+          Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
+{
+  this->cellIndex = cellIndex;
+  this->cellLetter = cellLetter;
+  this->theMaterial = theMaterial;
+  this->p0 = p0;
+  this->p1 = p1;
+  this->p2 = p2;
+  this->p3 = p3;
+  this->p4 = p4;
+  this->p5 = p5;
+  this->p6 = p6;
+  this->p7 = p7;
+}
+
 int Cell::get_cellIndex() { return this->cellIndex; }
 char Cell::get_cellLetter() { return this->cellLetter; }
 int Cell::get_cellMaterialIndex() { return theMaterial.get_materialIndex(); }
@@ -177,6 +165,14 @@ int Cell::get_cellp0Index() { return p0.get_vectorID(); }
 int Cell::get_cellp1Index() { return p1.get_vectorID(); }
 int Cell::get_cellp2Index() { return p2.get_vectorID(); }
 int Cell::get_cellp3Index() { return p3.get_vectorID(); }
+int Cell::get_cellp4Index() { return p4.get_vectorID(); }
+int Cell::get_cellp5Index() { return p5.get_vectorID(); }
+int Cell::get_cellp6Index() { return p6.get_vectorID(); }
+int Cell::get_cellp7Index() { return p7.get_vectorID(); } //old version - less useful
+
+//Vector3d Cell:get_cellp7() { return p7; }
+
+Material Cell::get_cellMaterial() { return theMaterial; }
 
 double Cell::calculateVolume()
 {
@@ -222,7 +218,11 @@ Tetrahedron::Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial
 
 double Tetrahedron::calculateVolume()
 {
-  return 11.3;
+  //int test = Model::get_numMaterials()
+  //return test;
+  float result = theMaterial.get_materialDensity();
+  return result;
+  //return 11.3;
 }
 
 Tetrahedron::~Tetrahedron() {}
@@ -251,7 +251,7 @@ Pyramid::Pyramid() {}
 Pyramid::~Pyramid() {}
 
 Pyramid::Pyramid(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
-    : Cell(cellLetter, cellIndex)
+    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4)
 {
   this->cellIndex = cellIndex;
   this->cellLetter = cellLetter;
@@ -296,7 +296,7 @@ Hexahedron::~Hexahedron() {}
 Hexahedron::Hexahedron(int &cellIndex, char &cellLetter, Material &theMaterial,
                        Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
                        Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
-    : Cell(cellLetter, cellIndex)
+    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4, p5, p6, p7)
 {
   this->cellIndex = cellIndex;
   this->cellLetter = cellLetter;
@@ -322,12 +322,13 @@ float Hexahedron::customFunc()
 }
 //####################################################
 
+//Cell class
 class Model
 {
 
 public:
-  //Model constructor - creating a model from your own set of cells?
-  //Model Destructor
+  Model();//Model constructor - creating a model from your own set of cells?
+  ~Model();//Model Destructor
 
   int readFile(string &filePath); //funtion for reading from file - pass string of file name/path as argument
 
@@ -337,19 +338,16 @@ public:
   int declareMaterials(string &filePath);
   int declareVectors(string &filePath);
   int declareCells(string &filePath);
-  //##############################
+
+
   //Accessor functions
-  //Format get_
   vector<Material> get_listOfMaterials();
   vector<Vector3d> get_listOfVectors();
-  //vector<Cell> get_listOfCells();
   vector<shared_ptr<Cell>> get_listOfCells();
 
   int get_numMaterials();
   int get_numVectors();
   int get_numCells();
-
-  //Tetrahedron myTet = Tetrahedron();
 
 private:
   int currentLine = 1;
@@ -363,14 +361,14 @@ private:
   //List to store the objects that are created once data is read from file
   vector<Material> listOfMaterials;
   vector<Vector3d> listOfVectors;
-  //vector<Cell> listOfCells;
-  //vector<Cell*> listOfCells;
-  vector<shared_ptr<Cell>> listOfCells;
-  //use shared pointer for this
 
+  vector<shared_ptr<Cell>> listOfCells;
   //Once we have read file and know how many of each object there are, we will need to resize above vector
   int numMaterials = 0, numVectors = 0, numCells = 0;
 };
+
+Model::Model() {}
+Model::~Model() {}
 
 //Accessor functions
 vector<Material> Model::get_listOfMaterials() { return this->listOfMaterials; }
@@ -707,7 +705,6 @@ int Model::declareCells(string &filePath)
 } //function end
 
 //Function for saving read data to file
-//TODO: write vector and cell data to the file
 int Model::saveToFile(string &newFilePath)
 {
   ofstream outputFile(newFilePath);
@@ -758,10 +755,29 @@ int Model::saveToFile(string &newFilePath)
 
       break;
 
+    case 'p':
+      outputFile << listOfCells.at(i)->get_cellIndex() << " "
+                 << listOfCells.at(i)->get_cellLetter() << " "
+                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0Index() << " "
+                 << listOfCells.at(i)->get_cellp1Index() << " "
+                 << listOfCells.at(i)->get_cellp2Index() << " "
+                 << listOfCells.at(i)->get_cellp3Index() << " "
+                 << listOfCells.at(i)->get_cellp4Index() << "\n";
+      break;
+    
     case 'h':
       outputFile << listOfCells.at(i)->get_cellIndex() << " "
-                 << listOfCells.at(i)->get_cellLetter() << "\n";
-      break;
+                 << listOfCells.at(i)->get_cellLetter() << " "
+                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0Index() << " "
+                 << listOfCells.at(i)->get_cellp1Index() << " "
+                 << listOfCells.at(i)->get_cellp2Index() << " "
+                 << listOfCells.at(i)->get_cellp3Index() << " "
+                 << listOfCells.at(i)->get_cellp4Index() << " "
+                 << listOfCells.at(i)->get_cellp5Index() << " "
+                 << listOfCells.at(i)->get_cellp6Index() << " "
+                 << listOfCells.at(i)->get_cellp7Index() << "\n";
     }
   }
 
@@ -771,6 +787,10 @@ int Model::saveToFile(string &newFilePath)
 }
 
 //########################################################################################
+
+/*
+//Commented out main as currently testing use of Cmake lists
+//linking etc.
 
 int main()
 {
@@ -810,23 +830,24 @@ int main()
   char cell_idk_letter = myModel.get_listOfCells().at(0)->get_cellLetter();
   cout << "\nThe cell at index idk (currently 0) has the letter " << cell_idk_letter << "\n";
 
-  //cout << modelResultM << " " << modelResultV << " " << modelResultC << "\n";
+  cout << "All zero means everything declared" << modelResultM << " " << modelResultV << " " << modelResultC << "\n";
 
   //Testing inheritance
   double vol0 = myModel.get_listOfCells().at(0)->calculateVolume();
   cout << "Vol 0: " << vol0 << "\n";
 
-  /*
+  
   //below only vlaid if there are 2 cells present 
   double vol1 = myModel.get_listOfCells().at(1)->calculateVolume();
-  cout << "Vol 1: " << vol1 << "\n";
-  */
+  cout << "Density 1: " << vol1 << "\n";
+  
 
-  // float testing = myModel.get_listOfCells().at(0)->customFunc();
-  // cout << "Testing: " << testing << "\n";
+   //float testing = myModel.get_listOfCells().at(0)->customFunc();
+   //cout << "Testing: " << testing << "\n";
 
   //Saving data to file
   string newFilePath = "../model_files/saveFile.mod";
 
   myModel.saveToFile(newFilePath);
 }
+*/
