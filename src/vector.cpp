@@ -1,68 +1,13 @@
 //Vector class - Best
 
-#include <iostream>
-//#include <vector>
+#include "vector.hpp"
 
-// To be done: Accessing Vector Data from Eg. ListOfVectors, vectorID
+/// Constructors
+Vector3d::Vector3d(){}
 
-using namespace std;
-
-class Vector3d
+Vector3d::Vector3d(int &vectorID, float _x, float _y, float _z)
 {
-public:
-
-   /// Constructor
-//   Vector3d(int &vectorID, float x, float y, float z);
-   Vector3d();
-   Vector3d(float _x, float _y, float _z);
-
-   /// Copy Constructor
-   Vector3d(const Vector3d& V);
-
-   /// Assignment Operator
-   Vector3d& operator=(const Vector3d& V);
-
-   /// Sets
-//   void Vector3d::set_vectorID() {this->vectorID = vectorID; }
-   void set_x(float _x);
-   void set_y(float _y);
-   void set_z(float _z);
-
-   /// Gets
-//   int Vector3d::get_vectorID() { return this->vectorID; }
-   float get_x();
-   float get_y();
-   float get_z();
-
-   /// Vector Addition
-   Vector3d operator+(const Vector3d& V);
-   Vector3d &operator+=(const Vector3d& V);
-
-   /// Vector Subtraction
-   Vector3d operator-(const Vector3d& V);
-   Vector3d &operator-=(const Vector3d& V);
-
-   /// Inner/Scalar/Dot Product
-   float dotProduct(const Vector3d& V);
-
-   /// Outer/Vector/Cross Product
-   Vector3d crossProduct(const Vector3d& V);
-
-   /// Print Result
-   void print();
-
-   /// Destructor
-   ~Vector3d(){}
-
-private:
-   //int vectorID;
-   float x, y, z;
-};
-
-//------------------------------------------------------------------------------
-
-Vector3d::Vector3d(float _x, float _y, float _z)
-{
+    this->vectorID = vectorID;
     x = _x;
     y = _y;
     z = _z;
@@ -75,12 +20,14 @@ Vector3d::Vector3d(const Vector3d &V)
     z = V.z;
 }
 
-/// Sets
+/// Mutators
+void Vector3d::set_vectorID() {this->vectorID = vectorID; }
 void Vector3d::set_x(float _x) {x = _x;}
 void Vector3d::set_y(float _y) {y = _y;}
 void Vector3d::set_z(float _z) {z = _z;}
 
-/// Gets
+/// Accessors
+int Vector3d::get_vectorID() { return this->vectorID; }
 float Vector3d::get_x() {return x;}
 float Vector3d::get_y() {return y;}
 float Vector3d::get_z() {return z;}
@@ -88,7 +35,7 @@ float Vector3d::get_z() {return z;}
 /// Vector Addition
 Vector3d Vector3d::operator+(const Vector3d &V)
 {
-    return Vector3d(x+V.x,y+V.y,z+V.z);
+    return Vector3d(vectorID, x+V.x, y+V.y, z+V.z);
 }
 
 Vector3d &Vector3d::operator+=(const Vector3d &V)
@@ -102,7 +49,7 @@ Vector3d &Vector3d::operator+=(const Vector3d &V)
 /// Vector Subtraction
 Vector3d Vector3d::operator-(const Vector3d &V)
 {
-    return Vector3d(x-V.x,y-V.y,z-V.z);
+    return Vector3d(vectorID, x-V.x, y-V.y, z-V.z);
 }
 
 Vector3d &Vector3d::operator-=(const Vector3d &V)
@@ -120,13 +67,21 @@ float Vector3d::dotProduct(const Vector3d& V)
 }
 
 /// Outer/Vector/Cross Product
-Vector3d Vector3d::crossProduct(const Vector3d& V)
+Vector3d Vector3d::crossProduct(const Vector3d& Va, const Vector3d& Vb)
 {
-    Vector3d resultCrossProduct=Vector3d(resultCrossProduct.x,resultCrossProduct.y,resultCrossProduct.z);
-    resultCrossProduct.x = y*V.z - z*V.y;
-    resultCrossProduct.y = z*V.x - x*V.z;
-    resultCrossProduct.z = x*V.y - y*V.x;
+    Vector3d resultCrossProduct=Vector3d(vectorID, resultCrossProduct.x, resultCrossProduct.y, resultCrossProduct.z);
+    resultCrossProduct.x = Va.y*Vb.z - Va.z*Vb.y;
+    resultCrossProduct.y = Va.z*Vb.x - Va.x*Vb.z;
+    resultCrossProduct.z = Va.x*Vb.y - Va.y*Vb.x;
     return resultCrossProduct;
+}
+
+Vector3d &Vector3d::operator=(const Vector3d &V)
+{
+    x=V.x;
+    y=V.y;
+    z=V.z;
+    return *this;
 }
 
 /// Print Result in Vector Format
@@ -137,12 +92,15 @@ void Vector3d::print()
 
 //------------------------------------------------------------------------------
 
-// Sample test main
+/*
+// Test program to ensure Vector3d class works
 int main()
 {
     // Initialize Vector Coordinates
+    int vectorID;
     float x,y,z;
-    Vector3d A=Vector3d(x,y,z);
+
+    Vector3d A=Vector3d(vectorID, x, y, z);
 
     // Ask user to enter Coordinates of Vector A
     cout<<"Enter x y z Coordinates of Vector A: ";
@@ -157,7 +115,7 @@ int main()
     // Initialize and ask user to enter Coordinates of Vector B
     cout<<"Enter x y z Coordinates of vector B: ";
     cin>>x>>y>>z;
-    Vector3d B(x,y,z);
+    Vector3d B(vectorID, x, y, z);
 
     // Set user defined Coordinates of Vector B
     B.set_x(x);
@@ -178,10 +136,13 @@ int main()
     sub.print();
 
     // Perform Inner/Scalar/Dot Product
-    cout<<"Dot Product = "<<A.dotProduct(B)<<"\n";
+    float dotProductResult=A.dotProduct(B);
+    cout<<"Dot Product = "<<dotProductResult<<"\n";
 
     // Perform Outer/Vector/Cross Product
-    Vector3d cross = A.crossProduct(B);
+    Vector3d crossProductResult = crossProductResult.crossProduct(A, B);
+
     cout<<"Cross Product = ";
-    cross.print();
+    crossProductResult.print();
 }
+*/
