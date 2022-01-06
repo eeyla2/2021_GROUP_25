@@ -16,12 +16,7 @@ Freeing memory when program ends?
 
 */
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <memory> //for managing vector list of different classes for shared_ptr
+//moved includes to .hpp - some could probably come back here to prevent unnecessary linking
 
 #include "model.hpp"
 
@@ -56,6 +51,7 @@ private:
   float z;
 };
 */
+
 Vector3d::Vector3d() {}
 
 Vector3d::Vector3d(int &vectorID, float &x, float &y, float &z)
@@ -75,47 +71,8 @@ float Vector3d::get_z() { return this->z; }
 Vector3d::~Vector3d() {}
 
 ////////////////////////////////////////////////////////////////
-/*
-class Cell
-{
-public:
-  Cell();
 
-  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //tetrahdron
-  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); //pyramid
-  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
-       Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); //hexahedron
-
-  ~Cell();
-
-  //Cell constructor with number of arguments for creating tetrahedron
-
-  int get_cellIndex();
-  char get_cellLetter();
-  int get_cellMaterialIndex();  //replaced below - actually return material
-  int get_cellp0Index();
-  int get_cellp1Index();
-  int get_cellp2Index();
-  int get_cellp3Index();
-  int get_cellp4Index();
-  int get_cellp5Index();
-  int get_cellp6Index();
-  int get_cellp7Index(); //this really doesnt feel sensible
-
-  Material get_cellMaterial();
-
-  //virtual function allows the correct version of calculateVolume to be called for each shape
-  virtual double calculateVolume();
-
-protected:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3, p4, p5, p6, p7;
-  //This doesnt feel that intelligent - not quite using inheriitance correctly
-  //Questions regarding dynamic casting, how to use shared pointers properly
-  //supposedly i should be able to access the shapes using pointers, not currenly clear how
-};
+//cell class############################- moved to model.hpp
 
 Cell::Cell(){ }
 
@@ -181,24 +138,8 @@ double Cell::calculateVolume()
 
 Cell::~Cell() {}
 
-//The Tetrahedron class is a child of the Cell class
-class Tetrahedron : public Cell
-{
-public:
-  Tetrahedron();
-  ~Tetrahedron();
+//The Tetrahedron class is a child of the Cell class######################################### - moved to model.hpp
 
-  Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3);
-
-  double calculateVolume();
-
-  //cellIndex materialIndex  vectorIndexP0  vectorIndexP1 vectorIndexP2  vectorIndexP3
-private:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3;
-};
 
 Tetrahedron::Tetrahedron() {}
 
@@ -229,22 +170,7 @@ Tetrahedron::~Tetrahedron() {}
 
 //#########################################################################
 
-class Pyramid : public Cell
-{
-public:
-  Pyramid();
-  ~Pyramid();
-
-  Pyramid(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4);
-
-  double calculateVolume();
-
-private:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3, p4, p5;
-};
+///pyramid class###########################- moved to model.hpp
 
 Pyramid::Pyramid() {}
 
@@ -269,25 +195,7 @@ double Pyramid::calculateVolume()
 }
 //##################################################################
 
-class Hexahedron : public Cell
-{
-public:
-  Hexahedron();
-  ~Hexahedron();
-
-  Hexahedron(int &cellIndex, char &cellLetter, Material &theMaterial,
-             Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
-             Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7);
-
-  double calculateVolume();
-  float customFunc();
-
-private:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3, p4, p5, p6, p7;
-};
+//hexagedron class#######################- moved to model.hpp
 
 Hexahedron::Hexahedron() {}
 
@@ -322,53 +230,30 @@ float Hexahedron::customFunc()
 }
 //####################################################
 
-//Cell class
-class Model
-{
-
-public:
-  Model();//Model constructor - creating a model from your own set of cells?
-  ~Model();//Model Destructor
-
-  int readFile(string &filePath); //funtion for reading from file - pass string of file name/path as argument
-
-  int saveToFile(string &newFilePath);
-
-  //Once we know how many of each letter we have, we go about creating them
-  int declareMaterials(string &filePath);
-  int declareVectors(string &filePath);
-  int declareCells(string &filePath);
-
-
-  //Accessor functions
-  vector<Material> get_listOfMaterials();
-  vector<Vector3d> get_listOfVectors();
-  vector<shared_ptr<Cell>> get_listOfCells();
-
-  int get_numMaterials();
-  int get_numVectors();
-  int get_numCells();
-
-private:
-  int currentLine = 1;
-
-  //std::vector is a convenient way of dynamically allocating arrays & manipulating
-  //the following list of indexes tells us on which line in the file the desired letters are
-  vector<int> materialLineIndexes;
-  vector<int> vectorLineIndexes;
-  vector<int> cellLineIndexes;
-
-  //List to store the objects that are created once data is read from file
-  vector<Material> listOfMaterials;
-  vector<Vector3d> listOfVectors;
-
-  vector<shared_ptr<Cell>> listOfCells;
-  //Once we have read file and know how many of each object there are, we will need to resize above vector
-  int numMaterials = 0, numVectors = 0, numCells = 0;
-};
+//Model class
+//definition moved to header file
 
 Model::Model() {}
-Model::~Model() {}
+
+//model constructor - reads file and declares objects
+Model::Model(string &filePath)
+{
+  int fileResult = readFile(filePath);
+  if (fileResult) //if the file is not read successfully
+  {
+    cout << "\nFailed to create model\n"; //TODO - just a warning sufficent?
+    exit(0);
+  }
+  int modelResultM = declareMaterials(filePath);
+  int modelResultV = declareVectors(filePath);
+  int modelResultC = declareCells(filePath);
+  if (!(modelResultM && modelResultV && modelResultC))  //if above declare functions all returned zero
+  {
+    cout << "\nSuccessfuly declared materials, vectors & cells\n";
+  }
+}
+
+Model::~Model() {}  //destructor - TODO: freeing memory declared
 
 //Accessor functions
 vector<Material> Model::get_listOfMaterials() { return this->listOfMaterials; }
@@ -461,7 +346,7 @@ int Model::declareMaterials(string &filePath)
 
   if (!inputFile.is_open())
   {
-    cout << "Failed to open file";
+    cout << "Failed to open file\n";
     return (-1);
   }
 
@@ -521,7 +406,7 @@ int Model::declareVectors(string &filePath)
 
   if (!inputFile.is_open())
   {
-    cout << "Failed to open file";
+    cout << "Failed to open file\n";
     return (-1);
   }
 
@@ -580,7 +465,7 @@ int Model::declareCells(string &filePath)
 
   if (!inputFile.is_open())
   {
-    cout << "Failed to open file";
+    cout << "Failed to open file\n";
     return (-1);
   }
 
@@ -794,20 +679,12 @@ int Model::saveToFile(string &newFilePath)
 
 int main()
 {
-  Model myModel;
-
-  string filePath = "../model_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
-
-  int fileResult = myModel.readFile(filePath);
-  if (fileResult) //if the file is not read successfully
-  {
-    cout << "Now what?\n"; //TODO - just a warning sufficent?
-  }
+  string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
+  Model myModel = Model(filePath);
 
   cout << "\n-------------------Testing Functionality-----------------\n";
 
   //------------------------------------------
-  int modelResultM = myModel.declareMaterials(filePath);
 
   string nameOfMaterial1 = myModel.get_listOfMaterials().at(0).get_materialName();
   cout << "\n\nName of material 0: " << nameOfMaterial1 << "\n\n";
@@ -816,14 +693,10 @@ int main()
   cout << "Number of materials: " << numberOfMaterials << "\n\n";
 
   //--------------------------------------
-  //declaring vectors
-  int modelResultV = myModel.declareVectors(filePath);
+
   float vector_idk_xValue = myModel.get_listOfVectors().at(2).get_x();
   cout << "The vector at index idk (currently 2) has x value: " << vector_idk_xValue << "\n";
   //----------------------------------
-
-  //declaring cells
-  int modelResultC = myModel.declareCells(filePath);
 
   //char cell_idk_letter = myModel.get_listOfCells().at(1).get_cellLetter();
 
