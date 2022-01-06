@@ -3,7 +3,7 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-//Class definition, class member functions in Material.cpp
+// Vector3d class definition and member functions in vector.cpp
 #include <iostream>
 using namespace std;
 
