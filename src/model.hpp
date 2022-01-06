@@ -5,133 +5,19 @@
 
 //Other classes of library
 
-//Commented for the time being so they don't interfere with my tests
+//Commented for the time being so they don't interfere with my tests   -no longer true
 #include "material.hpp"
-//#include "vector.hpp"
-//#include "cell.hpp"
+#include "vector.hpp"
+#include "cell.hpp"
 
 // includes - some could propaly go back to .cpp
-#include <iostream>
+//#include <iostream> - included in material.hpp
 #include <fstream>
 #include <sstream>
-#include <string>
-#include <vector>
+//#include <string>   - included in material.hpp
+//#include <vector> - included in cell.hpp
 #include <memory> //for managing vector list of different classes for shared_ptr
 
-class Vector3d
-{
-public:
-  //constructor
-  Vector3d();
-  Vector3d(int &vectorID, float &x, float &y, float &z);
-  ~Vector3d();
-  //public here for ease of use
-
-  int get_vectorID();
-  float get_x();
-  float get_y();
-  float get_z();
-
-private:
-  int vectorID;
-  float x;
-  float y;
-  float z;
-};
-
-class Cell
-{
-public:
-  Cell();
-
-  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //tetrahdron
-  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); //pyramid
-  Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
-       Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); //hexahedron
-
-  ~Cell();
-
-  //Cell constructor with number of arguments for creating tetrahedron
-
-  int get_cellIndex();
-  char get_cellLetter();
-  int get_cellMaterialIndex();  //replaced below - actually return material
-  int get_cellp0Index();
-  int get_cellp1Index();
-  int get_cellp2Index();
-  int get_cellp3Index();
-  int get_cellp4Index();
-  int get_cellp5Index();
-  int get_cellp6Index();
-  int get_cellp7Index(); //this really doesnt feel sensible
-
-  Material get_cellMaterial();
-
-  //virtual function allows the correct version of calculateVolume to be called for each shape
-  virtual double calculateVolume();
-
-protected:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3, p4, p5, p6, p7;
-  //This doesnt feel that intelligent - not quite using inheriitance correctly
-  //Questions regarding dynamic casting, how to use shared pointers properly
-  //supposedly i should be able to access the shapes using pointers, not currenly clear how
-};
-
-class Tetrahedron : public Cell
-{
-public:
-  Tetrahedron();
-  ~Tetrahedron();
-
-  Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3);
-
-  double calculateVolume();
-
-  //cellIndex materialIndex  vectorIndexP0  vectorIndexP1 vectorIndexP2  vectorIndexP3
-private:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3;
-};
-class Pyramid : public Cell
-{
-public:
-  Pyramid();
-  ~Pyramid();
-
-  Pyramid(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4);
-
-  double calculateVolume();
-
-private:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3, p4, p5;
-};
-class Hexahedron : public Cell
-{
-public:
-  Hexahedron();
-  ~Hexahedron();
-
-  Hexahedron(int &cellIndex, char &cellLetter, Material &theMaterial,
-             Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
-             Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7);
-
-  double calculateVolume();
-  float customFunc();
-
-private:
-  int cellIndex;
-  char cellLetter;
-  Material theMaterial;
-  Vector3d p0, p1, p2, p3, p4, p5, p6, p7;
-};
 
 class Model
 {

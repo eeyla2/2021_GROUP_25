@@ -13,6 +13,7 @@ Save this data to a new file in the required format
 //TODO:
 Make most things const so we dont accidently change data
 Freeing memory when program ends?
+computing the centre of the model - weighted average of the indiviudal centres?
 
 */
 
@@ -51,7 +52,8 @@ private:
   float z;
 };
 */
-
+//#################################################################################commenting out class memeber functions now defined in headers
+/*
 Vector3d::Vector3d() {}
 
 Vector3d::Vector3d(int &vectorID, float &x, float &y, float &z)
@@ -233,6 +235,10 @@ float Hexahedron::customFunc()
 //Model class
 //definition moved to header file
 
+
+*/
+//#######################################################################################################end comment of class member func
+
 Model::Model() {}
 
 //model constructor - reads file and declares objects
@@ -247,13 +253,13 @@ Model::Model(string &filePath)
   int modelResultM = declareMaterials(filePath);
   int modelResultV = declareVectors(filePath);
   int modelResultC = declareCells(filePath);
-  if (!(modelResultM && modelResultV && modelResultC))  //if above declare functions all returned zero
+  if (!(modelResultM && modelResultV && modelResultC)) //if above declare functions all returned zero
   {
     cout << "\nSuccessfuly declared materials, vectors & cells\n";
   }
 }
 
-Model::~Model() {}  //destructor - TODO: freeing memory declared
+Model::~Model() {} //destructor - TODO: freeing memory declared
 
 //Accessor functions
 vector<Material> Model::get_listOfMaterials() { return this->listOfMaterials; }
@@ -632,37 +638,37 @@ int Model::saveToFile(string &newFilePath)
     case 't':
       outputFile << listOfCells.at(i)->get_cellIndex() << " "
                  << listOfCells.at(i)->get_cellLetter() << " "
-                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
-                 << listOfCells.at(i)->get_cellp0Index() << " "
-                 << listOfCells.at(i)->get_cellp1Index() << " "
-                 << listOfCells.at(i)->get_cellp2Index() << " "
-                 << listOfCells.at(i)->get_cellp3Index() << "\n";
+                 << listOfCells.at(i)->get_cellMaterial().get_materialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp1().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp2().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp3().get_vectorID() << "\n";
 
       break;
 
     case 'p':
       outputFile << listOfCells.at(i)->get_cellIndex() << " "
                  << listOfCells.at(i)->get_cellLetter() << " "
-                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
-                 << listOfCells.at(i)->get_cellp0Index() << " "
-                 << listOfCells.at(i)->get_cellp1Index() << " "
-                 << listOfCells.at(i)->get_cellp2Index() << " "
-                 << listOfCells.at(i)->get_cellp3Index() << " "
-                 << listOfCells.at(i)->get_cellp4Index() << "\n";
+                 << listOfCells.at(i)->get_cellMaterial().get_materialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp1().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp2().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp3().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp4().get_vectorID() << "\n";
       break;
-    
+
     case 'h':
       outputFile << listOfCells.at(i)->get_cellIndex() << " "
                  << listOfCells.at(i)->get_cellLetter() << " "
-                 << listOfCells.at(i)->get_cellMaterialIndex() << " "
-                 << listOfCells.at(i)->get_cellp0Index() << " "
-                 << listOfCells.at(i)->get_cellp1Index() << " "
-                 << listOfCells.at(i)->get_cellp2Index() << " "
-                 << listOfCells.at(i)->get_cellp3Index() << " "
-                 << listOfCells.at(i)->get_cellp4Index() << " "
-                 << listOfCells.at(i)->get_cellp5Index() << " "
-                 << listOfCells.at(i)->get_cellp6Index() << " "
-                 << listOfCells.at(i)->get_cellp7Index() << "\n";
+                 << listOfCells.at(i)->get_cellMaterial().get_materialIndex() << " "
+                 << listOfCells.at(i)->get_cellp0().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp1().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp2().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp3().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp4().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp5().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp6().get_vectorID() << " "
+                 << listOfCells.at(i)->get_cellp7().get_vectorID() << "\n";
     }
   }
 

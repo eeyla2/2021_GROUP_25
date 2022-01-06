@@ -1,63 +1,7 @@
-#include <Vector>
-// Vector class - Best
-
-#include <iostream>
-#include <string>
-//#include <vector>
-using namespace std;
+#include "cell.hpp"
 
 // ONLY AN ABSTRACT FOR CLARITY
 // this will be class material and i will inherit the characteristics to different types of material according to the indexID it has
-class Cell
-{
-public:
-    // Cell constructor for different Cell variants
-    Cell();
-    // cell class constructor for a tetrahedron
-    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cp1, Vector3d &cP2, Vector3d &cP3); // tetrahedron
-
-    // cell class constructor for a hexahedron
-    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3,
-         Vector3d &cP4, Vector3d &cP5, Vector3d &cP6, Vector3d &cP7); // hexahedron
-
-    // cell class constructor for pyramid
-    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4); // pyramid
-
-    ~Cell(); // destructor for the cell called (works for the three constructors)
-
-    // first get returns the value of cell Index, while second get returns the value of cell Letter and third one reteurns the Material Index
-    int get_cellIndex() const;
-    char get_cellLetter() const;
-    int get_cellMaterialIndex() const;
-
-    // get functions for all the points
-    Vector3d get_cellp0() const;
-    Vector3d get_cellp1() const;
-    Vector3d get_cellp2() const;
-    Vector3d get_cellp3() const;
-    Vector3d get_cellp4() const;
-    Vector3d get_cellp5() const;
-    Vector3d get_cellp6() const;
-    Vector3d get_cellp7() const;
-
-    // get the material inside the cell class
-    Material get_cellMaterial() const;
-
-    // virtual function allows the correct version of volume and center of massto be called for each shape
-    virtual double volume();
-    virtual double centerOfMass();
-
-    // weight of the cell calculated
-    double weight();
-
-protected:
-    int cellIndex;                           // the cell Index
-    char cellLetter;                         // the cell letter
-    Material theMaterial;                    // the material
-    Vector3d p0, p1, p2, p3, p4, p5, p6, p7; // all possible points that could be used in a shape
-
-    // the weight function that is currently in the Cell classes will actually be inherited
-};
 
 // incase the cell class is empty
 Cell::Cell()
@@ -89,7 +33,7 @@ Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d 
 
     // necessary data for identification
     this->cellIndex = cCellIndex;
-    this->cellLetter = cellLetter;
+    this->cellLetter = cCellLetter;
     this->theMaterial = cTheMaterial;
 
     // points
@@ -121,15 +65,11 @@ Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d 
     this->p4 = cP4;
 }
 
-// an accessor/get function to access the data for Index in the private part of the Cell class
-int Cell::get_cellIndex() const { return this->cellIndex; }
-
-// an accessor/get function to access the data for Letter in the private part of the Cell class
-char Cell::get_cellLetter() const { return this->cellLetter; }
-
-// accessors/get functions for points and materialIndex
-int Cell::get_cellMaterialIndex() const { return theMaterial.get_materialIndex(); }
-Vector3d Cell::get_cellp0() const { return p0; }
+//accesor functions
+int Cell::get_cellIndex() const { return this->cellIndex; }     // an accessor/get function to access the data for Index in the private part of the Cell class
+char Cell::get_cellLetter() const { return this->cellLetter; }  // an accessor/get function to access the data for Letter in the private part of the Cell class
+Material Cell::get_cellMaterial() const { return theMaterial; } //get the material inside the cell class
+Vector3d Cell::get_cellp0() const { return p0; }                // accessors/get functions for points
 Vector3d Cell::get_cellp1() const { return p1; }
 Vector3d Cell::get_cellp2() const { return p2; }
 Vector3d Cell::get_cellp3() const { return p3; }
@@ -138,18 +78,16 @@ Vector3d Cell::get_cellp5() const { return p5; }
 Vector3d Cell::get_cellp6() const { return p6; }
 Vector3d Cell::get_cellp7() const { return p7; }
 
-
-//get the material inside the cell class
-Material Cell::get_cellMaterial() const { return theMaterial; }
-
 // volume left empty because it is determined inside the cell that inherit the function
 double Cell::volume()
 {
+    return 0.;  // function must return something - even though inherited
 }
 
 // center of mass left empty because it is determined inside the cell that inherit the function
 double Cell::centerOfMass()
 {
+    return 0.;
 }
 
 // center of mass left empty because it is determined inside the cell that inherit the function
@@ -168,33 +106,6 @@ double Cell::weight()
 Cell::~Cell() {}
 
 // tetrahedron class declared and has its contents defined
-class Tetrahedron : public Cell
-{
-public:
-    Tetrahedron();//incase of empty argument
-
-    Tetrahedron(int &tCellIndex, char &tCellLetter, Material &tTheMaterial, Vector3d &tP0, Vector3d &tP1, Vector3d &tP2, Vector3d &tP3); // constructor for tetrahedron vectors is called
-    ~Tetrahedron();                                                                                                                      // destructor for tetrahedron vector constructor called
-
-    Tetrahedron(const Tetrahedron &instance); // copying constructor applied (Note: this is the same function
-    // as the normal constructor but with an instance argument where a whole instance is supplied)
-
-    const Tetrahedron &operator=(const Tetrahedron &instance); // assignment operator for Tetrahedron
-
-    // operators for subtraction, addition, dotmulitplication, cross multiplication
-    // all have to be applied here
-
-    // private variables and functions of the tetrahedron class
-private:
-    int cellIndex;
-    char cellLetter;
-    Material theMaterial;
-    Vector3d p0, p1, p2, p3;
-
-    double volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); // volume of a tetrahedron
-
-    Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //center of mass of a tetrahedron
-};
 
 // incase no data is entered
 Tetrahedron::Tetrahedron()
@@ -228,7 +139,6 @@ Tetrahedron::Tetrahedron(const Tetrahedron &instance)
     cellLetter = instance.get_cellLetter();
     theMaterial = instance.get_cellMaterial();
 
-
     //the points are assigned to each other
     p0 = instance.get_cellp0();
     p1 = instance.get_cellp1();
@@ -246,9 +156,8 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
     if (this == &instance)
         return (*this);
 
-
-//extract the x,y and z coordinates of every point from the parameter 
-//and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
+    //extract the x,y and z coordinates of every point from the parameter
+    //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
 
     double x = instance.get_cellp0().get_x();
     double y = instance.get_cellp0().get_y();
@@ -279,7 +188,7 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
     p3.set_z(z);
 
     return (*this); // returns the address of the instance we are in
-} 
+}
 
 // definition of the volume of a tetrahedron
 double Tetrahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
@@ -290,17 +199,16 @@ double Tetrahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p
     Vector3d b = p0 - p2; // second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
     Vector3d c = p0 - p3; // third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
 
-    Vector3d crossmult = b.crossProduct(c); // cross multiplication which is set up by pisit
+    Vector3d crossProductResult = crossProductResult.crossProduct(b, c); // cross multiplication which is set up by pisit
 
-    double dotmult = a.dotProduct(crossmult); // dot multiplication which is set up by pisit
-
+    float dotProductResult = a.dotProduct(crossProductResult); // dot multiplication which is set up by pisit
     // apply absolute value on the variable
-    if (dotmult < 0)
-        dotmult = -dotmult; // if the variable is negative make it +ve otherwise keep it as is
+    if (dotProductResult < 0)
+        dotProductResult = -dotProductResult; // if the variable is negative make it +ve otherwise keep it as is
 
     // calculate the volume by dividing the absolut value of the dot multiplication result
     // by dividing by 3 factorial which is 6
-    double volume = dotmult / 6;
+    double volume = dotProductResult / 6;
 
     // return the volume as a float
     return volume;
@@ -325,32 +233,245 @@ Vector3d Tetrahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vec
 } //########## not 100% if its alright since can't be tested #########
 
 // hexahedron class declared and has its contents defined
-class Hexahedron : public Cell
+
+Pyramid::Pyramid()
 {
-public:
-    Hexahedron();
+}
 
-    Hexahedron(int &hCellIndex, char &hCellLetter, Material &tTheMaterial, Vector3d &hP0, Vector3d &hP1, Vector3d &hP2, Vector3d &hP3, Vector3d &hP4, Vector3d &hP5, Vector3d &hP6, Vector3d &hP7); // vector constructor called
+// constructor for Pyramid vectors declared
+Pyramid::Pyramid(int &pCellIndex, char &pCellLetter, Material &pTheMaterial, Vector3d &pP0, Vector3d &pP1, Vector3d &pP2, Vector3d &pP3, Vector3d &pP4)
+    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4)
+{
+    // necessary data for identification
+    this->cellIndex = cellIndex;
+    this->cellLetter = cellLetter;
+    this->theMaterial = theMaterial;
 
-    ~Hexahedron(); // hexahedron destructor applied to the vector constructor
+    // points
+    this->p0 = pP0;
+    this->p1 = pP1;
+    this->p2 = pP2;
+    this->p3 = pP3;
+    this->p4 = pP4;
+}
 
-    Hexahedron(const Hexahedron &instance); // copying constructor applied
+// constructor copies the contents of instance into the new instance for a Pyramid
+Pyramid::Pyramid(const Pyramid &instance)
+{
+    // necessary data for identification
+    cellIndex = instance.get_cellIndex();
+    cellLetter = instance.get_cellLetter();
+    theMaterial = instance.get_cellMaterial();
 
-    const Hexahedron &operator=(const Hexahedron &instance); // assignment operator for Pyramid
+    // points
+    p0 = instance.get_cellp0();
+    p1 = instance.get_cellp1();
+    p2 = instance.get_cellp2();
+    p3 = instance.get_cellp3();
+    p4 = instance.get_cellp4();
+}
 
-    // operators for subtraction, addition, dotmulitplication, cross multiplication
-    // all have to be applied here
+// assignment operator which tells the compiler how to equate two instances of a pyramid properly if asked to
+const Pyramid &Pyramid::operator=(const Pyramid &instance)
+{
 
-private:
-    int cellIndex;
-    char cellLetter;
-    Material theMaterial;
-    Vector3d p0, p1, p2, p3, p4, p5, p6, p7;
+    // if the instance we have is exactly the same instance we are equating it to then return the
+    // address of the instance we have
+    // example if we want x to be x=x, then we are equating a variable to itself
+    if (this == &instance)
+        return (*this);
 
-    double volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); // volume of a Hexahedron
+    //extract the x,y and z coordinates of every point from the parameter
+    //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
+    double x = instance.get_cellp0().get_x();
+    double y = instance.get_cellp0().get_y();
+    double z = instance.get_cellp0().get_z();
+    p0.set_x(x);
+    p0.set_y(y);
+    p0.set_z(z);
 
-    Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); // center of mass of a hexahedron
-};
+    x = instance.get_cellp1().get_x();
+    y = instance.get_cellp1().get_y();
+    z = instance.get_cellp1().get_z();
+    p1.set_x(x);
+    p1.set_y(y);
+    p1.set_z(z);
+
+    x = instance.get_cellp2().get_x();
+    y = instance.get_cellp2().get_y();
+    z = instance.get_cellp2().get_z();
+    p2.set_x(x);
+    p2.set_y(y);
+    p2.set_z(z);
+
+    x = instance.get_cellp3().get_x();
+    y = instance.get_cellp3().get_y();
+    z = instance.get_cellp3().get_z();
+    p3.set_x(x);
+    p3.set_y(y);
+    p3.set_z(z);
+
+    x = instance.get_cellp4().get_x();
+    y = instance.get_cellp4().get_y();
+    z = instance.get_cellp4().get_z();
+    p4.set_x(x);
+    p4.set_y(y);
+    p4.set_z(z);
+
+    return (*this); // returns the address of the instance we are in
+}
+
+//######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
+// definition of the volume of a pyramid
+double Pyramid::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+{
+
+    // the base's area has to be calculated which is 2D
+    //a vector of vertices is made for easier implementation
+    vector<Vector3d> points;
+
+    //points are entered into the vector
+    points.push_back(p0);
+    points.push_back(p1);
+    points.push_back(p2);
+    points.push_back(p3);
+    points.push_back(p4);
+
+    //vertex made to store the x, y and z coordinates of teh center of mass
+    Vector3d center;
+
+    // variables needed for the calculations
+    double summation;
+    double summationX;
+    double summationY;
+
+    // for loop to go through vertices performing a summation calculation
+    for (int i = 0; i < 4; ++i)
+    {
+        summation += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+    }
+
+    summation += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+
+    // take the absolut value of the summation if the summation is -ve
+    if (summation < 0)
+    {
+
+        summation = -summation;
+    }
+
+    // the area is then calculate by dividing the absolut value of the summation by 2
+    double area = summation / 2;
+
+    // for loop to go through vertices performing a summation calculation
+    for (int i = 0; i < 4; ++i)
+    {
+        summationX += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+    }
+
+    summationX += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+
+    center.set_x((1 / (6 * area)) * summationX);
+
+    // for loop to go through vertices performing a summation calculation
+    for (int i = 0; i < 4; ++i)
+    {
+        summationY += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+    }
+
+    summationY += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+
+    Vector3d distanceBetweenBaseAndTip = center - points[4]; // the distance between the tip and the base
+
+    center.set_y((1 / (6 * area)) * summationY); // equation to find the y coordinate of the centriod of the base
+
+    // to calculate the volume (assumes that point number 5 is the top of the pyramid)
+    double volume = (distanceBetweenBaseAndTip.get_y() * area) / 3;
+
+    return volume;
+} // not sure if it's right might have to do take the height as the distance between the center of the base and the tip instead of a plane y coordinate
+
+//######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
+
+// definitoin of a center of mass function
+Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+{
+
+    // the center for the Y, X and Z
+    // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
+
+    //a vector of vertices is made for easier implementation
+    vector<Vector3d> points;
+
+    //points are entered into the vector
+    points.push_back(p0);
+    points.push_back(p1);
+    points.push_back(p2);
+    points.push_back(p3);
+    points.push_back(p4);
+
+    //vertex made in which the x, y and z coordinates are stored inside
+    Vector3d center;
+
+    // variables needed for the calculations
+    double summationX;
+    double summationY;
+    double areaSummation;
+
+    // for loop to go through vertices performing a summation calculation
+    for (int i = 0; i < 4; ++i)
+    {
+        summationX += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+    }
+
+    summationX += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+
+    // the base's area has to be calculated which is 2D
+
+    // for loop to go through vertices performing a summation calculation
+    for (int i = 0; i < 4; ++i)
+    {
+        areaSummation += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+    }
+
+    areaSummation += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+
+    // take the absolut value of the summation if the summation is -ve
+    if (areaSummation < 0)
+    {
+
+        areaSummation = -areaSummation;
+    }
+
+    // the area is then calculated by dividing the absolut value of the summation by 2
+    double area = areaSummation / 2;
+
+    center.set_x((1 / (6 * area)) * summationX);
+
+    // for loop to go through vertices performing a summation calculation
+    for (int i = 0; i < 4; ++i)
+    {
+        summationY += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+    }
+
+    summationY += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+
+    center.set_y((1 / (6 * area)) * summationY); // equation to find the y coordinate of the centriod of the base
+
+    center.set_z(0); // since its the base its z has to be 0
+
+    Vector3d distanceBetweenBaseAndTip = points[4] - center; // the distance between the tip and the base
+
+    center.set_x(distanceBetweenBaseAndTip.get_x() / 4); // the center is now changed to include the z axis and changes the x and y values
+    center.set_y(distanceBetweenBaseAndTip.get_y() / 4);
+    center.set_z(distanceBetweenBaseAndTip.get_z() / 4);
+
+    return center; // return the center instance
+}
+//######################### also no way of validating if this is working or not ###############################
+
+Pyramid::~Pyramid() {}
+
 
 Hexahedron::Hexahedron()
 {
@@ -407,11 +528,8 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
     // example if we want x to be x=x, then we are equating a variable to itself
     if (this == &instance)
         return (*this);
-
-
-
-//extract the x,y and z coordinates of every point from the parameter 
-//and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
+    //extract the x,y and z coordinates of every point from the parameter
+    //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
 
     double x = instance.get_cellp0().get_x();
     double y = instance.get_cellp0().get_y();
@@ -441,7 +559,7 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
     p3.set_y(y);
     p3.set_z(z);
 
-    x= instance.get_cellp4().get_x();
+    x = instance.get_cellp4().get_x();
     y = instance.get_cellp4().get_y();
     z = instance.get_cellp4().get_z();
     p4.set_x(x);
@@ -483,19 +601,31 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     // a vector is declared to store the three parts of the first triple product inside
     vector<Vector3d> firstTriple;
 
+    firstTriple.push_back(p6 - p0);
+    firstTriple.push_back(p1 - p0);
+    firstTriple.push_back(p2 - p5);
+    /*
     firstTriple[0] = p6 - p0; // first part is calculated by subtracting the vertex 0 from the vertex 6
     firstTriple[1] = p1 - p0; // second edge is calculated by subtracting the vertex 0 from the vertex 1
     firstTriple[2] = p2 - p5; // third edge is calculated by subtracting the vertex 5 from the vertex 2
+    */
 
+    /*
     Vector3d firstCrossMult = firstTriple[1].crossProduct(firstTriple[2]); // cross multiplication which is set up by pisit
 
     double firstDotMult = firstTriple[0].dotProduct(firstCrossMult); // dot multiplication which is set up by pisit
+    */
+
+    Vector3d firstCrossProduct = firstCrossProduct.crossProduct(firstTriple.at(1), firstTriple.at(2));
+
+    float firstDotProduct = firstTriple.at(0).dotProduct(firstCrossProduct);
+
 
     // implementation of the second triple product
-
     // a vector is declared to store the three parts of the second triple product inside
     vector<Vector3d> secondTriple;
 
+    /*
     secondTriple[0] = p6 - p0; // first part is calculated  by subtracting the vertex 0 from the vertex 6
     secondTriple[1] = p4 - p0; // second edge is calculated  by subtracting the vertex 0 from the vertex 4
     secondTriple[2] = p5 - p7; // third edge is calculated  by subtracting the vertex 7 from the vertex 5
@@ -503,12 +633,17 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     Vector3d secondCrossMult = secondTriple[1].crossProduct(secondTriple[2]); // cross multiplication which is set up by pisit
 
     double secondDotMult = secondTriple[0].dotProduct(secondCrossMult); // dot multiplication which is set up by pisit
+    */
 
-    // implementation of the third triple product
-
+    secondTriple.push_back(p6 - p0);
+    secondTriple.push_back(p4 - p0);
+    secondTriple.push_back(p5 - p7);
+ 
+    Vector3d secondCrossProduct = secondCrossProduct.crossProduct(secondTriple.at(1), secondTriple.at(2));
+    float secondDotProduct =  secondTriple.at(0).dotProduct(secondCrossProduct);
+    
     // a vector is declared to store the three parts of the third triple product inside
-    vector<Vector3d> thirdTriple;
-
+    /*
     thirdTriple[0] = p6 - p0; // first part is calculated by subtracting the vertex 0 from the vertex 7
     thirdTriple[1] = p3 - p0; // second edge is calculated by subtracting the vertex 0 from the vertex 3
     thirdTriple[2] = p7 - p2; // third edge is calculated by subtracting the vertex 2 from the vertex 7
@@ -516,10 +651,20 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     Vector3d thirdCrossMult = thirdTriple[1].crossProduct(thirdTriple[2]); // cross multiplication which is set up by pisit
 
     double thirdDotMult = thirdTriple[0].dotProduct(thirdCrossMult); // dot multiplication which is set up by pisit
+    */
+
+    vector<Vector3d> thirdTriple;
+
+    thirdTriple.push_back(p6-p0);
+    thirdTriple.push_back(p3-p0);
+    thirdTriple.push_back(p7-p2);
+
+    Vector3d thirdCrossProduct = thirdCrossProduct.crossProduct(thirdTriple.at(1), thirdTriple.at(2));
+    float thirdDotProduct = thirdTriple.at(0).dotProduct(thirdCrossProduct);
 
     // calculate the volume by adding the three Dot multiplication products of the triple products and then
     // by dividing by 3 factorial which is 6
-    double volume = (firstDotMult + secondDotMult + thirdDotMult) / 6;
+    double volume = (firstDotProduct + secondDotProduct + thirdDotProduct) / 6;
 
     // return the volume as a double
     return volume;
@@ -532,7 +677,7 @@ Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vect
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
 
-    //a vector of vertices is made for easier implementation 
+    //a vector of vertices is made for easier implementation
     vector<Vector3d> points;
 
     //points are entered
@@ -653,269 +798,20 @@ Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vect
     // summationYTop += ((Ppoints[7].get_x()) * (Ppoints[0].get_y())) - ((Ppoints[0].get_x()) * (Ppoints[7].get_y())); // first vertex needs to be the last vertex too
 
     // centerTop.y = (1/(6*Area))* summationYTop; //equation to find the y coordinate of the
+    
+
+    //unitl actual centre of mass calcualtion figured out
+    //test vector to retun
+
+    int ID = 0;
+	float x_coord = 1.1;
+	float y_coord = 2.2;
+	float z_coord = 3.3;
+
+    Vector3d simulatedCentre = Vector3d(ID, x_coord, y_coord, z_coord);
+    return simulatedCentre;
 }
+
+
 
 // pyramid class declared and has its contents defined
-class Pyramid : public Cell
-{
-public:
-    Pyramid();
-
-    Pyramid(int &pCellIndex, char &pCellLetter, Material &pTheMaterial, Vector3d &pP0, Vector3d &pP1, Vector3d &pP2, Vector3d &pP3, Vector3d &pP4); // constructor for tetrahedron vectors is called
-    ~Pyramid();                                                                                                                                     // destructor for pyramid vectors is called
-
-    Pyramid(const Pyramid &instance); // copying constructor applied
-
-    const Pyramid &operator=(const Pyramid &instance); // assignment operator for Pyramid
-
-    // operators for subtraction, addition, dotmulitplication, cross multiplication
-    // all have to be applied here
-
-private:
-    int cellIndex;
-    char cellLetter;
-    Material theMaterial;
-    Vector3d p0, p1, p2, p3, p4;
-
-    double volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // volume of a pyramid
-
-    Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // center of mass of a pyramid
-};
-
-Pyramid::Pyramid()
-{
-}
-
-// constructor for Pyramid vectors declared
-Pyramid::Pyramid(int &pCellIndex, char &pCellLetter, Material &pTheMaterial, Vector3d &pP0, Vector3d &pP1, Vector3d &pP2, Vector3d &pP3, Vector3d &pP4)
-: Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4)
-{
-    // necessary data for identification
-    this->cellIndex = cellIndex;
-    this->cellLetter = cellLetter;
-    this->theMaterial = theMaterial;
-
-    // points
-    this->p0 = pP0;
-    this->p1 = pP1;
-    this->p2 = pP2;
-    this->p3 = pP3;
-    this->p4 = pP4;
-}
-
-// constructor copies the contents of instance into the new instance for a Pyramid
-Pyramid::Pyramid(const Pyramid &instance)
-{
-    // necessary data for identification
-    cellIndex = instance.get_cellIndex();
-    cellLetter = instance.get_cellLetter();
-    theMaterial = instance.get_cellMaterial();
-
-    // points
-    p0 = instance.get_cellp0();
-    p1 = instance.get_cellp1();
-    p2 = instance.get_cellp2();
-    p3 = instance.get_cellp3();
-    p4 = instance.get_cellp4();
-}
-
-// assignment operator which tells the compiler how to equate two instances of a pyramid properly if asked to
-const Pyramid &Pyramid::operator=(const Pyramid &instance)
-{
-
-    // if the instance we have is exactly the same instance we are equating it to then return the
-    // address of the instance we have
-    // example if we want x to be x=x, then we are equating a variable to itself
-    if (this == &instance)
-        return (*this);
-
-
-//extract the x,y and z coordinates of every point from the parameter 
-//and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
-    double x = instance.get_cellp0().get_x();
-    double y = instance.get_cellp0().get_y();
-    double z = instance.get_cellp0().get_z();
-    p0.set_x(x);
-    p0.set_y(y);
-    p0.set_z(z);
-
-    x = instance.get_cellp1().get_x();
-    y = instance.get_cellp1().get_y();
-    z = instance.get_cellp1().get_z();
-    p1.set_x(x);
-    p1.set_y(y);
-    p1.set_z(z);
-
-    x = instance.get_cellp2().get_x();
-    y = instance.get_cellp2().get_y();
-    z = instance.get_cellp2().get_z();
-    p2.set_x(x);
-    p2.set_y(y);
-    p2.set_z(z);
-
-    x = instance.get_cellp3().get_x();
-    y = instance.get_cellp3().get_y();
-    z = instance.get_cellp3().get_z();
-    p3.set_x(x);
-    p3.set_y(y);
-    p3.set_z(z);
-
-    x = instance.get_cellp4().get_x();
-    y = instance.get_cellp4().get_y();
-    z = instance.get_cellp4().get_z();
-    p4.set_x(x);
-    p4.set_y(y);
-    p4.set_z(z);
-
-    return (*this); // returns the address of the instance we are in
-}
-
-//######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
-// definition of the volume of a pyramid
-double Pyramid::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
-{
-
-    // the base's area has to be calculated which is 2D
-    //a vector of vertices is made for easier implementation 
-    vector<Vector3d> points;
-
-//points are entered into the vector
-    points.push_back(p0);
-    points.push_back(p1);
-    points.push_back(p2);
-    points.push_back(p3);
-    points.push_back(p4);
-
-//vertex made to store the x, y and z coordinates of teh center of mass
-    Vector3d center;
-
-    // variables needed for the calculations
-    double summation;
-    double summationX;
-    double summationY;
-
-    // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
-    {
-        summation += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-    }
-
-    summation += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
-
-    // take the absolut value of the summation if the summation is -ve
-    if (summation < 0)
-    {
-
-        summation = -summation;
-    }
-
-    // the area is then calculate by dividing the absolut value of the summation by 2
-    double area = summation / 2;
-
-    // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
-    {
-        summationX += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-    }
-
-    summationX += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
-
-    center.set_x((1 / (6 * area)) * summationX);
-
-    // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
-    {
-        summationY += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-    }
-
-    summationY += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
-
-    Vector3d distanceBetweenBaseAndTip = center - points[4]; // the distance between the tip and the base
-
-    center.set_y((1 / (6 * area)) * summationY); // equation to find the y coordinate of the centriod of the base
-
-    // to calculate the volume (assumes that point number 5 is the top of the pyramid)
-    double volume = (distanceBetweenBaseAndTip.get_y() * area) / 3;
-
-    return volume;
-} // not sure if it's right might have to do take the height as the distance between the center of the base and the tip instead of a plane y coordinate
-
-//######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
-
-// definitoin of a center of mass function
-Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
-{
-
-    // the center for the Y, X and Z
-    // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
-
-    //a vector of vertices is made for easier implementation 
-    vector<Vector3d> points;
-
-//points are entered into the vector
-    points.push_back(p0);
-    points.push_back(p1);
-    points.push_back(p2);
-    points.push_back(p3);
-    points.push_back(p4);
-
-//vertex made in which the x, y and z coordinates are stored inside
-    Vector3d center;
-
-    // variables needed for the calculations
-    double summationX;
-    double summationY;
-    double areaSummation;
-
-    // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
-    {
-        summationX += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-    }
-
-    summationX += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
-
-    // the base's area has to be calculated which is 2D
-
-    // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
-    {
-        areaSummation += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-    }
-
-    areaSummation += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
-
-    // take the absolut value of the summation if the summation is -ve
-    if (areaSummation < 0)
-    {
-
-        areaSummation = -areaSummation;
-    }
-
-    // the area is then calculated by dividing the absolut value of the summation by 2
-    double area = areaSummation / 2;
-
-    center.set_x((1 / (6 * area)) * summationX);
-
-    // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
-    {
-        summationY += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-    }
-
-    summationY += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
-
-    center.set_y((1 / (6 * area)) * summationY); // equation to find the y coordinate of the centriod of the base
-
-    center.set_z(0); // since its the base its z has to be 0
-
-    Vector3d distanceBetweenBaseAndTip = points[4] - center; // the distance between the tip and the base
-
-    center.set_x(distanceBetweenBaseAndTip.get_x() / 4); // the center is now changed to include the z axis and changes the x and y values
-    center.set_y(distanceBetweenBaseAndTip.get_y() / 4);
-    center.set_z(distanceBetweenBaseAndTip.get_z() / 4);
-
-    return center; // return the center instance
-}
-//######################### also no way of validating if this is working or not ###############################
-
