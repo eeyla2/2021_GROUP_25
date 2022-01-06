@@ -21,11 +21,11 @@ Vector3d::Vector3d(const Vector3d &V)
 }
 
 /// Assignment Operator
-Vector3d &Vector3d::operator+=(const Vector3d &V)
+Vector3d &Vector3d::operator=(const Vector3d &V)
 {
-    x+=V.x;
-    y+=V.y;
-    z+=V.z;
+    x=V.x;
+    y=V.y;
+    z=V.z;
     return *this;
 }
 
@@ -45,6 +45,14 @@ float Vector3d::get_z() {return z;}
 Vector3d Vector3d::operator+(const Vector3d &V)
 {
     return Vector3d(vectorID, x+V.x, y+V.y, z+V.z);
+}
+
+Vector3d &Vector3d::operator+=(const Vector3d &V)
+{
+    x+=V.x;
+    y+=V.y;
+    z+=V.z;
+    return *this;
 }
 
 /// Vector Subtraction
@@ -75,14 +83,6 @@ Vector3d Vector3d::crossProduct(const Vector3d& Va, const Vector3d& Vb)
     resultCrossProduct.y = Va.z*Vb.x - Va.x*Vb.z;
     resultCrossProduct.z = Va.x*Vb.y - Va.y*Vb.x;
     return resultCrossProduct;
-}
-
-Vector3d &Vector3d::operator=(const Vector3d &V)
-{
-    x=V.x;
-    y=V.y;
-    z=V.z;
-    return *this;
 }
 
 /// Print Result in Vector Format
