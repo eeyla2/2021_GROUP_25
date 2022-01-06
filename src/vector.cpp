@@ -12,12 +12,21 @@ Vector3d::Vector3d(int &vectorID, float _x, float _y, float _z)
     y = _y;
     z = _z;
 }
-
+/// Copy Constructor
 Vector3d::Vector3d(const Vector3d &V)
 {
     x = V.x;
     y = V.y;
     z = V.z;
+}
+
+/// Assignment Operator
+Vector3d &Vector3d::operator+=(const Vector3d &V)
+{
+    x+=V.x;
+    y+=V.y;
+    z+=V.z;
+    return *this;
 }
 
 /// Mutators
@@ -36,14 +45,6 @@ float Vector3d::get_z() {return z;}
 Vector3d Vector3d::operator+(const Vector3d &V)
 {
     return Vector3d(vectorID, x+V.x, y+V.y, z+V.z);
-}
-
-Vector3d &Vector3d::operator+=(const Vector3d &V)
-{
-    x+=V.x;
-    y+=V.y;
-    z+=V.z;
-    return *this;
 }
 
 /// Vector Subtraction
@@ -93,7 +94,7 @@ void Vector3d::print()
 //------------------------------------------------------------------------------
 
 /*
-// Test program to ensure Vector3d class works
+// Test program to test Vector3d class functionalities
 int main()
 {
     // Initialize Vector Coordinates
