@@ -43,8 +43,8 @@ public:
     Material get_cellMaterial() const;
 
     // virtual function allows the correct version of volume and center of massto be called for each shape
-    virtual double volume();
-    virtual double centerOfMass();
+    virtual double calculateVolume();
+    virtual Vector3d centerOfMass();
 
     // weight of the cell calculated
     double weight();
@@ -74,7 +74,7 @@ public:
     // operators for subtraction, addition, dotmulitplication, cross multiplication
     // all have to be applied here
 
-    double volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); // volume of a tetrahedron
+    double calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); // volume of a tetrahedron
 
     Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //center of mass of a tetrahedron
 
@@ -102,7 +102,7 @@ public:
 
     // operators for subtraction, addition, dotmulitplication, cross multiplication
     // all have to be applied here
-    double volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // volume of a pyramid
+    double calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // volume of a pyramid
 
     Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // center of mass of a pyramid
     
@@ -130,9 +130,10 @@ public:
 
     // operators for subtraction, addition, dotmulitplication, cross multiplication
     // all have to be applied here
-    double volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); // volume of a Hexahedron
-
-    Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); // center of mass of a hexahedron
+    
+    //prev version with arguments    double calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); // volume of a Hexahedron
+    double calculateVolume();
+    Vector3d centerOfMass(); // center of mass of a hexahedron  //also prev with arguments
 
 private:
     int cellIndex;

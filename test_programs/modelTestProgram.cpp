@@ -29,7 +29,7 @@ int main()
 	//--------------------------------------------------
 	//Model test
 
-	string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../proprietary_files/ExampleModel3.mod"; //  ExampleModel1.mod  //  testFile.mod
 	
 	Model myModel = Model(filePath);
 
@@ -53,15 +53,17 @@ int main()
 	char cell_idk_letter = myModel.get_listOfCells().at(0)->get_cellLetter();
 	cout << "\nThe cell at index idk (currently 0) has the letter " << cell_idk_letter << "\n";
 
-/*
-	//Testing inheritance
-	double vol0 = myModel.get_listOfCells().at(0)->calculateVolume();
-	cout << "Vol 0: " << vol0 << "\n";
 
-	//below only vlaid if there are 2 cells present
-	double vol1 = myModel.get_listOfCells().at(1)->calculateVolume();
-	cout << "Density 1: " << vol1 << "\n";
-*/
+
+//Hexahedron Test - assuming using file 1
+	double volH = myModel.get_listOfCells().at(1)->calculateVolume();
+	cout << "Vol H: " << volH << "\n";
+
+	Vector3d centreH = myModel.get_listOfCells().at(1)->centerOfMass();
+	cout << "Centre of H: ";
+	centreH.print();
+
+
 
 	//Saving data to file
 	string newFilePath = "../proprietary_files/saveFile.mod";

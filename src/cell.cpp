@@ -24,7 +24,6 @@ Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d 
 }
 
 
-
 // pyramid
 Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4)
 {
@@ -79,15 +78,16 @@ Vector3d Cell::get_cellp6() const { return p6; }
 Vector3d Cell::get_cellp7() const { return p7; }
 
 // volume left empty because it is determined inside the cell that inherit the function
-double Cell::volume()
+double Cell::calculateVolume()
 {
-    return 0.; // function must return something - even though inherited
+    return 1.23; // function must return something - even though inherited
 }
 
 // center of mass left empty because it is determined inside the cell that inherit the function
-double Cell::centerOfMass()
+Vector3d Cell::centerOfMass()
 {
-    return 0.;
+    Vector3d undefinedVector;
+    return undefinedVector;
 }
 
 // center of mass left empty because it is determined inside the cell that inherit the function
@@ -95,7 +95,7 @@ double Cell::weight()
 {
     float mass = 0; // mass is declared
 
-    mass = volume() * theMaterial.get_materialDensity(); // mass is found by multiplying the volume and the density
+    mass = calculateVolume() * theMaterial.get_materialDensity(); // mass is found by multiplying the volume and the density
 
     double weight = mass * 9.81; // the weight is found by multiplying the mass and the gravity of earth
 
@@ -191,9 +191,9 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
 }
 
 // definition of the volume of a tetrahedron
-double Tetrahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
+double Tetrahedron::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
 {
-
+    cout << "In tet calc vol\n";
     // the edges coming out of the same vector are calcualted(still abstract)
     Vector3d a = p0 - p1; // first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
     Vector3d b = p0 - p2; // second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
@@ -209,7 +209,7 @@ double Tetrahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p
     // calculate the volume by dividing the absolut value of the dot multiplication result
     // by dividing by 3 factorial which is 6
     double volume = dotProductResult / 6;
-
+    cout << "Calculated volume in tet func: " << volume << "\n";
     // return the volume as a float
     return volume;
 } //####### im 95% sure its right #############
@@ -323,7 +323,7 @@ const Pyramid &Pyramid::operator=(const Pyramid &instance)
 
 //######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
 // definition of the volume of a pyramid
-double Pyramid::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
 {
 
     // the base's area has to be calculated which is 2D
@@ -591,30 +591,24 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
 }
 
 // definition of the volume of a Hexahedron
-double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
+double Hexahedron::calculateVolume()
 {
+    // prev arguments: Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7
+
 
     // three implementations of a triple product have to be implemented then added
 
     // implementation of the first triple product
 
     // a vector is declared to store the three parts of the first triple product inside
+    
+    
     vector<Vector3d> firstTriple;
 
     firstTriple.push_back(p6 - p0);
     firstTriple.push_back(p1 - p0);
     firstTriple.push_back(p2 - p5);
-    /*
-    firstTriple[0] = p6 - p0; // first part is calculated by subtracting the vertex 0 from the vertex 6
-    firstTriple[1] = p1 - p0; // second edge is calculated by subtracting the vertex 0 from the vertex 1
-    firstTriple[2] = p2 - p5; // third edge is calculated by subtracting the vertex 5 from the vertex 2
-    */
 
-    /*
-    Vector3d firstCrossMult = firstTriple[1].crossProduct(firstTriple[2]); // cross multiplication which is set up by pisit
-
-    double firstDotMult = firstTriple[0].dotProduct(firstCrossMult); // dot multiplication which is set up by pisit
-    */
 
     Vector3d firstCrossProduct = firstCrossProduct.crossProduct(firstTriple.at(1), firstTriple.at(2));
 
@@ -624,15 +618,6 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     // a vector is declared to store the three parts of the second triple product inside
     vector<Vector3d> secondTriple;
 
-    /*
-    secondTriple[0] = p6 - p0; // first part is calculated  by subtracting the vertex 0 from the vertex 6
-    secondTriple[1] = p4 - p0; // second edge is calculated  by subtracting the vertex 0 from the vertex 4
-    secondTriple[2] = p5 - p7; // third edge is calculated  by subtracting the vertex 7 from the vertex 5
-
-    Vector3d secondCrossMult = secondTriple[1].crossProduct(secondTriple[2]); // cross multiplication which is set up by pisit
-
-    double secondDotMult = secondTriple[0].dotProduct(secondCrossMult); // dot multiplication which is set up by pisit
-    */
 
     secondTriple.push_back(p6 - p0);
     secondTriple.push_back(p4 - p0);
@@ -642,15 +627,6 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     float secondDotProduct = secondTriple.at(0).dotProduct(secondCrossProduct);
 
     // a vector is declared to store the three parts of the third triple product inside
-    /*
-    thirdTriple[0] = p6 - p0; // first part is calculated by subtracting the vertex 0 from the vertex 7
-    thirdTriple[1] = p3 - p0; // second edge is calculated by subtracting the vertex 0 from the vertex 3
-    thirdTriple[2] = p7 - p2; // third edge is calculated by subtracting the vertex 2 from the vertex 7
-
-    Vector3d thirdCrossMult = thirdTriple[1].crossProduct(thirdTriple[2]); // cross multiplication which is set up by pisit
-
-    double thirdDotMult = thirdTriple[0].dotProduct(thirdCrossMult); // dot multiplication which is set up by pisit
-    */
 
     vector<Vector3d> thirdTriple;
 
@@ -664,15 +640,18 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     // calculate the volume by adding the three Dot multiplication products of the triple products and then
     // by dividing by 3 factorial which is 6
     double volume = (firstDotProduct + secondDotProduct + thirdDotProduct) / 6;
+    
+    //volume = 7.89; // test number
 
     // return the volume as a double
     return volume;
 } //######################### not 100% sure if its all right since its necessary that the vertices are in the right order #############
 
 // definition of a center of mass function
-Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
+Vector3d Hexahedron::centerOfMass()
 {
-
+    /*
+    
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
 
@@ -693,9 +672,11 @@ Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vect
     Vector3d centerBase;
 
     // variables needed for the calculations
-    double areaSummationBase;
-    double summationXBase;
-    double summationYBase;
+
+    //These neeed to be initalised, ive assumed zero\\##########################################################################
+    double areaSummationBase=0;
+    double summationXBase=0;
+    double summationYBase=0;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 0; i < 4; ++i)
@@ -744,9 +725,9 @@ Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vect
 
     Vector3d centerTop;
 
-    double areaSummationTop;
-    double summationXTop;
-    double summationYTop;
+    double areaSummationTop=0;
+    double summationXTop=0;
+    double summationYTop=0;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 4; i < 8; ++i)
@@ -801,6 +782,7 @@ Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vect
     //unitl actual centre of mass calcualtion figured out
     //test vector to retun
 
+    */
     int ID = 0;
     float x_coord = 1.1;
     float y_coord = 2.2;
