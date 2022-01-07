@@ -191,13 +191,13 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
 }
 
 // definition of the volume of a tetrahedron
-double Tetrahedron::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
+double Tetrahedron::calculateVolume()
 {
     cout << "In tet calc vol\n";
     // the edges coming out of the same vector are calcualted(still abstract)
-    Vector3d a = p0 - p1; // first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
-    Vector3d b = p0 - p2; // second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
-    Vector3d c = p0 - p3; // third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    Vector3d a = this->p0 - this->p1; // first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    Vector3d b = this->p0 - this->p2; // second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
+    Vector3d c = this->p0 - this->p3; // third edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
 
     Vector3d crossProductResult = crossProductResult.crossProduct(b, c); // cross multiplication which is set up by pisit
 
@@ -215,14 +215,14 @@ double Tetrahedron::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Ve
 } //####### im 95% sure its right #############
 
 // definition of the volume of a Hexahedron
-Vector3d Tetrahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
+Vector3d Tetrahedron::centerOfMass()
 {
 
     Vector3d center; // create a vector instance to store the x, y and z of the center in
 
-    double x = (p0.get_x() + p1.get_x() + p2.get_x() + p3.get_x()) / 4;
-    double y = (p0.get_y() + p1.get_y() + p2.get_y() + p3.get_y()) / 4;
-    double z = (p0.get_z() + p1.get_z() + p2.get_z() + p3.get_z()) / 4;
+    double x = (this->p0.get_x() + this->p1.get_x() + this->p2.get_x() + this->p3.get_x()) / 4;
+    double y = (this->p0.get_y() + this->p1.get_y() + this->p2.get_y() + this->p3.get_y()) / 4;
+    double z = (this->p0.get_z() + this->p1.get_z() + this->p2.get_z() + this->p3.get_z()) / 4;
     center.set_x(x); // set the x of the center
 
     center.set_y(y); // set the y of the center
@@ -323,7 +323,7 @@ const Pyramid &Pyramid::operator=(const Pyramid &instance)
 
 //######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
 // definition of the volume of a pyramid
-double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+double Pyramid::calculateVolume()
 {
 
     // the base's area has to be calculated which is 2D
@@ -331,11 +331,11 @@ double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector
     vector<Vector3d> points;
 
     //points are entered into the vector
-    points.push_back(p0);
-    points.push_back(p1);
-    points.push_back(p2);
-    points.push_back(p3);
-    points.push_back(p4);
+    points.push_back(this->p0);
+    points.push_back(this->p1);
+    points.push_back(this->p2);
+    points.push_back(this->p3);
+    points.push_back(this->p4);
 
     //vertex made to store the x, y and z coordinates of teh center of mass
     Vector3d center;
@@ -346,7 +346,7 @@ double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector
     double summationY;
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         summation += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -364,7 +364,7 @@ double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector
     double area = summation / 2;
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         summationX += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -374,7 +374,7 @@ double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector
     center.set_x((1 / (6 * area)) * summationX);
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         summationY += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -394,7 +394,7 @@ double Pyramid::calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector
 //######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
 
 // definitoin of a center of mass function
-Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
+Vector3d Pyramid::centerOfMass()
 {
 
     // the center for the Y, X and Z
@@ -404,11 +404,11 @@ Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3
     vector<Vector3d> points;
 
     //points are entered into the vector
-    points.push_back(p0);
-    points.push_back(p1);
-    points.push_back(p2);
-    points.push_back(p3);
-    points.push_back(p4);
+    points.push_back(this->p0);
+    points.push_back(this->p1);
+    points.push_back(this->p2);
+    points.push_back(this->p3);
+    points.push_back(this->p4);
 
     //vertex made in which the x, y and z coordinates are stored inside
     Vector3d center;
@@ -429,7 +429,7 @@ Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3
     // the base's area has to be calculated which is 2D
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         areaSummation += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -449,7 +449,7 @@ Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3
     center.set_x((1 / (6 * area)) * summationX);
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         summationY += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -605,9 +605,9 @@ double Hexahedron::calculateVolume()
     
     vector<Vector3d> firstTriple;
 
-    firstTriple.push_back(p6 - p0);
-    firstTriple.push_back(p1 - p0);
-    firstTriple.push_back(p2 - p5);
+    firstTriple.push_back(this->p6 - this->p0);
+    firstTriple.push_back(this->p1 - this->p0);
+    firstTriple.push_back(this->p2 - this->p5);
 
 
     Vector3d firstCrossProduct = firstCrossProduct.crossProduct(firstTriple.at(1), firstTriple.at(2));
@@ -619,9 +619,9 @@ double Hexahedron::calculateVolume()
     vector<Vector3d> secondTriple;
 
 
-    secondTriple.push_back(p6 - p0);
-    secondTriple.push_back(p4 - p0);
-    secondTriple.push_back(p5 - p7);
+    secondTriple.push_back(this->p6 - this->p0);
+    secondTriple.push_back(this->p4 - this->p0);
+    secondTriple.push_back(this->p5 - this->p7);
 
     Vector3d secondCrossProduct = secondCrossProduct.crossProduct(secondTriple.at(1), secondTriple.at(2));
     float secondDotProduct = secondTriple.at(0).dotProduct(secondCrossProduct);
@@ -630,9 +630,9 @@ double Hexahedron::calculateVolume()
 
     vector<Vector3d> thirdTriple;
 
-    thirdTriple.push_back(p6 - p0);
-    thirdTriple.push_back(p3 - p0);
-    thirdTriple.push_back(p7 - p2);
+    thirdTriple.push_back(this->p6 - this->p0);
+    thirdTriple.push_back(this->p3 - this->p0);
+    thirdTriple.push_back(this->p7 - this->p2);
 
     Vector3d thirdCrossProduct = thirdCrossProduct.crossProduct(thirdTriple.at(1), thirdTriple.at(2));
     float thirdDotProduct = thirdTriple.at(0).dotProduct(thirdCrossProduct);
@@ -659,14 +659,14 @@ Vector3d Hexahedron::centerOfMass()
     vector<Vector3d> points;
 
     //points are entered
-    points.push_back(p0);
-    points.push_back(p1);
-    points.push_back(p2);
-    points.push_back(p3);
-    points.push_back(p4);
-    points.push_back(p5);
-    points.push_back(p6);
-    points.push_back(p7);
+    points.push_back(this->p0);
+    points.push_back(this->p1);
+    points.push_back(this->p2);
+    points.push_back(this->p3);
+    points.push_back(this->p4);
+    points.push_back(this->p5);
+    points.push_back(this->p6);
+    points.push_back(this->p7);
 
     // store the coordinates of the center of the base inside the centerBase variable
     Vector3d centerBase;
@@ -679,7 +679,7 @@ Vector3d Hexahedron::centerOfMass()
     double summationYBase=0;
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         summationXBase += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -689,7 +689,7 @@ Vector3d Hexahedron::centerOfMass()
     // the base's area has to be calculated which is 2D
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         areaSummationBase += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -709,7 +709,7 @@ Vector3d Hexahedron::centerOfMass()
     centerBase.set_x((1 / (6 * areaBase)) * summationXBase);
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         summationYBase += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
@@ -730,22 +730,22 @@ Vector3d Hexahedron::centerOfMass()
     double summationYTop=0;
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 4; i < 8; ++i)
+    for (int i = 4; i < 7; ++i)
     {
         summationXTop += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
 
-    summationXTop += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
+    summationXTop += ((points[7].get_x()) * (points[4].get_y())) - ((points[4].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
 
     // the base's area has to be calculated which is 2D
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 4; i < 8; ++i)
+    for (int i = 4; i < 7; ++i)
     {
         areaSummationTop += ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
 
-    areaSummationTop += ((points[7].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
+    areaSummationTop += ((points[7].get_x()) * (points[4].get_y())) - ((points[4].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
 
     // take the absolut value of the summation if the summation is -ve
     if (areaSummationTop < 0)
@@ -760,22 +760,22 @@ Vector3d Hexahedron::centerOfMass()
     centerTop.set_x((1 / (6 * areaTop)) * summationXTop);
 
     // for loop to go through vertices performing a summation calculation
-    for (int i = 4; i < 8; ++i)
+    for (int i = 4; i < 7; ++i)
     {
         summationYTop += (points[i].get_y() + points[i + 1].get_y()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
     }
 
-    summationYTop += ((points[7].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
+    summationYTop += ((points[7].get_x()) * (points[4].get_y())) - ((points[4].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
 
     centerTop.set_y((1 / (6 * areaTop)) * summationYTop); // equation to find the y coordinate of the
 
     // for loop to go through vertices performing a summation calculation
-    // for (int i = 4; i < 8; ++i)
+    // for (int i = 4; i < 7; ++i)
     {
         // double summationYTop += (Ppoints[i].get_z() + Ppoints[i+1].get_z()) * ((Ppoints[i].get_x()) * (Ppoints[i + 1].get_y())) - ((Ppoints[i + 1].get_x()) * (Ppoints[i].get_y()));
     }
 
-    // summationYTop += ((Ppoints[7].get_x()) * (Ppoints[0].get_y())) - ((Ppoints[0].get_x()) * (Ppoints[7].get_y())); // first vertex needs to be the last vertex too
+    // summationYTop += ((Ppoints[7].get_x()) * (Ppoints[4].get_y())) - ((Ppoints[4].get_x()) * (Ppoints[7].get_y())); // first vertex needs to be the last vertex too
 
     // centerTop.y = (1/(6*Area))* summationYTop; //equation to find the y coordinate of the
 
