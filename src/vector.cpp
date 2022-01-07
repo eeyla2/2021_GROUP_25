@@ -78,7 +78,8 @@ float Vector3d::dotProduct(const Vector3d& V)
 /// Outer/Vector/Cross Product
 Vector3d Vector3d::crossProduct(const Vector3d& Va, const Vector3d& Vb)
 {
-    Vector3d resultCrossProduct=Vector3d(vectorID, resultCrossProduct.x, resultCrossProduct.y, resultCrossProduct.z);
+    //Vector3d resultCrossProduct=Vector3d(vectorID, resultCrossProduct.x, resultCrossProduct.y, resultCrossProduct.z);
+    Vector3d resultCrossProduct;
     resultCrossProduct.x = Va.y*Vb.z - Va.z*Vb.y;
     resultCrossProduct.y = Va.z*Vb.x - Va.x*Vb.z;
     resultCrossProduct.z = Va.x*Vb.y - Va.y*Vb.x;
