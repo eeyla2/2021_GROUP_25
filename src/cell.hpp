@@ -74,9 +74,9 @@ public:
     // operators for subtraction, addition, dotmulitplication, cross multiplication
     // all have to be applied here
 
-    double calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); // volume of a tetrahedron
+    double calculateVolume(); // volume of a tetrahedron
 
-    Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3); //center of mass of a tetrahedron
+    Vector3d centerOfMass(); //center of mass of a tetrahedron
 
     // private variables and functions of the tetrahedron class
 private:
@@ -102,9 +102,9 @@ public:
 
     // operators for subtraction, addition, dotmulitplication, cross multiplication
     // all have to be applied here
-    double calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // volume of a pyramid
+    double calculateVolume(); // volume of a pyramid
 
-    Vector3d centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4); // center of mass of a pyramid
+    Vector3d centerOfMass(); // center of mass of a pyramid
     
 private:
     int cellIndex;
