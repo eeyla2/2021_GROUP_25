@@ -109,7 +109,7 @@ int Model::readFile(string &filePath) //arguments - file name/path as a string)
     currentLine++; //we have completed reading from a line, increment for next loop round
   }
   cout << "\nRead " << currentLine << " lines from file\n";
-  cout << "\nNum m: " << numMaterials << "\tNum v: " << numVectors << "\tNum c: " << numCells << "\n";
+  cout << "\nNum materials: " << numMaterials << "\tNum verticies: " << numVectors << "\tNum cells: " << numCells << "\n\n";
 
   //dynamically allocating memory for the lists of objects we will need using std::vector wrapper/container
   //doing all at once due to overheads with dynamic memory allocation

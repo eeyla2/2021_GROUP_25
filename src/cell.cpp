@@ -193,7 +193,6 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
 // definition of the volume of a tetrahedron
 double Tetrahedron::calculateVolume()
 {
-    cout << "In tet calc vol\n";
     // the edges coming out of the same vector are calcualted(still abstract)
     Vector3d a = this->p0 - this->p1; // first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
     Vector3d b = this->p0 - this->p2; // second edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
@@ -209,8 +208,6 @@ double Tetrahedron::calculateVolume()
     // calculate the volume by dividing the absolut value of the dot multiplication result
     // by dividing by 3 factorial which is 6
     double volume = dotProductResult / 6;
-    cout << "Calculated volume in tet func: " << volume << "\n";
-    // return the volume as a float
     return volume;
 } //####### im 95% sure its right #############
 
@@ -396,7 +393,7 @@ double Pyramid::calculateVolume()
 // definitoin of a center of mass function
 Vector3d Pyramid::centerOfMass()
 {
-
+    /*
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
 
@@ -467,8 +464,16 @@ Vector3d Pyramid::centerOfMass()
     //centerOfMass.set_x(distanceBetweenBaseAndTip.get_x() ); // the center is now changed to include the z axis and changes the x and y values
     //centerOfMass.set_y(distanceBetweenBaseAndTip.get_y() );
     //centerOfMass.set_z(distanceBetweenBaseAndTip.get_z() );
-
     return centerOfMass; // return the center instance
+    */
+    float x_coord = 1.1;
+    float y_coord = 2.2;
+    float z_coord = 3.3;
+
+    Vector3d simulatedCentre = Vector3d(x_coord, y_coord, z_coord);
+    return simulatedCentre;
+
+    
 }
 //######################### also no way of validating if this is working or not ###############################
 
@@ -652,11 +657,12 @@ double Hexahedron::calculateVolume()
 // definition of a center of mass function
 Vector3d Hexahedron::centerOfMass()
 {
-    
+     //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)]   or just that centrebase not defined?
     
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
 
+    /*
     //a vector of vertices is made for easier implementation
     vector<Vector3d> points;
 
@@ -811,16 +817,15 @@ Vector3d Hexahedron::centerOfMass()
 
     Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
      
-
+    //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?
      return centerOfMass;
-
+    */
     
-    int ID = 0;
     float x_coord = 1.1;
     float y_coord = 2.2;
     float z_coord = 3.3;
 
-    Vector3d simulatedCentre = Vector3d(ID, x_coord, y_coord, z_coord);
+    Vector3d simulatedCentre = Vector3d(x_coord, y_coord, z_coord);
     return simulatedCentre;
 }
 
