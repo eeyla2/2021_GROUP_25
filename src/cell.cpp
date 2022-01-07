@@ -3,10 +3,8 @@
 // ONLY AN ABSTRACT FOR CLARITY
 // this will be class material and i will inherit the characteristics to different types of material according to the indexID it has
 
-// incase the cell class is empty
-Cell::Cell()
-{
-}
+
+Cell::Cell() { }    //default cell constructor
 
 // tetrahedron
 Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3)
@@ -23,6 +21,26 @@ Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d 
     this->p1 = cP1;
     this->p2 = cP2;
     this->p3 = cP3;
+}
+
+
+
+// pyramid
+Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4)
+{
+    // constructor for all the points and other data necessary to make sure the data is initialized correctly
+
+    // necessary data for identification
+    this->cellIndex = cCellIndex;
+    this->cellLetter = cCellLetter;
+    this->theMaterial = cTheMaterial;
+
+    // points
+    this->p0 = cP0;
+    this->p1 = cP1;
+    this->p2 = cP2;
+    this->p3 = cP3;
+    this->p4 = cP4;
 }
 
 // hexahedron
@@ -47,24 +65,6 @@ Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d 
     this->p7 = cP7;
 }
 
-// pyramid
-Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4)
-{
-    // constructor for all the points and other data necessary to make sure the data is initialized correctly
-
-    // necessary data for identification
-    this->cellIndex = cCellIndex;
-    this->cellLetter = cCellLetter;
-    this->theMaterial = cTheMaterial;
-
-    // points
-    this->p0 = cP0;
-    this->p1 = cP1;
-    this->p2 = cP2;
-    this->p3 = cP3;
-    this->p4 = cP4;
-}
-
 //accesor functions
 int Cell::get_cellIndex() const { return this->cellIndex; }     // an accessor/get function to access the data for Index in the private part of the Cell class
 char Cell::get_cellLetter() const { return this->cellLetter; }  // an accessor/get function to access the data for Letter in the private part of the Cell class
@@ -81,7 +81,7 @@ Vector3d Cell::get_cellp7() const { return p7; }
 // volume left empty because it is determined inside the cell that inherit the function
 double Cell::volume()
 {
-    return 0.;  // function must return something - even though inherited
+    return 0.; // function must return something - even though inherited
 }
 
 // center of mass left empty because it is determined inside the cell that inherit the function
@@ -114,7 +114,7 @@ Tetrahedron::Tetrahedron()
 
 // constructor for tetrahedron vectors declared
 Tetrahedron::Tetrahedron(int &tCellIndex, char &tCellLetter, Material &tTheMaterial, Vector3d &tP0, Vector3d &tP1, Vector3d &tP2, Vector3d &tP3)
-    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3)
+    : Cell(tCellLetter, tCellIndex, tTheMaterial, tP0, tP1, tP2, tP3)
 {
     // necessary data for identification
     this->cellIndex = tCellIndex;
@@ -240,7 +240,7 @@ Pyramid::Pyramid()
 
 // constructor for Pyramid vectors declared
 Pyramid::Pyramid(int &pCellIndex, char &pCellLetter, Material &pTheMaterial, Vector3d &pP0, Vector3d &pP1, Vector3d &pP2, Vector3d &pP3, Vector3d &pP4)
-    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4)
+    : Cell(pCellLetter, pCellIndex, pTheMaterial, pP0, pP1, pP2, pP3, pP4)
 {
     // necessary data for identification
     this->cellIndex = cellIndex;
@@ -472,14 +472,14 @@ Vector3d Pyramid::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3
 
 Pyramid::~Pyramid() {}
 
-
 Hexahedron::Hexahedron()
 {
 }
 
 // constructor for hexahedron vectors declared
-Hexahedron ::Hexahedron(int &hCellIndex, char &hCellLetter, Material &hTheMaterial, Vector3d &hP0, Vector3d &hP1, Vector3d &hP2, Vector3d &hP3, Vector3d &hP4, Vector3d &hP5, Vector3d &hP6, Vector3d &hP7)
-    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4, p5, p6, p7)
+Hexahedron::Hexahedron(int &hCellIndex, char &hCellLetter, Material &hTheMaterial, Vector3d &hP0, Vector3d &hP1, Vector3d &hP2, Vector3d &hP3,
+                         Vector3d &hP4, Vector3d &hP5, Vector3d &hP6, Vector3d &hP7)
+    : Cell(hCellLetter, hCellIndex, hTheMaterial, hP0, hP1, hP2, hP3, hP4, hP5, hP6, hP7)
 {
     // necessary data for identification
     this->cellIndex = hCellIndex;
@@ -498,7 +498,7 @@ Hexahedron ::Hexahedron(int &hCellIndex, char &hCellLetter, Material &hTheMateri
 }
 
 // destructor for the hexahedron vector constructor declared
-Hexahedron ::~Hexahedron() {}
+Hexahedron::~Hexahedron() {}
 
 // constructor copies the contents of instance into the new instance for a hexahedron
 Hexahedron::Hexahedron(const Hexahedron &instance)
@@ -620,7 +620,6 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
 
     float firstDotProduct = firstTriple.at(0).dotProduct(firstCrossProduct);
 
-
     // implementation of the second triple product
     // a vector is declared to store the three parts of the second triple product inside
     vector<Vector3d> secondTriple;
@@ -638,10 +637,10 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
     secondTriple.push_back(p6 - p0);
     secondTriple.push_back(p4 - p0);
     secondTriple.push_back(p5 - p7);
- 
+
     Vector3d secondCrossProduct = secondCrossProduct.crossProduct(secondTriple.at(1), secondTriple.at(2));
-    float secondDotProduct =  secondTriple.at(0).dotProduct(secondCrossProduct);
-    
+    float secondDotProduct = secondTriple.at(0).dotProduct(secondCrossProduct);
+
     // a vector is declared to store the three parts of the third triple product inside
     /*
     thirdTriple[0] = p6 - p0; // first part is calculated by subtracting the vertex 0 from the vertex 7
@@ -655,9 +654,9 @@ double Hexahedron::volume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3
 
     vector<Vector3d> thirdTriple;
 
-    thirdTriple.push_back(p6-p0);
-    thirdTriple.push_back(p3-p0);
-    thirdTriple.push_back(p7-p2);
+    thirdTriple.push_back(p6 - p0);
+    thirdTriple.push_back(p3 - p0);
+    thirdTriple.push_back(p7 - p2);
 
     Vector3d thirdCrossProduct = thirdCrossProduct.crossProduct(thirdTriple.at(1), thirdTriple.at(2));
     float thirdDotProduct = thirdTriple.at(0).dotProduct(thirdCrossProduct);
@@ -798,20 +797,17 @@ Vector3d Hexahedron::centerOfMass(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vect
     // summationYTop += ((Ppoints[7].get_x()) * (Ppoints[0].get_y())) - ((Ppoints[0].get_x()) * (Ppoints[7].get_y())); // first vertex needs to be the last vertex too
 
     // centerTop.y = (1/(6*Area))* summationYTop; //equation to find the y coordinate of the
-    
 
     //unitl actual centre of mass calcualtion figured out
     //test vector to retun
 
     int ID = 0;
-	float x_coord = 1.1;
-	float y_coord = 2.2;
-	float z_coord = 3.3;
+    float x_coord = 1.1;
+    float y_coord = 2.2;
+    float z_coord = 3.3;
 
     Vector3d simulatedCentre = Vector3d(ID, x_coord, y_coord, z_coord);
     return simulatedCentre;
 }
-
-
 
 // pyramid class declared and has its contents defined

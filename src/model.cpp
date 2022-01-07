@@ -26,218 +26,6 @@ using namespace std;
 //##################################################
 //actual classes will be defined in header files but doing it here for testing purposes
 
-//Material Class
-
-//###########################################################
-
-/*
-class Vector3d
-{
-public:
-  //constructor
-  Vector3d();
-  Vector3d(int &vectorID, float &x, float &y, float &z);
-  ~Vector3d();
-  //public here for ease of use
-
-  int get_vectorID();
-  float get_x();
-  float get_y();
-  float get_z();
-
-private:
-  int vectorID;
-  float x;
-  float y;
-  float z;
-};
-*/
-//#################################################################################commenting out class memeber functions now defined in headers
-/*
-Vector3d::Vector3d() {}
-
-Vector3d::Vector3d(int &vectorID, float &x, float &y, float &z)
-{
-  this->vectorID = vectorID;
-  this->x = x;
-  this->y = y;
-  this->z = z;
-}
-
-//accessor functions
-int Vector3d::get_vectorID() { return this->vectorID; }
-float Vector3d::get_x() { return this->x; }
-float Vector3d::get_y() { return this->y; }
-float Vector3d::get_z() { return this->z; }
-
-Vector3d::~Vector3d() {}
-
-////////////////////////////////////////////////////////////////
-
-//cell class############################- moved to model.hpp
-
-Cell::Cell(){ }
-
-Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
-{
-  this->cellIndex = cellIndex;
-  this->cellLetter = cellLetter;
-  this->theMaterial = theMaterial;
-  this->p0 = p0;
-  this->p1 = p1;
-  this->p2 = p2;
-  this->p3 = p3;
-}
-
-Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
-{
-  this->cellIndex = cellIndex;
-  this->cellLetter = cellLetter;
-  this->theMaterial = theMaterial;
-  this->p0 = p0;
-  this->p1 = p1;
-  this->p2 = p2;
-  this->p3 = p3;
-  this->p4 = p4;
-}
-
-Cell::Cell(char &cellLetter, int &cellIndex, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
-          Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
-{
-  this->cellIndex = cellIndex;
-  this->cellLetter = cellLetter;
-  this->theMaterial = theMaterial;
-  this->p0 = p0;
-  this->p1 = p1;
-  this->p2 = p2;
-  this->p3 = p3;
-  this->p4 = p4;
-  this->p5 = p5;
-  this->p6 = p6;
-  this->p7 = p7;
-}
-
-int Cell::get_cellIndex() { return this->cellIndex; }
-char Cell::get_cellLetter() { return this->cellLetter; }
-int Cell::get_cellMaterialIndex() { return theMaterial.get_materialIndex(); }
-int Cell::get_cellp0Index() { return p0.get_vectorID(); }
-int Cell::get_cellp1Index() { return p1.get_vectorID(); }
-int Cell::get_cellp2Index() { return p2.get_vectorID(); }
-int Cell::get_cellp3Index() { return p3.get_vectorID(); }
-int Cell::get_cellp4Index() { return p4.get_vectorID(); }
-int Cell::get_cellp5Index() { return p5.get_vectorID(); }
-int Cell::get_cellp6Index() { return p6.get_vectorID(); }
-int Cell::get_cellp7Index() { return p7.get_vectorID(); } //old version - less useful
-
-//Vector3d Cell:get_cellp7() { return p7; }
-
-Material Cell::get_cellMaterial() { return theMaterial; }
-
-double Cell::calculateVolume()
-{
-  return 0.;
-}
-
-Cell::~Cell() {}
-
-//The Tetrahedron class is a child of the Cell class######################################### - moved to model.hpp
-
-
-Tetrahedron::Tetrahedron() {}
-
-// Tetrahedron class calling apporopraite Cell constructor to initialise the inherited variables
-// not sure if itd be more sensible to call function with index of material, vector etc.? - think as passing by reference its okay, also clearer in function code
-Tetrahedron::Tetrahedron(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3)
-    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3)
-{
-  this->cellIndex = cellIndex;
-  this->cellLetter = cellLetter;
-  this->theMaterial = theMaterial;
-  this->p0 = p0;
-  this->p1 = p1;
-  this->p2 = p2;
-  this->p3 = p3;
-}
-
-double Tetrahedron::calculateVolume()
-{
-  //int test = Model::get_numMaterials()
-  //return test;
-  float result = theMaterial.get_materialDensity();
-  return result;
-  //return 11.3;
-}
-
-Tetrahedron::~Tetrahedron() {}
-
-//#########################################################################
-
-///pyramid class###########################- moved to model.hpp
-
-Pyramid::Pyramid() {}
-
-Pyramid::~Pyramid() {}
-
-Pyramid::Pyramid(int &cellIndex, char &cellLetter, Material &theMaterial, Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4)
-    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4)
-{
-  this->cellIndex = cellIndex;
-  this->cellLetter = cellLetter;
-  this->theMaterial = theMaterial;
-  this->p0 = p0;
-  this->p1 = p1;
-  this->p2 = p2;
-  this->p3 = p3;
-  this->p4 = p4;
-}
-
-double Pyramid::calculateVolume()
-{
-  return 12.345;
-}
-//##################################################################
-
-//hexagedron class#######################- moved to model.hpp
-
-Hexahedron::Hexahedron() {}
-
-Hexahedron::~Hexahedron() {}
-
-Hexahedron::Hexahedron(int &cellIndex, char &cellLetter, Material &theMaterial,
-                       Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3,
-                       Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7)
-    : Cell(cellLetter, cellIndex, theMaterial, p0, p1, p2, p3, p4, p5, p6, p7)
-{
-  this->cellIndex = cellIndex;
-  this->cellLetter = cellLetter;
-  this->theMaterial = theMaterial;
-  this->p0 = p0;
-  this->p1 = p1;
-  this->p2 = p2;
-  this->p3 = p3;
-  this->p4 = p4;
-  this->p5 = p5;
-  this->p6 = p6;
-  this->p7 = p7;
-}
-
-double Hexahedron::calculateVolume()
-{
-  return 62.31;
-}
-
-float Hexahedron::customFunc()
-{
-  return 1.123;
-}
-//####################################################
-
-//Model class
-//definition moved to header file
-
-
-*/
-//#######################################################################################################end comment of class member func
 
 Model::Model() {}
 
@@ -386,7 +174,7 @@ int Model::declareMaterials(string &filePath)
           }
           else
           {
-            //cout << "We have: " << lineLetter << " " << materialIndex << " " << materialDensity << " " << materialColour << " " << materialName << "\n";
+            cout << "We have: " << lineLetter << " " << materialIndex << " " << materialDensity << " " << materialColour << " " << materialName << "\n";
             //call the constructor for the material class
             listOfMaterials.at(i) = Material(materialIndex, materialDensity, materialColour, materialName);
           }
@@ -444,8 +232,8 @@ int Model::declareVectors(string &filePath)
           }
           else
           {
-            //cout << "We have: " << lineLetter << " " << vectorID << " "
-            //                    << x  << " " << y << " " << z << "\n";
+            cout << "We have: " << lineLetter << " " << vectorID << " "
+                                << x  << " " << y << " " << z << "\n";
             //call the constructor for the vector class
             listOfVectors.at(i) = Vector3d(vectorID, x, y, z);
           }
@@ -481,7 +269,7 @@ int Model::declareCells(string &filePath)
 
     if (!line.empty())
     {
-      //cout
+      //cout << "Cell lineIndexes.size() " << cellLineIndexes.size() << "\n";
       for (int i = 0; i < int(cellLineIndexes.size()); i++)
       {
         //cout <<
@@ -572,8 +360,9 @@ int Model::declareCells(string &filePath)
                 cout << "We have: " << cellIndex << " " << cellLetter << " " << materialIndex << " "
                      << vectorIndexP0 << " " << vectorIndexP1 << " " << vectorIndexP2 << " " << vectorIndexP3 << " "
                      << vectorIndexP4 << " " << vectorIndexP5 << " " << vectorIndexP6 << " " << vectorIndexP7 << "\n";
+                
                 auto it = listOfCells.begin() + i;
-
+                
                 listOfCells.insert(it, shared_ptr<Cell>(new Hexahedron(cellIndex, cellLetter,
                                                                        listOfMaterials.at(materialIndex),
                                                                        listOfVectors.at(vectorIndexP0), listOfVectors.at(vectorIndexP1),

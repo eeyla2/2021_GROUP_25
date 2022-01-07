@@ -15,19 +15,16 @@ class Cell
 public:
     // Cell constructor for different Cell variants
     Cell();
-    // cell class constructor for a tetrahedron
-    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cp1, Vector3d &cP2, Vector3d &cP3); // tetrahedron
 
-    // cell class constructor for a hexahedron
+    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3); // tetrahedron
+
+    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4); // pyramid
+
     Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3,
          Vector3d &cP4, Vector3d &cP5, Vector3d &cP6, Vector3d &cP7); // hexahedron
 
-    // cell class constructor for pyramid
-    Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4); // pyramid
+    ~Cell(); // destructor
 
-    ~Cell(); // destructor for the cell called (works for the three constructors)
-
-    // first get returns the value of cell Index, while second get returns the value of cell Letter and third one reteurns the Material Index
     int get_cellIndex() const;
     char get_cellLetter() const;
     int get_cellMaterialIndex() const;

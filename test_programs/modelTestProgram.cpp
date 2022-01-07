@@ -29,7 +29,7 @@ int main()
 	//--------------------------------------------------
 	//Model test
 
-	string filePath = "../proprietary_files/testFile.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
 	
 	Model myModel = Model(filePath);
 
