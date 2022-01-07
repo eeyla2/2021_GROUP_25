@@ -12,6 +12,13 @@ Vector3d::Vector3d(int &vectorID, float _x, float _y, float _z)
     y = _y;
     z = _z;
 }
+
+Vector3d::Vector3d(float _x, float _y, float _z) //constructor without ID - for maths
+{
+    x = _x;
+    y = _y;
+    z = _z;
+}
 /// Copy Constructor
 Vector3d::Vector3d(const Vector3d &V)
 {
@@ -44,7 +51,7 @@ float Vector3d::get_z() {return z;}
 /// Vector Addition
 Vector3d Vector3d::operator+(const Vector3d &V)
 {
-    return Vector3d(vectorID, x+V.x, y+V.y, z+V.z);
+    return Vector3d(vectorID, x+V.x, y+V.y, z+V.z);     //change to constructor without ID?
 }
 
 Vector3d &Vector3d::operator+=(const Vector3d &V)
@@ -67,6 +74,29 @@ Vector3d &Vector3d::operator-=(const Vector3d &V)
     y-=V.y;
     z-=V.z;
     return *this;
+}
+
+//Vector Multiplication (multiplying vectors)
+Vector3d Vector3d::operator*(const Vector3d& V) //, float num
+{
+    //return Vector3d(this->x*V.x, this->y*V.y, this->z*V.z);   //not necessary
+    return Vector3d(x*V.x, y*V.y, z*V.z);
+}
+
+Vector3d Vector3d::operator*(const float& f)    //for multiplying a vector by a constant
+{
+    return Vector3d(x*f, y*f, z*f);
+}
+
+//Vector division
+Vector3d Vector3d::operator/(const Vector3d& V)
+{
+    return Vector3d(x/V.x, y/V.y, z/V.z);
+}
+
+Vector3d Vector3d::operator/(const float& f)
+{
+    return Vector3d(x/f, y/f, z/f);
 }
 
 /// Inner/Scalar/Dot Product
@@ -98,12 +128,13 @@ void Vector3d::print()
 // Test program to test Vector3d class functionalities
 int main()
 {
+    
     // Initialize Vector Coordinates
     int vectorID;
     float x,y,z;
 
-    Vector3d A=Vector3d(vectorID, x, y, z);
-
+    //Vector3d A=Vector3d(vectorID, x, y, z);
+    Vector3d A;  
     // Ask user to enter Coordinates of Vector A
     cout<<"Enter x y z Coordinates of Vector A: ";
     cin>>x>>y>>z;
@@ -117,7 +148,8 @@ int main()
     // Initialize and ask user to enter Coordinates of Vector B
     cout<<"Enter x y z Coordinates of vector B: ";
     cin>>x>>y>>z;
-    Vector3d B(vectorID, x, y, z);
+    //Vector3d B(vectorID, x, y, z);
+    Vector3d B;
 
     // Set user defined Coordinates of Vector B
     B.set_x(x);
@@ -141,10 +173,30 @@ int main()
     float dotProductResult=A.dotProduct(B);
     cout<<"Dot Product = "<<dotProductResult<<"\n";
 
+    //testing multiplication
+    Vector3d mult = A*B;
+    cout << "A x B = ";
+    mult.print();
+
+    Vector3d multByConstant = A*3;
+    cout << "A x 3 = ";
+    multByConstant.print();
+
+    //testing division
+    Vector3d division = A/B;
+    cout << "A/B = ";
+    division.print();
+
+    Vector3d divByConstant = B/1.34;
+    cout << "B/1.34 = ";
+    divByConstant.print();
+
     // Perform Outer/Vector/Cross Product
     Vector3d crossProductResult = crossProductResult.crossProduct(A, B);
 
     cout<<"Cross Product = ";
     crossProductResult.print();
+
+
 }
-*/
+

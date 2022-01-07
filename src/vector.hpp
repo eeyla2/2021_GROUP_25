@@ -14,6 +14,7 @@ public:
    /// Constructor
    Vector3d();
    Vector3d(int &vectorID, float _x, float _y, float _z);
+   Vector3d(float _x, float _y, float _z);    //constructor for when doing maths and not interested in ID
 
    /// Copy Constructor
    Vector3d(const Vector3d& V);
@@ -40,6 +41,14 @@ public:
    /// Vector Subtraction
    Vector3d operator-(const Vector3d& V);
    Vector3d &operator-=(const Vector3d& V);
+
+   //Vector Multiplication (multiplying vectors)
+   Vector3d operator*(const Vector3d& V); //const Vector3d& V, float num
+   Vector3d operator*(const float& f);
+
+   Vector3d operator/(const Vector3d& V); //dividing one vector by another
+   Vector3d operator/(const float& f);
+
 
    /// Inner/Scalar/Dot Product
    float dotProduct(const Vector3d& V);
