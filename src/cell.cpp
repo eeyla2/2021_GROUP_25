@@ -460,13 +460,15 @@ Vector3d Pyramid::centerOfMass()
 
     center.set_z(0); // since its the base its z has to be 0
 
-    Vector3d distanceBetweenBaseAndTip = points[4] - center; // the distance between the tip and the base
+    Vector3d distanceBetweenBaseAndTip = (points[4] - centerBase)/4; // the distance between the tip and the base
 
-    center.set_x(distanceBetweenBaseAndTip.get_x() / 4); // the center is now changed to include the z axis and changes the x and y values
-    center.set_y(distanceBetweenBaseAndTip.get_y() / 4);
-    center.set_z(distanceBetweenBaseAndTip.get_z() / 4);
+    Vector3d centerOfMass = (centerBase + centerDistanceFromBase); //add the distance to the center of Base to get the coordinates
 
-    return center; // return the center instance
+    //centerOfMass.set_x(distanceBetweenBaseAndTip.get_x() ); // the center is now changed to include the z axis and changes the x and y values
+    //centerOfMass.set_y(distanceBetweenBaseAndTip.get_y() );
+    //centerOfMass.set_z(distanceBetweenBaseAndTip.get_z() );
+
+    return centerOfMass; // return the center instance
 }
 //######################### also no way of validating if this is working or not ###############################
 
@@ -650,7 +652,7 @@ double Hexahedron::calculateVolume()
 // definition of a center of mass function
 Vector3d Hexahedron::centerOfMass()
 {
-    /*
+    
     
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
@@ -782,7 +784,37 @@ Vector3d Hexahedron::centerOfMass()
     //unitl actual centre of mass calcualtion figured out
     //test vector to retun
 
-    */
+     Vector3d sideA = points[6] - points[5];
+    //Vector3d sideB = points[6] - points[7];
+    Vector3d sideC = points[7] - points[4];
+    //Vector3d sideD = points[5] - points[4];
+
+   Vector3d distanceBetweenSides = sideA - sideC;
+
+//################ Note: anything between brackets in the following explanation is merely a subset ####################################
+//apply equation y = m(yx)*x + c(yx) and equation z=m(zy)y + c(zy) then substitute y into the second equation
+// where we get the equation z = m(zy)*m(yx)*x + m(zy)*c(yx) + c(zy) 
+
+   float mYX = distanceBetweenSides.get_y()/distanceBetweenSides.get_z(); //slope where y depends on x 
+ 
+   float cYX = sideA.get_y(); //the y-intersection for y and x relationship
+
+   float mZY = distanceBetweenSides.get_z()/distanceBetweenSides.get_y(); //slope where z depends on x
+
+   float cZY = sideA.get_z();// the y-intersection for z and x relationship
+
+    float z = mZY * mYX * centerTop.get_x() + mZY * cYX + cZY;// equation for z coordinate of the center of mass of the top 
+
+    centerTop.set_z(z);//store the z into the vector3d
+
+    Vector3d centerDistanceFromBase = (centerTop - centerBase)/2;// the distance between the center and the base
+
+    Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
+     
+
+     return centerOfMass;
+
+    
     int ID = 0;
     float x_coord = 1.1;
     float y_coord = 2.2;
