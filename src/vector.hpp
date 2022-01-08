@@ -9,6 +9,8 @@ using namespace std;
 
 class Vector3d
 {
+    friend class Matrix3x3;
+
 public:
 
    /// Constructor
