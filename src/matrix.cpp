@@ -69,6 +69,19 @@ public:
 
     /// Matrix Transpose
 
+   //Rotation Operations
+
+   //Rotation about x-axis by angle theta
+    //thinking
+    /*
+    Vector 3d myVector;
+    Vector3d Matrix::rotate(vector3d, angle, axis)
+
+    rotationX_byTheta()
+    
+    */
+
+
     /// Print Result in Matrix Format
    void printMatrix();
 
