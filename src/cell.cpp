@@ -662,7 +662,7 @@ Vector3d Hexahedron::centerOfMass()
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
 
-    /*
+    
     //a vector of vertices is made for easier implementation
     vector<Vector3d> points;
 
@@ -791,21 +791,25 @@ Vector3d Hexahedron::centerOfMass()
     //test vector to retun
 
      Vector3d sideA = points[6] - points[5];
-    //Vector3d sideB = points[6] - points[7];
+    Vector3d sideB = points[6] - points[7];
     Vector3d sideC = points[7] - points[4];
-    //Vector3d sideD = points[5] - points[4];
+    Vector3d sideD = points[5] - points[4];
 
-   Vector3d distanceBetweenSides = sideA - sideC;
+   Vector3d distanceBetweenSidesAC = sideA - sideC;
+
+   Vector3d distanceBetweenSidesBD = sideB - sideD;
 
 //################ Note: anything between brackets in the following explanation is merely a subset ####################################
 //apply equation y = m(yx)*x + c(yx) and equation z=m(zy)y + c(zy) then substitute y into the second equation
 // where we get the equation z = m(zy)*m(yx)*x + m(zy)*c(yx) + c(zy) 
 
-   float mYX = distanceBetweenSides.get_y()/distanceBetweenSides.get_z(); //slope where y depends on x 
+if (0 != distanceBetweenSidesAC.get_z()){
+
+   float mYX = distanceBetweenSidesAC.get_y()/distanceBetweenSidesAC.get_z(); //slope where y depends on x 
  
    float cYX = sideA.get_y(); //the y-intersection for y and x relationship
 
-   float mZY = distanceBetweenSides.get_z()/distanceBetweenSides.get_y(); //slope where z depends on x
+   float mZY = distanceBetweenSidesAC.get_z()/distanceBetweenSidesAC.get_y(); //slope where z depends on x
 
    float cZY = sideA.get_z();// the y-intersection for z and x relationship
 
@@ -819,14 +823,54 @@ Vector3d Hexahedron::centerOfMass()
      
     //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?
      return centerOfMass;
-    */
     
-    float x_coord = 1.1;
+}
+
+else if (0 != distanceBetweenSidesBD.get_z()){
+
+   float mYX = distanceBetweenSidesBD.get_y()/distanceBetweenSidesBD.get_z(); //slope where y depends on x 
+ 
+   float cYX = sideA.get_y(); //the y-intersection for y and x relationship
+
+   float mZY = distanceBetweenSidesBD.get_z()/distanceBetweenSidesBD.get_y(); //slope where z depends on x
+
+   float cZY = sideA.get_z();// the y-intersection for z and x relationship
+
+    float z = mZY * mYX * centerTop.get_x() + mZY * cYX + cZY;// equation for z coordinate of the center of mass of the top 
+
+    centerTop.set_z(z);//store the z into the vector3d
+
+    Vector3d centerDistanceFromBase = (centerTop - centerBase)/2;// the distance between the center and the base
+
+    Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
+     
+    //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?
+     return centerOfMass;
+
+
+}
+
+else {
+
+    centerTop.set_z(points[6].get_z());// set the value of the center of the top identical
+    //to the z of any random point on the top since in this case the base is straight
+
+    Vector3d centerDistanceFromBase = (centerTop - centerBase)/2;// the distance between the center and the base
+
+    Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
+     
+    //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?
+     return centerOfMass;
+
+
+
+}
+   /* float x_coord = 1.1;
     float y_coord = 2.2;
     float z_coord = 3.3;
 
     Vector3d simulatedCentre = Vector3d(x_coord, y_coord, z_coord);
-    return simulatedCentre;
+    return simulatedCentre;*/
 }
 
 // pyramid class declared and has its contents defined
