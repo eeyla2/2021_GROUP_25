@@ -78,7 +78,7 @@ public:
     Vector3d Matrix::rotate(vector3d, angle, axis)
 
     rotationX_byTheta()
-    
+
     */
 
 
@@ -89,7 +89,10 @@ public:
     ~Matrix3x3(){}
 
 private:
-    float i11, i12, i13, i21, i22, i23, i31, i32, i33;
+    // float i11, i12, i13, i21, i22, i23, i31, i32, i33;
+
+    // Restructured: from storing separate points into multidimensional arrays
+    float matrix[3][3] = {};
 };
 
 /// Constructors
@@ -99,108 +102,117 @@ Matrix3x3::Matrix3x3(float _i11, float _i12, float _i13,
                      float _i21, float _i22, float _i23,
                      float _i31, float _i32, float _i33)
 {
-    i11 = _i11;
-    i12 = _i12;
-    i13 = _i13;
-    i21 = _i21;
-    i22 = _i22;
-    i23 = _i23;
-    i31 = _i31;
-    i32 = _i32;
-    i33 = _i33;
+    /*
+    float storageMatrix[3][3] = { {_i11, _i12, _i13},
+                            {_i21, _i22, _i23},
+                            {_i31, _i32, _i33} };
+
+    matrix = storageMatrix;
+    */
+
+    matrix[1][1] = _i11;
+    matrix[1][2] = _i12;
+    matrix[1][3] = _i13;
+    matrix[2][1] = _i21;
+    matrix[2][2] = _i22;
+    matrix[2][3] = _i23;
+    matrix[3][1] = _i31;
+    matrix[3][2] = _i32;
+    matrix[3][3] = _i33;
 }
 
 /// Copy Constructor
 Matrix3x3::Matrix3x3(const Matrix3x3 &M)
 {
-    i11 = M.i11;
-    i12 = M.i12;
-    i13 = M.i13;
-    i21 = M.i21;
-    i22 = M.i22;
-    i23 = M.i23;
-    i31 = M.i31;
-    i32 = M.i32;
-    i33 = M.i33;
+    matrix[1][1] = M.matrix[1][1];
+    matrix[1][2] = M.matrix[1][2];
+    matrix[1][3] = M.matrix[1][3];
+    matrix[2][1] = M.matrix[2][1];
+    matrix[2][2] = M.matrix[2][2];
+    matrix[2][3] = M.matrix[2][3];
+    matrix[3][1] = M.matrix[3][1];
+    matrix[3][2] = M.matrix[3][2];
+    matrix[3][3] = M.matrix[3][3];
 }
 
 /// Assignment Operator
 Matrix3x3 &Matrix3x3::operator=(const Matrix3x3& M)
 {
-    i11 = M.i11;
-    i12 = M.i12;
-    i13 = M.i13;
-    i21 = M.i21;
-    i22 = M.i22;
-    i23 = M.i23;
-    i31 = M.i31;
-    i32 = M.i32;
-    i33 = M.i33;
+    matrix[1][1] = M.matrix[1][1];
+    matrix[1][2] = M.matrix[1][2];
+    matrix[1][3] = M.matrix[1][3];
+    matrix[2][1] = M.matrix[2][1];
+    matrix[2][2] = M.matrix[2][2];
+    matrix[2][3] = M.matrix[2][3];
+    matrix[3][1] = M.matrix[3][1];
+    matrix[3][2] = M.matrix[3][2];
+    matrix[3][3] = M.matrix[3][3];
     return *this;
 }
 
 /// Mutators
-void Matrix3x3::set_i11(float _i11) {i11 = _i11;}
-void Matrix3x3::set_i12(float _i12) {i12 = _i12;}
-void Matrix3x3::set_i13(float _i13) {i13 = _i13;}
-void Matrix3x3::set_i21(float _i21) {i21 = _i21;}
-void Matrix3x3::set_i22(float _i22) {i22 = _i22;}
-void Matrix3x3::set_i23(float _i23) {i23 = _i23;}
-void Matrix3x3::set_i31(float _i31) {i31 = _i31;}
-void Matrix3x3::set_i32(float _i32) {i32 = _i32;}
-void Matrix3x3::set_i33(float _i33) {i33 = _i33;}
+void Matrix3x3::set_i11(float _i11) {matrix[1][1] = _i11;}
+void Matrix3x3::set_i12(float _i12) {matrix[1][2] = _i12;}
+void Matrix3x3::set_i13(float _i13) {matrix[1][3] = _i13;}
+void Matrix3x3::set_i21(float _i21) {matrix[2][1] = _i21;}
+void Matrix3x3::set_i22(float _i22) {matrix[2][2] = _i22;}
+void Matrix3x3::set_i23(float _i23) {matrix[2][3] = _i23;}
+void Matrix3x3::set_i31(float _i31) {matrix[3][1] = _i31;}
+void Matrix3x3::set_i32(float _i32) {matrix[3][2] = _i32;}
+void Matrix3x3::set_i33(float _i33) {matrix[3][3] = _i33;}
 
 /// Accessors
-float Matrix3x3::get_i11() {return i11;}
-float Matrix3x3::get_i12() {return i12;}
-float Matrix3x3::get_i13() {return i13;}
-float Matrix3x3::get_i21() {return i21;}
-float Matrix3x3::get_i22() {return i22;}
-float Matrix3x3::get_i23() {return i23;}
-float Matrix3x3::get_i31() {return i31;}
-float Matrix3x3::get_i32() {return i32;}
-float Matrix3x3::get_i33() {return i33;}
+float Matrix3x3::get_i11() {return matrix[1][1];}
+float Matrix3x3::get_i12() {return matrix[1][2];}
+float Matrix3x3::get_i13() {return matrix[1][3];}
+float Matrix3x3::get_i21() {return matrix[2][1];}
+float Matrix3x3::get_i22() {return matrix[2][2];}
+float Matrix3x3::get_i23() {return matrix[2][3];}
+float Matrix3x3::get_i31() {return matrix[3][1];}
+float Matrix3x3::get_i32() {return matrix[3][2];}
+float Matrix3x3::get_i33() {return matrix[3][3];}
 
 /// Matrix Addition
 Matrix3x3 Matrix3x3::operator+(const Matrix3x3& M)
 {
-    return Matrix3x3(i11+M.i11, i12+M.i12, i13+M.i13,
-                     i21+M.i21, i22+M.i22, i23+M.i23,
-                     i31+M.i31, i32+M.i32, i33+M.i33);
+    return Matrix3x3(matrix[1][1]+M.matrix[1][1], matrix[1][2]+M.matrix[1][2], matrix[1][3]+M.matrix[1][3],
+                     matrix[2][1]+M.matrix[2][1], matrix[2][2]+M.matrix[2][2], matrix[2][3]+M.matrix[2][3],
+                     matrix[3][1]+M.matrix[3][1], matrix[3][2]+M.matrix[3][2], matrix[3][3]+M.matrix[3][3]);
 }
+
 Matrix3x3 &Matrix3x3::operator+=(const Matrix3x3& M)
 {
-    i11+=M.i11;
-    i12+=M.i12;
-    i13+=M.i13;
-    i21+=M.i21;
-    i22+=M.i22;
-    i23+=M.i23;
-    i31+=M.i31;
-    i32+=M.i32;
-    i33+=M.i33;
+    matrix[1][1] += M.matrix[1][1];
+    matrix[1][2] += M.matrix[1][2];
+    matrix[1][3] += M.matrix[1][3];
+    matrix[2][1] += M.matrix[2][1];
+    matrix[2][2] += M.matrix[2][2];
+    matrix[2][3] += M.matrix[2][3];
+    matrix[3][1] += M.matrix[3][1];
+    matrix[3][2] += M.matrix[3][2];
+    matrix[3][3] += M.matrix[3][3];
     return *this;
 }
 
 /// Matrix Subtraction
 Matrix3x3 Matrix3x3::operator-(const Matrix3x3& M)
 {
-    return Matrix3x3(i11-M.i11, i12-M.i12, i13-M.i13,
-                     i21-M.i21, i22-M.i22, i23-M.i23,
-                     i31-M.i31, i32-M.i32, i33-M.i33);
+    return Matrix3x3(matrix[1][1]-M.matrix[1][1], matrix[1][2]-M.matrix[1][2], matrix[1][3]-M.matrix[1][3],
+                     matrix[2][1]-M.matrix[2][1], matrix[2][2]-M.matrix[2][2], matrix[2][3]-M.matrix[2][3],
+                     matrix[3][1]-M.matrix[3][1], matrix[3][2]-M.matrix[3][2], matrix[3][3]-M.matrix[3][3]);
 }
 
 Matrix3x3 &Matrix3x3::operator-=(const Matrix3x3& M)
 {
-    i11-=M.i11;
-    i12-=M.i12;
-    i13-=M.i13;
-    i21-=M.i21;
-    i22-=M.i22;
-    i23-=M.i23;
-    i31-=M.i31;
-    i32-=M.i32;
-    i33-=M.i33;
+    matrix[1][1] -= M.matrix[1][1];
+    matrix[1][2] -= M.matrix[1][2];
+    matrix[1][3] -= M.matrix[1][3];
+    matrix[2][1] -= M.matrix[2][1];
+    matrix[2][2] -= M.matrix[2][2];
+    matrix[2][3] -= M.matrix[2][3];
+    matrix[3][1] -= M.matrix[3][1];
+    matrix[3][2] -= M.matrix[3][2];
+    matrix[3][3] -= M.matrix[3][3];
     return *this;
 }
 
@@ -213,58 +225,51 @@ Matrix3x3 &Matrix3x3::operator-=(const Matrix3x3& M)
 /// Print Result in Matrix Format
 void Matrix3x3::printMatrix()
 {
-    cout<<"["<<i11<<","<<i12<<","<<i13<<" \n";
-    cout<<" "<<i21<<","<<i22<<","<<i23<<" \n";
-    cout<<" "<<i31<<","<<i32<<","<<i33<<"]\n";
+    cout<<"["<<matrix[1][1]<<","<<matrix[1][2]<<","<<matrix[1][3]<<" \n";
+    cout<<" "<<matrix[2][1]<<","<<matrix[2][2]<<","<<matrix[2][3]<<" \n";
+    cout<<" "<<matrix[3][1]<<","<<matrix[3][2]<<","<<matrix[3][3]<<"]\n";
 }
 
 //------------------------------------------------------------------------------
 
 // Test program to test Matrix3x3 class functionalities
+
+/*
+// A successful run displays the following:
+
+Matrix A =
+[1,2,3
+ 4,5,6
+ 7,8,9]
+
+Matrix B =
+[9,8,7
+ 6,5,4
+ 3,2,1]
+
+
+Matrix Addition A+B =
+[10,10,10
+ 10,10,10
+ 10,10,10]
+
+Matrix Subtraction A-B =
+[-8,-6,-4
+ -2,0,2
+ 4,6,8]
+*/
+
 int main()
 {
-    float i11, i12, i13, i21, i22, i23, i31, i32, i33;
+    Matrix3x3 A(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-    Matrix3x3 A=Matrix3x3(i11, i12, i13, i21, i22, i23, i31, i32, i33);
-
-    // Ask user to enter Coordinates of Matrix A
-    cout<<"Enter i11, i12, i13, i21, i22, i23, i31, i32, i33 Coordinates of Matrix A: ";
-    cin>>i11>>i12>>i13>>i21>>i22>>i23>>i31>>i32>>i33;
-
-    // Set user defined Coordinates of Matrix A
-    A.set_i11(i11);
-    A.set_i12(i12);
-    A.set_i13(i13);
-    A.set_i21(i21);
-    A.set_i22(i22);
-    A.set_i23(i23);
-    A.set_i31(i31);
-    A.set_i32(i32);
-    A.set_i33(i33);
+    Matrix3x3 B(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
     cout<<"\nMatrix A = \n";
     A.printMatrix();
 
-    // Initialize and ask user to enter Coordinates of Matrix B
-    cout<<"\nEnter i11, i12, i13, i21, i22, i23, i31, i32, i33 Coordinates of Matrix B: ";
-    cin>>i11>>i12>>i13>>i21>>i22>>i23>>i31>>i32>>i33;
-    Matrix3x3 B(i11, i12, i13, i21, i22, i23, i31, i32, i33);
-
-    // Set user defined Coordinates of Matrix B
-    B.set_i11(i11);
-    B.set_i12(i12);
-    B.set_i13(i13);
-    B.set_i21(i21);
-    B.set_i22(i22);
-    B.set_i23(i23);
-    B.set_i31(i31);
-    B.set_i32(i32);
-    B.set_i33(i33);
-
     cout<<"\nMatrix B = \n";
     B.printMatrix();
-
-    //------------------------------------------------------------------------------
 
     // Perform Matrix Addition
     Matrix3x3 add = A+B;
