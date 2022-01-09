@@ -7,8 +7,9 @@
 
 //Commented for the time being so they don't interfere with my tests   -no longer true
 #include "material.hpp"
-#include "vector.hpp"
+//#include "vector.hpp" - included via matrix
 #include "cell.hpp"
+#include "matrix.hpp"
 
 // includes - some could propaly go back to .cpp
 //#include <iostream> - included in material.hpp
