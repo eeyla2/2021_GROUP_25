@@ -1,7 +1,5 @@
 #include "cell.hpp"
 
-// ONLY AN ABSTRACT FOR CLARITY
-// this will be class material and i will inherit the characteristics to different types of material according to the indexID it has
 
 
 Cell::Cell() { }    //default cell constructor
@@ -64,7 +62,7 @@ Cell::Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d 
     this->p7 = cP7;
 }
 
-//accesor functions
+//accessor functions
 int Cell::get_cellIndex() const { return this->cellIndex; }     // an accessor/get function to access the data for Index in the private part of the Cell class
 char Cell::get_cellLetter() const { return this->cellLetter; }  // an accessor/get function to access the data for Letter in the private part of the Cell class
 Material Cell::get_cellMaterial() const { return theMaterial; } //get the material inside the cell class
@@ -83,14 +81,15 @@ double Cell::calculateVolume()
     return 1.23; // function must return something - even though inherited
 }
 
-// center of mass left empty because it is determined inside the cell that inherit the function
+// virtual center of mass function - correct calculate volume will be called depending on shape object (child class of cell)
+//it is called upon
 Vector3d Cell::centerOfMass()
 {
     Vector3d undefinedVector;
     return undefinedVector;
 }
 
-// center of mass left empty because it is determined inside the cell that inherit the function
+// weight is calcuated using density and volume
 double Cell::weight()
 {
     float mass = 0; // mass is declared
@@ -227,10 +226,10 @@ Vector3d Tetrahedron::centerOfMass()
     center.set_z(z); // set the z of the center
 
     return center; // return the center instance
-} //########## not 100% if its alright since can't be tested #########
+} 
 
-// hexahedron class declared and has its contents defined
 
+//incase its empty
 Pyramid::Pyramid()
 {
 }
@@ -251,6 +250,10 @@ Pyramid::Pyramid(int &pCellIndex, char &pCellLetter, Material &pTheMaterial, Vec
     this->p3 = pP3;
     this->p4 = pP4;
 }
+
+//destructor function for pyramid constructor
+Pyramid::~Pyramid() {}
+
 
 // constructor copies the contents of instance into the new instance for a Pyramid
 Pyramid::Pyramid(const Pyramid &instance)
@@ -318,7 +321,7 @@ const Pyramid &Pyramid::operator=(const Pyramid &instance)
     return (*this); // returns the address of the instance we are in
 }
 
-//######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
+//NOTE: this assumes that the base of the pyramid lies on the x and y axis(future possible upgrade for code)
 // definition of the volume of a pyramid
 double Pyramid::calculateVolume()
 {
@@ -386,11 +389,11 @@ double Pyramid::calculateVolume()
     double volume = (distanceBetweenBaseAndTip.get_y() * area) / 3;
 
     return volume;
-} // not sure if it's right might have to do take the height as the distance between the center of the base and the tip instead of a plane y coordinate
+} 
 
-//######################## NOTE: this assumes that the base of the pyramid lies on the x and y axis #################################
 
-// definitoin of a center of mass function
+
+// definition of a center of mass function
 Vector3d Pyramid::centerOfMass()
 {
     /*
@@ -475,9 +478,6 @@ Vector3d Pyramid::centerOfMass()
 
     
 }
-//######################### also no way of validating if this is working or not ###############################
-
-Pyramid::~Pyramid() {}
 
 Hexahedron::Hexahedron()
 {
@@ -535,6 +535,7 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
     // example if we want x to be x=x, then we are equating a variable to itself
     if (this == &instance)
         return (*this);
+
     //extract the x,y and z coordinates of every point from the parameter
     //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
 
@@ -600,8 +601,6 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
 // definition of the volume of a Hexahedron
 double Hexahedron::calculateVolume()
 {
-    // prev arguments: Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7
-
 
     // three implementations of a triple product have to be implemented then added
 
@@ -633,6 +632,7 @@ double Hexahedron::calculateVolume()
     Vector3d secondCrossProduct = secondCrossProduct.crossProduct(secondTriple.at(1), secondTriple.at(2));
     float secondDotProduct = secondTriple.at(0).dotProduct(secondCrossProduct);
 
+    //implementation of the third triple product
     // a vector is declared to store the three parts of the third triple product inside
 
     vector<Vector3d> thirdTriple;
@@ -647,20 +647,19 @@ double Hexahedron::calculateVolume()
     // calculate the volume by adding the three Dot multiplication products of the triple products and then
     // by dividing by 3 factorial which is 6
     double volume = (firstDotProduct + secondDotProduct + thirdDotProduct) / 6;
-    
-    //volume = 7.89; // test number
 
     // return the volume as a double
     return volume;
-} //######################### not 100% sure if its all right since its necessary that the vertices are in the right order #############
+} 
 
+
+//NOTE: this assumes that the base is in the XY axis when it could be in e.g YZ axis (future point to consider when improving code)
 // definition of a center of mass function
 Vector3d Hexahedron::centerOfMass()
 {
-     //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)]   or just that centrebase not defined?
     
-    // the center for the Y, X and Z
-    // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
+    // the center equation summation method for the Y and X coordinates
+    // has to be applied twice, once for the area of the base and once for use in the centroid equation
 
     
     //a vector of vertices is made for easier implementation
@@ -677,14 +676,11 @@ Vector3d Hexahedron::centerOfMass()
     points.push_back(this->p7);
 
 
-    cout << "p0 ";
-    p0.print();
     // store the coordinates of the center of the base inside the centerBase variable
     Vector3d centerBase;
 
     // variables needed for the calculations
 
-    //These neeed to be initalised, ive assumed zero\\##########################################################################
     double areaSummationBase=0;
     double summationXBase=0;
     double summationYBase=0;
@@ -693,7 +689,6 @@ Vector3d Hexahedron::centerOfMass()
     for (int i = 0; i < 3; ++i)
     {
         summationXBase += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
-        cout << "summationXBase: " << summationXBase << " ";
     }
 
     summationXBase += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
@@ -717,7 +712,6 @@ Vector3d Hexahedron::centerOfMass()
 
     // the area is then calculated by dividing the absolut value of the summation by 2
     double areaBase = areaSummationBase / 2;
-    cout << "area base: " << areaBase << " ";
 
     centerBase.set_x(float((1 / (6 * areaBase)) * summationXBase));
 
@@ -731,10 +725,10 @@ Vector3d Hexahedron::centerOfMass()
 
     centerBase.set_y((1 / (6 * areaBase)) * summationYBase); // equation to find the y coordinate of the
 
-    centerBase.set_z(float(0));
+    centerBase.set_z(float(0));//set value to z to zero for base
 
-    // the center for the Y, X and Z
-    // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
+    // the center equation summation method for the Y and X coordinates
+    // has to be applied twice, once for the area of the base and once for use in the centroid equation
 
     Vector3d centerTop;
 
@@ -769,8 +763,7 @@ Vector3d Hexahedron::centerOfMass()
 
     // the area is then calculated by dividing the absolut value of the summation by 2
     double areaTop = areaSummationTop / 2;
-    cout << "Area top: " << areaTop << " ";
-
+   
     centerTop.set_x((1 / (6 * areaTop)) * summationXTop);
 
     // for loop to go through vertices performing a summation calculation
@@ -781,28 +774,19 @@ Vector3d Hexahedron::centerOfMass()
 
     summationYTop += ((points[7].get_x()) * (points[4].get_y())) - ((points[4].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
 
-    centerTop.set_y(float((1 / (6 * areaTop)) * summationYTop)); // equation to find the y coordinate of the
+    centerTop.set_y(float((1 / (6 * areaTop)) * summationYTop)); // equation to find the y coordinate of the center of the top
 
-    // for loop to go through vertices performing a summation calculation
-    // for (int i = 4; i < 7; ++i)
-    {
-        // double summationYTop += (Ppoints[i].get_z() + Ppoints[i+1].get_z()) * ((Ppoints[i].get_x()) * (Ppoints[i + 1].get_y())) - ((Ppoints[i + 1].get_x()) * (Ppoints[i].get_y()));
-    }
-
-    // summationYTop += ((Ppoints[7].get_x()) * (Ppoints[4].get_y())) - ((Ppoints[4].get_x()) * (Ppoints[7].get_y())); // first vertex needs to be the last vertex too
-
-    // centerTop.y = (1/(6*Area))* summationYTop; //equation to find the y coordinate of the
-
-    //unitl actual centre of mass calcualtion figured out
-    //test vector to retun
-
+    /
+   //calculate sides as vectors
     Vector3d sideA = points[6] - points[5];
     Vector3d sideB = points[6] - points[7];
     Vector3d sideC = points[7] - points[4];
     Vector3d sideD = points[5] - points[4];
 
+//distance between side A and side C
    Vector3d distanceBetweenSidesAC = sideA - sideC;
 
+//distance between side B and D
    Vector3d distanceBetweenSidesBD = sideB - sideD;
 
 //################ Note: anything between brackets in the following explanation is merely a subset ####################################
@@ -823,19 +807,28 @@ if (0 != distanceBetweenSidesAC.get_z()){
 
     centerTop.set_z(z);//store the z into the vector3d
 
-    cout << "Centre top: ";
-    centerTop.print();
 
     Vector3d centerDistanceFromBase = (centerTop - centerBase)/float(2);// the distance between the center and the base
-    cout << "Centre distance from base: ";
-    centerDistanceFromBase.print();
+    
     Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
-     
-    //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?
+      
+      //error check for center of masses that don't work
+      if (1 == ( (isnan(centerOfMass.get_x())) || (isnan(centerOfMass.get_y())) || (isnan(centerOfMass.get_z())))  ) {
+
+        cout<<"Error in center of mass calculation !\n"<<endl;
+        
+        //set values
+          centerOfMass.set_x(0);
+          centerOfMass.set_y(0);
+          centerOfMass.set_z(0);
+
+      }
+
      return centerOfMass;
     
 }
 
+//if the difference between BD sides in terms of z coordinates is not zero then apply the following 
 else if (0 != distanceBetweenSidesBD.get_z()){
 
    float mYX = distanceBetweenSidesBD.get_y()/distanceBetweenSidesBD.get_z(); //slope where y depends on x 
@@ -860,6 +853,7 @@ else if (0 != distanceBetweenSidesBD.get_z()){
 
 }
 
+//this is applied when all the z coordinates of the points are the same
 else {
 
     centerTop.set_z(points[6].get_z());// set the value of the center of the top identical
@@ -869,18 +863,10 @@ else {
 
     Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
      
-    //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?
      return centerOfMass;
 
-
-
 }
-   /* float x_coord = 1.1;
-    float y_coord = 2.2;
-    float z_coord = 3.3;
-
-    Vector3d simulatedCentre = Vector3d(x_coord, y_coord, z_coord);
-    return simulatedCentre;*/
+   
 }
 
 // pyramid class declared and has its contents defined
