@@ -676,6 +676,9 @@ Vector3d Hexahedron::centerOfMass()
     points.push_back(this->p6);
     points.push_back(this->p7);
 
+
+    cout << "p0 ";
+    p0.print();
     // store the coordinates of the center of the base inside the centerBase variable
     Vector3d centerBase;
 
@@ -690,6 +693,7 @@ Vector3d Hexahedron::centerOfMass()
     for (int i = 0; i < 3; ++i)
     {
         summationXBase += (points[i].get_x() + points[i + 1].get_x()) * ((points[i].get_x()) * (points[i + 1].get_y())) - ((points[i + 1].get_x()) * (points[i].get_y()));
+        cout << "summationXBase: " << summationXBase << " ";
     }
 
     summationXBase += ((points[3].get_x()) * (points[0].get_y())) - ((points[0].get_x()) * (points[3].get_y())); // first vertex needs to be the last vertex too
@@ -713,8 +717,9 @@ Vector3d Hexahedron::centerOfMass()
 
     // the area is then calculated by dividing the absolut value of the summation by 2
     double areaBase = areaSummationBase / 2;
+    cout << "area base: " << areaBase << " ";
 
-    centerBase.set_x((1 / (6 * areaBase)) * summationXBase);
+    centerBase.set_x(float((1 / (6 * areaBase)) * summationXBase));
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 0; i < 3; ++i)
@@ -726,7 +731,7 @@ Vector3d Hexahedron::centerOfMass()
 
     centerBase.set_y((1 / (6 * areaBase)) * summationYBase); // equation to find the y coordinate of the
 
-    centerBase.set_z(0);
+    centerBase.set_z(float(0));
 
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
@@ -764,6 +769,7 @@ Vector3d Hexahedron::centerOfMass()
 
     // the area is then calculated by dividing the absolut value of the summation by 2
     double areaTop = areaSummationTop / 2;
+    cout << "Area top: " << areaTop << " ";
 
     centerTop.set_x((1 / (6 * areaTop)) * summationXTop);
 
@@ -775,7 +781,7 @@ Vector3d Hexahedron::centerOfMass()
 
     summationYTop += ((points[7].get_x()) * (points[4].get_y())) - ((points[4].get_x()) * (points[7].get_y())); // first vertex needs to be the last vertex too
 
-    centerTop.set_y((1 / (6 * areaTop)) * summationYTop); // equation to find the y coordinate of the
+    centerTop.set_y(float((1 / (6 * areaTop)) * summationYTop)); // equation to find the y coordinate of the
 
     // for loop to go through vertices performing a summation calculation
     // for (int i = 4; i < 7; ++i)
@@ -790,7 +796,7 @@ Vector3d Hexahedron::centerOfMass()
     //unitl actual centre of mass calcualtion figured out
     //test vector to retun
 
-     Vector3d sideA = points[6] - points[5];
+    Vector3d sideA = points[6] - points[5];
     Vector3d sideB = points[6] - points[7];
     Vector3d sideC = points[7] - points[4];
     Vector3d sideD = points[5] - points[4];
@@ -817,8 +823,12 @@ if (0 != distanceBetweenSidesAC.get_z()){
 
     centerTop.set_z(z);//store the z into the vector3d
 
-    Vector3d centerDistanceFromBase = (centerTop - centerBase)/2;// the distance between the center and the base
+    cout << "Centre top: ";
+    centerTop.print();
 
+    Vector3d centerDistanceFromBase = (centerTop - centerBase)/float(2);// the distance between the center and the base
+    cout << "Centre distance from base: ";
+    centerDistanceFromBase.print();
     Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
      
     //something is wrong with this calcualtion, maybe a divide by zero error, reuslt fro examplefile 1 Centre of H: [0.5,0.5,-nan(ind)] or just that centrebase not defined?

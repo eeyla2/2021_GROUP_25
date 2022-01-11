@@ -32,7 +32,7 @@ Vector3d::Vector3d(const Vector3d &V)
 Vector3d &Vector3d::operator=(const Vector3d &V)
 {
     if(this==&V) return(*this);
-    
+
     vectorID = V.vectorID;
     x = V.x;
     y = V.y;
@@ -55,7 +55,7 @@ float Vector3d::get_z() { return this->z; }
 /// Vector Addition
 Vector3d Vector3d::operator+(const Vector3d &V)
 {
-    return Vector3d(vectorID, x + V.x, y + V.y, z + V.z); //change to constructor without ID?
+    return Vector3d(x + V.x, y + V.y, z + V.z); 
 }
 
 Vector3d &Vector3d::operator+=(const Vector3d &V)
@@ -69,7 +69,7 @@ Vector3d &Vector3d::operator+=(const Vector3d &V)
 /// Vector Subtraction
 Vector3d Vector3d::operator-(const Vector3d &V)
 {
-    return Vector3d(vectorID, x - V.x, y - V.y, z - V.z);
+    return Vector3d(x - V.x, y - V.y, z - V.z);
 }
 
 Vector3d &Vector3d::operator-=(const Vector3d &V)

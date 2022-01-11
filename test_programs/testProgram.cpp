@@ -30,7 +30,7 @@ int main()
 	//Model test
 	cout << "\n\n-------------------Reading file & decalring objects-----------------\n";
 
-	string filePath = "../proprietary_files/ExampleModel3.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
 
 	Model myModel = Model(filePath);
 
