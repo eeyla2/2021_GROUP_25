@@ -3,11 +3,11 @@
 #include "vector.hpp"
 
 /// Constructors
-Vector3d::Vector3d(){}
+Vector3d::Vector3d() {}
 
-Vector3d::Vector3d(int &vectorID, float _x, float _y, float _z)
+Vector3d::Vector3d(int _vectorID, float _x, float _y, float _z)
 {
-    this->vectorID = vectorID;
+    vectorID = _vectorID;
     x = _x;
     y = _y;
     z = _z;
@@ -22,6 +22,7 @@ Vector3d::Vector3d(float _x, float _y, float _z) //constructor without ID - for 
 /// Copy Constructor
 Vector3d::Vector3d(const Vector3d &V)
 {
+    vectorID = V.vectorID;
     x = V.x;
     y = V.y;
     z = V.z;
@@ -30,96 +31,99 @@ Vector3d::Vector3d(const Vector3d &V)
 /// Assignment Operator
 Vector3d &Vector3d::operator=(const Vector3d &V)
 {
-    x=V.x;
-    y=V.y;
-    z=V.z;
+    if(this==&V) return(*this);
+    
+    vectorID = V.vectorID;
+    x = V.x;
+    y = V.y;
+    z = V.z;
     return *this;
 }
 
 /// Mutators
-void Vector3d::set_vectorID() {this->vectorID = vectorID; }
-void Vector3d::set_x(float _x) {x = _x;}
-void Vector3d::set_y(float _y) {y = _y;}
-void Vector3d::set_z(float _z) {z = _z;}
+void Vector3d::set_vectorID(int _vectorID) { vectorID = _vectorID; }
+void Vector3d::set_x(float _x) { x = _x; }
+void Vector3d::set_y(float _y) { y = _y; }
+void Vector3d::set_z(float _z) { z = _z; }
 
 /// Accessors
 int Vector3d::get_vectorID() { return this->vectorID; }
-float Vector3d::get_x() {return x;}
-float Vector3d::get_y() {return y;}
-float Vector3d::get_z() {return z;}
+float Vector3d::get_x() { return this->x; }
+float Vector3d::get_y() { return this->y; }
+float Vector3d::get_z() { return this->z; }
 
 /// Vector Addition
 Vector3d Vector3d::operator+(const Vector3d &V)
 {
-    return Vector3d(vectorID, x+V.x, y+V.y, z+V.z);     //change to constructor without ID?
+    return Vector3d(vectorID, x + V.x, y + V.y, z + V.z); //change to constructor without ID?
 }
 
 Vector3d &Vector3d::operator+=(const Vector3d &V)
 {
-    x+=V.x;
-    y+=V.y;
-    z+=V.z;
+    x += V.x;
+    y += V.y;
+    z += V.z;
     return *this;
 }
 
 /// Vector Subtraction
 Vector3d Vector3d::operator-(const Vector3d &V)
 {
-    return Vector3d(vectorID, x-V.x, y-V.y, z-V.z);
+    return Vector3d(vectorID, x - V.x, y - V.y, z - V.z);
 }
 
 Vector3d &Vector3d::operator-=(const Vector3d &V)
 {
-    x-=V.x;
-    y-=V.y;
-    z-=V.z;
+    x -= V.x;
+    y -= V.y;
+    z -= V.z;
     return *this;
 }
 
 //Vector Multiplication (multiplying vectors)
-Vector3d Vector3d::operator*(const Vector3d& V) //, float num
+Vector3d Vector3d::operator*(const Vector3d &V) //, float num
 {
     //return Vector3d(this->x*V.x, this->y*V.y, this->z*V.z);   //not necessary
-    return Vector3d(x*V.x, y*V.y, z*V.z);
+    return Vector3d(x * V.x, y * V.y, z * V.z);
 }
 
-Vector3d Vector3d::operator*(const float& f)    //for multiplying a vector by a constant
+Vector3d Vector3d::operator*(const float &f) //for multiplying a vector by a constant
 {
-    return Vector3d(x*f, y*f, z*f);
+    return Vector3d(x * f, y * f, z * f);
 }
 
 //Vector division
-Vector3d Vector3d::operator/(const Vector3d& V)
+Vector3d Vector3d::operator/(const Vector3d &V)
 {
-    return Vector3d(x/V.x, y/V.y, z/V.z);
+    return Vector3d(x / V.x, y / V.y, z / V.z);
 }
 
-Vector3d Vector3d::operator/(const float& f)
+Vector3d Vector3d::operator/(const float &f)
 {
-    return Vector3d(x/f, y/f, z/f);
+    return Vector3d(x / f, y / f, z / f);
 }
 
 /// Inner/Scalar/Dot Product
-float Vector3d::dotProduct(const Vector3d& V)
+float Vector3d::dotProduct(const Vector3d &V)
 {
-    return x*V.x + y*V.y + z*V.z;
+    return x * V.x + y * V.y + z * V.z;
 }
 
 /// Outer/Vector/Cross Product
-Vector3d Vector3d::crossProduct(const Vector3d& Va, const Vector3d& Vb)
+Vector3d Vector3d::crossProduct(const Vector3d &Va, const Vector3d &Vb)
 {
     //Vector3d resultCrossProduct=Vector3d(vectorID, resultCrossProduct.x, resultCrossProduct.y, resultCrossProduct.z);
     Vector3d resultCrossProduct;
-    resultCrossProduct.x = Va.y*Vb.z - Va.z*Vb.y;
-    resultCrossProduct.y = Va.z*Vb.x - Va.x*Vb.z;
-    resultCrossProduct.z = Va.x*Vb.y - Va.y*Vb.x;
+    resultCrossProduct.x = Va.y * Vb.z - Va.z * Vb.y;
+    resultCrossProduct.y = Va.z * Vb.x - Va.x * Vb.z;
+    resultCrossProduct.z = Va.x * Vb.y - Va.y * Vb.x;
     return resultCrossProduct;
 }
 
 /// Print Result in Vector Format
 void Vector3d::print()
 {
-    cout<<"["<<x<<","<<y<<","<<z<<"]\n";
+    cout << "[" << x << "," << y << "," << z << "]\n";
 }
 
 //------------------------------------------------------------------------------
@@ -200,4 +204,3 @@ int main()
 
 }
 */
-

@@ -1,4 +1,4 @@
-//Matrix.cpp - Best
+//Matrix.cpp - Best & Daniel
 
 //Some comments / thoughts
 

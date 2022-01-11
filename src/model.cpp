@@ -26,7 +26,6 @@ using namespace std;
 //##################################################
 //actual classes will be defined in header files but doing it here for testing purposes
 
-
 Model::Model() {}
 
 //model constructor - reads file and declares objects
@@ -50,8 +49,8 @@ Model::Model(string &filePath)
 Model::~Model() {} //destructor - TODO: freeing memory declared
 
 //Accessor functions
-vector<Material> Model::get_listOfMaterials() { return this->listOfMaterials; }
-vector<Vector3d> Model::get_listOfVectors() { return this->listOfVectors; }
+vector<Material> Model::get_listOfMaterials() { return listOfMaterials; } 
+vector<Vector3d> Model::get_listOfVectors() { return listOfVectors; }
 vector<shared_ptr<Cell>> Model::get_listOfCells() { return this->listOfCells; }
 //vector<Cell> Model::get_listOfCells() { return this->listOfCells; }
 
@@ -233,7 +232,7 @@ int Model::declareVectors(string &filePath)
           else
           {
             cout << "We have: " << lineLetter << " " << vectorID << " "
-                                << x  << " " << y << " " << z << "\n";
+                 << x << " " << y << " " << z << "\n";
             //call the constructor for the vector class
             listOfVectors.at(i) = Vector3d(vectorID, x, y, z);
           }
@@ -360,9 +359,9 @@ int Model::declareCells(string &filePath)
                 cout << "We have: " << cellIndex << " " << cellLetter << " " << materialIndex << " "
                      << vectorIndexP0 << " " << vectorIndexP1 << " " << vectorIndexP2 << " " << vectorIndexP3 << " "
                      << vectorIndexP4 << " " << vectorIndexP5 << " " << vectorIndexP6 << " " << vectorIndexP7 << "\n";
-                
+
                 auto it = listOfCells.begin() + i;
-                
+
                 listOfCells.insert(it, shared_ptr<Cell>(new Hexahedron(cellIndex, cellLetter,
                                                                        listOfMaterials.at(materialIndex),
                                                                        listOfVectors.at(vectorIndexP0), listOfVectors.at(vectorIndexP1),

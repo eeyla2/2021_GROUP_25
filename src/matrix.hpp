@@ -1,4 +1,4 @@
-//Matrix header - Best
+//Matrix header - Best & Daniel
 #include <iostream>
 #include <math.h>
 #include "vector.hpp"

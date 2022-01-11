@@ -15,7 +15,7 @@ public:
 
    /// Constructor
    Vector3d();
-   Vector3d(int &vectorID, float _x, float _y, float _z);
+   Vector3d(int _vectorID, float _x, float _y, float _z);
    Vector3d(float _x, float _y, float _z);    //constructor for when doing maths and not interested in ID
 
    /// Copy Constructor
@@ -25,7 +25,7 @@ public:
    Vector3d& operator=(const Vector3d& V);
 
    /// Mutators
-   void set_vectorID();
+   void set_vectorID(int _vectorID);
    void set_x(float _x);
    void set_y(float _y);
    void set_z(float _z);

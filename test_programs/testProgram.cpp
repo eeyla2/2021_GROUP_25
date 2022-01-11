@@ -30,15 +30,18 @@ int main()
 	//Model test
 	cout << "\n\n-------------------Reading file & decalring objects-----------------\n";
 
-	string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../proprietary_files/ExampleModel3.mod"; //  ExampleModel1.mod  //  testFile.mod
 
 	Model myModel = Model(filePath);
 
 	cout << "\n-------------------Testing Functionality-----------------\n";
 
 	//------------------------------------------
-	string nameOfMaterial1 = myModel.get_listOfMaterials().at(0).get_materialName();
-	cout << "\n\nName of material 0: " << nameOfMaterial1 << "\n\n";
+	string nameOfMaterial0 = myModel.get_listOfMaterials().at(0).get_materialName();
+	cout << "\n\nName of material 0: " << nameOfMaterial0 << "\n\n";
+
+	// string colourOfMaterial0 = myModel.get_listOfMaterials().at(0).get_materialColour();
+	// cout << "\n\nColour of material 0: " << colourOfMaterial0 << "\n\n";
 
 	int numberOfMaterials = myModel.get_numMaterials();
 	cout << "Number of materials: " << numberOfMaterials << "\n\n";
@@ -47,6 +50,7 @@ int main()
 
 	float vector2_xValue = myModel.get_listOfVectors().at(2).get_x();
 	cout << "The vector at index 2 has x value: " << vector2_xValue << "\n";
+
 	//----------------------------------
 
 	char cell0_letter = myModel.get_listOfCells().at(0)->get_cellLetter();

@@ -10,15 +10,9 @@ It should be run within the build directory (which you will create locally),
 e.g.  C:\Users\Daniel\Git\2021_GROUP_25\build>cmake_gen_msvc.bat ..
 
 Now msbuild can be used, e.g. msbuild MyProject.sln  (The project name is specified in CMakeLists.txt)
-Now you can navigate to where the executable is: 
+Now you can navigate to where the executable is: (cd test_programs\Debug) and then execute
 e.g. C:\Users\Daniel\Git\2021_GROUP_25\build\test_programs\Debug>test_programs.exe
 
 
-At time of writing, expected output:
-
-Vector ID: 0
-Vector y coord: 2
-Material density: 10.23
-Material name: Cheese
-
-(This will likely have changed)
+To view saved file, go back up one directory from the executable (cd ..\proprietary_files) then open file
+C:\Users\Daniel\Git\2021_GROUP_25\build\test_programs\proprietary_files>saveFile.mod
