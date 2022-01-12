@@ -13,6 +13,17 @@ Now msbuild can be used, e.g. msbuild MyProject.sln  (The project name is specif
 Now you can navigate to where the executable is: (cd test_programs\Debug) and then execute
 e.g. C:\Users\Daniel\Git\2021_GROUP_25\build\test_programs\Debug>test_programs.exe
 
-
 To view saved file, go back up one directory from the executable (cd ..\proprietary_files) then open file
 C:\Users\Daniel\Git\2021_GROUP_25\build\test_programs\proprietary_files>saveFile.mod
+
+---------------------------------------------------------------------------------------------
+What the test program shows:
+
+Reading data from file, allocating materials, vectors & cells with appropriate data & storing.
+Showing that this stored data can be retrieved and the relevant operations & functions performed.
+e.g. volume, centre & weight of shapes (Note: Assumed weight = mass * 9.81)
+Save the model data to a new file in the same format as original.
+
+Capabilites of the matrix class.
+Creating various standard matricies, performing rotations of vectors, matrix multiplication etc.
+Determinant, inverse & transpose of matrix
