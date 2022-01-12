@@ -21,9 +21,9 @@ What the test program shows:
 
 Reading data from file, allocating materials, vectors & cells with appropriate data & storing.
 Showing that this stored data can be retrieved and the relevant operations & functions performed.
-e.g. volume, centre & weight of shapes (Note: Assumed weight = mass * 9.81)
+e.g. volume, centre & weight of shapes (Note: Assumed weight = mass * 9.81).
 Save the model data to a new file in the same format as original.
 
 Capabilites of the matrix class.
-Creating various standard matricies, performing rotations of vectors, matrix multiplication etc.
-Determinant, inverse & transpose of matrix
+Creating various standard matricies, performing rotations of vectors, matrix multiplication etc..
+Determinant, inverse & transpose of matrix.
