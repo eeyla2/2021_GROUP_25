@@ -1,18 +1,5 @@
 //Matrix.cpp - Best & Daniel
 
-//Some comments / thoughts
-
-// You will want constructors for different standard matricies
-// some examples are where diagonals are 1, rest 0, (gets used in some operations)
-// all zeros etc.
-
-// How do we want to store data in matrix, array, std::vector (be careful to avoid confusion with Vector3d)
-
-/// Objectives:
-// Class Matrix3x3 to store 3x3 matrix data
-// Range of Constructos to initialize different standard matrix types
-// Perform Matrix Operations
-// Ability to Initialize/Set a rotation matrix
 
 #include <iostream>
 using namespace std;
@@ -26,14 +13,6 @@ Matrix3x3::Matrix3x3(float _i00, float _i01, float _i02,
                      float _i10, float _i11, float _i12,
                      float _i20, float _i21, float _i22)
 {
-    /*
-    float storageMatrix[3][3] = { {_i00, _i01, _i02},
-                            {_i10, _i11, _i12},
-                            {_i20, _i21, _i22} };
-
-    matrix = storageMatrix;
-    */
-
     matrix[0][0] = _i00;
     matrix[0][1] = _i01;
     matrix[0][2] = _i02;
@@ -151,7 +130,6 @@ void Matrix3x3::set_i21(float _i21) { matrix[2][1] = _i21; }
 void Matrix3x3::set_i22(float _i22) { matrix[2][2] = _i22; }
 
 /// Accessors
-
 float Matrix3x3::get_i00() { return matrix[0][0]; }
 float Matrix3x3::get_i01() { return matrix[0][1]; }
 float Matrix3x3::get_i02() { return matrix[0][2]; }
@@ -165,7 +143,6 @@ float Matrix3x3::get_i22() { return matrix[2][2]; }
 /// Matrix Addition
 Matrix3x3 Matrix3x3::operator+(const Matrix3x3 &M)
 {
-
     return Matrix3x3(matrix[0][0] + M.matrix[0][0], matrix[0][1] + M.matrix[0][1], matrix[0][2] + M.matrix[0][2],
                      matrix[1][0] + M.matrix[1][0], matrix[1][1] + M.matrix[1][1], matrix[1][2] + M.matrix[1][2],
                      matrix[2][0] + M.matrix[2][0], matrix[2][1] + M.matrix[2][1], matrix[2][2] + M.matrix[2][2]);
@@ -283,7 +260,6 @@ Matrix3x3 Matrix3x3::inverse()
     else
     {
         //not the most efficent way of doing this
-
         inverseMatrix.matrix[0][0] = matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1];
         inverseMatrix.matrix[0][1] = matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0];
         inverseMatrix.matrix[0][2] = matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0];
@@ -306,5 +282,5 @@ void Matrix3x3::printMatrix()
     cout << " " << matrix[2][0] << "," << matrix[2][1] << "," << matrix[2][2] << "]\n";
 }
 
-Matrix3x3::~Matrix3x3() {}
-//------------------------------------------------------------------------------
+Matrix3x3::~Matrix3x3() {}  //destructor
+

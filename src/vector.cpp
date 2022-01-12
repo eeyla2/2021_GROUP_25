@@ -19,8 +19,9 @@ Vector3d::Vector3d(float _x, float _y, float _z) //constructor without ID - for 
     y = _y;
     z = _z;
 }
-/// Copy Constructor
-Vector3d::Vector3d(const Vector3d &V)
+
+// Copy Constructor
+Vector3d::Vector3d(const Vector3d &V) 
 {
     vectorID = V.vectorID;
     x = V.x;
@@ -83,7 +84,6 @@ Vector3d &Vector3d::operator-=(const Vector3d &V)
 //Vector Multiplication (multiplying vectors)
 Vector3d Vector3d::operator*(const Vector3d &V) //, float num
 {
-    //return Vector3d(this->x*V.x, this->y*V.y, this->z*V.z);   //not necessary
     return Vector3d(x * V.x, y * V.y, z * V.z);
 }
 
@@ -112,7 +112,6 @@ float Vector3d::dotProduct(const Vector3d &V)
 /// Outer/Vector/Cross Product
 Vector3d Vector3d::crossProduct(const Vector3d &Va, const Vector3d &Vb)
 {
-    //Vector3d resultCrossProduct=Vector3d(vectorID, resultCrossProduct.x, resultCrossProduct.y, resultCrossProduct.z);
     Vector3d resultCrossProduct;
     resultCrossProduct.x = Va.y * Vb.z - Va.z * Vb.y;
     resultCrossProduct.y = Va.z * Vb.x - Va.x * Vb.z;

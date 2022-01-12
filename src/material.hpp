@@ -5,7 +5,7 @@
 
 //Class definition, class member functions in Material.cpp
 #include <iostream>
-#include <string>
+#include <string> 
 using namespace std;
 
 
@@ -21,7 +21,7 @@ public:
     string get_materialName();
     string get_materialColour();
 
-    void set_materialIndex(int index); //not sure how sensible set functions are - data specified in file
+    void set_materialIndex(int index);
     void set_materialDensity(float density);
     void set_materialColour(string colour);
     void set_materialName(string name);

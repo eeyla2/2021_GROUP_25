@@ -1,9 +1,7 @@
 //Vector header - Best
-
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-// Vector3d class definition and member functions in vector.cpp
 #include <iostream>
 using namespace std;
 

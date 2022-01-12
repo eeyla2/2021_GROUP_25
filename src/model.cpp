@@ -17,14 +17,10 @@ computing the centre of the model - weighted average of the indiviudal centres?
 
 */
 
-//moved includes to .hpp - some could probably come back here to prevent unnecessary linking
-
 #include "model.hpp"
 
 using namespace std;
 
-//##################################################
-//actual classes will be defined in header files but doing it here for testing purposes
 
 Model::Model() {}
 

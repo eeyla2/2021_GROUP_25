@@ -1,8 +1,5 @@
-// Test executable for Model / testing building with Cmake - Daniel
+// Test executable - Daniel
 #include "../src/model.hpp"
-
-//This was a test program used with only the vector class in model.cpp
-//More to test how things would fit together
 
 int main()
 {
@@ -27,10 +24,10 @@ int main()
 	*/
 
 	//--------------------------------------------------
-	//Model test
+	
 	cout << "\n\n-------------------Reading file & decalring objects-----------------\n";
 
-	string filePath = "../proprietary_files/ExampleModel3.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
 
 	Model myModel = Model(filePath);
 
@@ -63,15 +60,23 @@ int main()
 	cout << "Cell 0\n";
 	double volH = myModel.get_listOfCells().at(0)->calculateVolume();
 	cout << "\tVolume of " << cell0_letter << ": " << volH << "\n";
+	
+	double weightH = myModel.get_listOfCells().at(0)->weight();
+	cout << "\tWeight of " << cell0_letter << ": " << weightH << "\n";
 
 	Vector3d centreH = myModel.get_listOfCells().at(0)->centerOfMass();
 	cout << "\tCentre of " << cell0_letter << ": ";
 	centreH.print();
 
+
+
 	//Tetrahedron Test
 	cout << "Cell 1\n";
 	double volT = myModel.get_listOfCells().at(1)->calculateVolume();
 	cout << "\tVolume of " << cell1_letter << ": " << volT << "\n";
+
+	double weightT = myModel.get_listOfCells().at(1)->weight();
+	cout << "\tWeight of " << cell1_letter << ": " << weightT << "\n";
 
 	Vector3d centreT = myModel.get_listOfCells().at(1)->centerOfMass();
 	cout << "\tCentre of " << cell1_letter << ": ";

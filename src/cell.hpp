@@ -2,20 +2,18 @@
 #ifndef CELL_HPP
 #define CELL_HPP
 
-#include <Vector>
+#include <vector>
 
 #include "material.hpp"
 #include "vector.hpp"
 
 
-
-//cell class
 class Cell
 {
 public:
-    // Cell constructor for different Cell variants
+    
     Cell();
-
+    // Cell constructor for different Cell variants
     Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3); // tetrahedron
 
     Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4); // pyramid
@@ -42,7 +40,7 @@ public:
     // get the material inside the cell class
     Material get_cellMaterial() const;
 
-    // virtual function allows the correct version of volume and center of massto be called for each shape
+    // virtual function allows the correct version of volume and center of mass to be called for each shape
     virtual double calculateVolume();
     virtual Vector3d centerOfMass();
 
@@ -50,12 +48,11 @@ public:
     double weight();
 
 protected:
-    int cellIndex;                           // the cell Index
-    char cellLetter;                         // the cell letter
-    Material theMaterial;                    // the material
+    int cellIndex;                           
+    char cellLetter;                         
+    Material theMaterial;                    
     Vector3d p0, p1, p2, p3, p4, p5, p6, p7; // all possible points that could be used in a shape
 
-    // the weight function that is currently in the Cell classes will actually be inherited
 };
 
 class Tetrahedron : public Cell
@@ -66,19 +63,14 @@ public:
     Tetrahedron(int &tCellIndex, char &tCellLetter, Material &tTheMaterial, Vector3d &tP0, Vector3d &tP1, Vector3d &tP2, Vector3d &tP3); // constructor for tetrahedron vectors is called
     ~Tetrahedron();                                                                                                                      // destructor for tetrahedron vector constructor called
 
-    Tetrahedron(const Tetrahedron &instance); // copying constructor applied (Note: this is the same function
-    // as the normal constructor but with an instance argument where a whole instance is supplied)
+    Tetrahedron(const Tetrahedron &instance); // copying constructor 
 
     const Tetrahedron &operator=(const Tetrahedron &instance); // assignment operator for Tetrahedron
-
-    // operators for subtraction, addition, dotmulitplication, cross multiplication
-    // all have to be applied here
 
     double calculateVolume(); // volume of a tetrahedron
 
     Vector3d centerOfMass(); //center of mass of a tetrahedron
 
-    // private variables and functions of the tetrahedron class
 private:
     int cellIndex;
     char cellLetter;
@@ -100,8 +92,6 @@ public:
 
     const Pyramid &operator=(const Pyramid &instance); // assignment operator for Pyramid
 
-    // operators for subtraction, addition, dotmulitplication, cross multiplication
-    // all have to be applied here
     double calculateVolume(); // volume of a pyramid
 
     Vector3d centerOfMass(); // center of mass of a pyramid
@@ -111,8 +101,6 @@ private:
     char cellLetter;
     Material theMaterial;
     Vector3d p0, p1, p2, p3, p4;
-
-
 };
 
 class Hexahedron : public Cell
@@ -127,13 +115,9 @@ public:
     Hexahedron(const Hexahedron &instance); // copying constructor applied
 
     const Hexahedron &operator=(const Hexahedron &instance); // assignment operator for Pyramid
-
-    // operators for subtraction, addition, dotmulitplication, cross multiplication
-    // all have to be applied here
     
-    //prev version with arguments    double calculateVolume(Vector3d &p0, Vector3d &p1, Vector3d &p2, Vector3d &p3, Vector3d &p4, Vector3d &p5, Vector3d &p6, Vector3d &p7); // volume of a Hexahedron
     double calculateVolume();
-    Vector3d centerOfMass(); // center of mass of a hexahedron  //also prev with arguments
+    Vector3d centerOfMass(); // center of mass of a hexahedron
 
 private:
     int cellIndex;
@@ -142,6 +126,5 @@ private:
     Vector3d p0, p1, p2, p3, p4, p5, p6, p7;
 
 };
-
 
 #endif

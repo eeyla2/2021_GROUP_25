@@ -3,7 +3,7 @@
 #include <math.h>
 #include "vector.hpp"
 
-//Trig functions require arguments in radians
+//Reminder: Trig functions require arguments in radians
 
 class Matrix3x3
 {
@@ -18,7 +18,8 @@ public:
     /* letter = ' ' - all zeros
               = 'i' - identity
               = 'x' - rotate about x by theta
-              = 'y', 'z' as above
+              = 'y' - rotate about y by theta
+              = 'z' - rotate about z by theta
     */
     Matrix3x3(char letter, float theta);
 
