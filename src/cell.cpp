@@ -63,7 +63,7 @@ Vector3d Cell::get_cellp6() const { return p6; }
 Vector3d Cell::get_cellp7() const { return p7; }
 
 // volume left empty because it is determined inside the cell that inherit the function
-double Cell::calculateVolume()
+float Cell::calculateVolume()
 {
     return 0.; // function must return something - even though inherited
 }
@@ -75,11 +75,11 @@ Vector3d Cell::centerOfMass()
     return undefinedVector;
 }
 
-double Cell::weight() // weight is calcuated using density and volume
+float Cell::weight() // weight is calcuated using density and volume
 {
     float mass = 0;                                               // mass is declared
     mass = calculateVolume() * theMaterial.get_materialDensity(); // mass is found by multiplying the volume and the density
-    double weight = mass * 9.81;                                  // the weight is found by multiplying the mass and the gravity of earth
+    float weight = mass * float(9.81);                                  // the weight is found by multiplying the mass and the gravity of earth
     return weight;
 }
 
@@ -127,10 +127,10 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
         return (*this);
 
     //extract the x,y and z coordinates of every point from the parameter
-    //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
-    double x = instance.get_cellp0().get_x();
-    double y = instance.get_cellp0().get_y();
-    double z = instance.get_cellp0().get_z();
+    //and store them inside a float each then appoint the floats to the x,y and z points of the new instance
+    float x = instance.get_cellp0().get_x();
+    float y = instance.get_cellp0().get_y();
+    float z = instance.get_cellp0().get_z();
     p0.set_x(x);
     p0.set_y(y);
     p0.set_z(z);
@@ -159,7 +159,7 @@ const Tetrahedron &Tetrahedron::operator=(const Tetrahedron &instance)
     return (*this); // returns the address of the instance we are in
 }
 
-double Tetrahedron::calculateVolume()
+float Tetrahedron::calculateVolume()
 {
     // the edges coming out of the same vector are calcualted(still abstract)
     Vector3d a = this->p0 - this->p1; // first edge is calculated and given the name 'a' in accordance to the equation v=(1/3!)|a.(bxc| which will be used later
@@ -175,7 +175,7 @@ double Tetrahedron::calculateVolume()
 
     // calculate the volume by dividing the absolut value of the dot multiplication result
     // by dividing by 3 factorial which is 6
-    double volume = dotProductResult / 6;
+    float volume = dotProductResult / 6;
     return volume;
 }
 
@@ -185,9 +185,9 @@ Vector3d Tetrahedron::centerOfMass()
 
     Vector3d center; // create a vector instance to store the x, y and z of the center in
 
-    double x = (this->p0.get_x() + this->p1.get_x() + this->p2.get_x() + this->p3.get_x()) / 4;
-    double y = (this->p0.get_y() + this->p1.get_y() + this->p2.get_y() + this->p3.get_y()) / 4;
-    double z = (this->p0.get_z() + this->p1.get_z() + this->p2.get_z() + this->p3.get_z()) / 4;
+    float x = (this->p0.get_x() + this->p1.get_x() + this->p2.get_x() + this->p3.get_x()) / 4;
+    float y = (this->p0.get_y() + this->p1.get_y() + this->p2.get_y() + this->p3.get_y()) / 4;
+    float z = (this->p0.get_z() + this->p1.get_z() + this->p2.get_z() + this->p3.get_z()) / 4;
     center.set_x(x); // set the x of the center
 
     center.set_y(y); // set the y of the center
@@ -243,10 +243,10 @@ const Pyramid &Pyramid::operator=(const Pyramid &instance)
         return (*this);
 
     //extract the x,y and z coordinates of every point from the parameter
-    //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
-    double x = instance.get_cellp0().get_x();
-    double y = instance.get_cellp0().get_y();
-    double z = instance.get_cellp0().get_z();
+    //and store them inside a float each then appoint the floats to the x,y and z points of the new instance
+    float x = instance.get_cellp0().get_x();
+    float y = instance.get_cellp0().get_y();
+    float z = instance.get_cellp0().get_z();
     p0.set_x(x);
     p0.set_y(y);
     p0.set_z(z);
@@ -283,7 +283,7 @@ const Pyramid &Pyramid::operator=(const Pyramid &instance)
 }
 
 //NOTE: this assumes that the base of the pyramid lies on the x and y axis(future possible upgrade for code)
-double Pyramid::calculateVolume()
+float Pyramid::calculateVolume()
 {
 
     // the base's area has to be calculated which is 2D
@@ -299,9 +299,9 @@ double Pyramid::calculateVolume()
 
     Vector3d center; //vector made to store the x, y and z coordinates of the center of mass
 
-    double summation; // variables needed for the calculations
-    double summationX;
-    double summationY;
+    float summation=0; // variables needed for the calculations
+    float summationX=0;
+    float summationY=0;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 0; i < 3; ++i)
@@ -318,7 +318,7 @@ double Pyramid::calculateVolume()
     }
 
     // the area is then calculate by dividing the absolut value of the summation by 2
-    double area = summation / 2;
+    float area = summation / 2;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 0; i < 3; ++i)
@@ -340,7 +340,7 @@ double Pyramid::calculateVolume()
     center.set_y((1 / (6 * area)) * summationY);                                                             // equation to find the y coordinate of the centriod of the base
 
     // to calculate the volume (assumes that point number 5 is the top of the pyramid)
-    double volume = (distanceBetweenBaseAndTip.get_y() * area) / 3;
+    float volume = (distanceBetweenBaseAndTip.get_y() * area) / 3;
 
     return volume;
 }
@@ -363,9 +363,9 @@ Vector3d Pyramid::centerOfMass()
     Vector3d centerBase;
     Vector3d centerDistanceFromBase;
     // variables needed for the calculations
-    double summationX;
-    double summationY;
-    double areaSummation;
+    float summationX=0;
+    float summationY=0;
+    float areaSummation=0;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 0; i < 4; ++i)
@@ -393,7 +393,7 @@ Vector3d Pyramid::centerOfMass()
     }
 
     // the area is then calculated by dividing the absolut value of the summation by 2
-    double area = areaSummation / 2;
+    float area = areaSummation / 2;
 
     center.set_x((1 / (6 * area)) * summationX);
 
@@ -468,10 +468,10 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
         return (*this);
 
     //extract the x,y and z coordinates of every point from the parameter
-    //and store them inside a double each then appoint the doubles to the x,y and z points of the new instance
-    double x = instance.get_cellp0().get_x();
-    double y = instance.get_cellp0().get_y();
-    double z = instance.get_cellp0().get_z();
+    //and store them inside a float each then appoint the floats to the x,y and z points of the new instance
+    float x = instance.get_cellp0().get_x();
+    float y = instance.get_cellp0().get_y();
+    float z = instance.get_cellp0().get_z();
     p0.set_x(x);
     p0.set_y(y);
     p0.set_z(z);
@@ -529,7 +529,7 @@ const Hexahedron &Hexahedron::operator=(const Hexahedron &instance)
 }
 
 // definition of the volume of a Hexahedron
-double Hexahedron::calculateVolume()
+float Hexahedron::calculateVolume()
 {
 
     // three implementations of a triple product have to be implemented then added
@@ -569,7 +569,7 @@ double Hexahedron::calculateVolume()
 
     // calculate the volume by adding the three Dot multiplication products of the triple products and then
     // by dividing by 3 factorial which is 6
-    double volume = (firstDotProduct + secondDotProduct + thirdDotProduct) / 6;
+    float volume = (firstDotProduct + secondDotProduct + thirdDotProduct) / 6;
 
     return volume;
 }
@@ -598,9 +598,9 @@ Vector3d Hexahedron::centerOfMass()
 
     // variables needed for the calculations
 
-    double areaSummationBase = 0;
-    double summationXBase = 0;
-    double summationYBase = 0;
+    float areaSummationBase = 0;
+    float summationXBase = 0;
+    float summationYBase = 0;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 0; i < 3; ++i)
@@ -627,7 +627,7 @@ Vector3d Hexahedron::centerOfMass()
     }
 
     // the area is then calculated by dividing the absolut value of the summation by 2
-    double areaBase = areaSummationBase / 2;
+    float areaBase = areaSummationBase / 2;
 
     centerBase.set_x(float((1 / (6 * areaBase)) * summationXBase));
 
@@ -648,9 +648,9 @@ Vector3d Hexahedron::centerOfMass()
 
     Vector3d centerTop;
 
-    double areaSummationTop = 0;
-    double summationXTop = 0;
-    double summationYTop = 0;
+    float areaSummationTop = 0;
+    float summationXTop = 0;
+    float summationYTop = 0;
 
     // for loop to go through vertices performing a summation calculation
     for (int i = 4; i < 7; ++i)
@@ -678,7 +678,7 @@ Vector3d Hexahedron::centerOfMass()
     }
 
     // the area is then calculated by dividing the absolut value of the summation by 2
-    double areaTop = areaSummationTop / 2;
+    float areaTop = areaSummationTop / 2;
 
     centerTop.set_x((1 / (6 * areaTop)) * summationXTop);
 

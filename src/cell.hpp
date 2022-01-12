@@ -41,11 +41,11 @@ public:
     Material get_cellMaterial() const;
 
     // virtual function allows the correct version of volume and center of mass to be called for each shape
-    virtual double calculateVolume();
+    virtual float calculateVolume();
     virtual Vector3d centerOfMass();
 
     // weight of the cell calculated
-    double weight();
+    float weight();
 
 protected:
     int cellIndex;                           
@@ -67,7 +67,7 @@ public:
 
     const Tetrahedron &operator=(const Tetrahedron &instance); // assignment operator for Tetrahedron
 
-    double calculateVolume(); // volume of a tetrahedron
+    float calculateVolume(); // volume of a tetrahedron
 
     Vector3d centerOfMass(); //center of mass of a tetrahedron
 
@@ -92,7 +92,7 @@ public:
 
     const Pyramid &operator=(const Pyramid &instance); // assignment operator for Pyramid
 
-    double calculateVolume(); // volume of a pyramid
+    float calculateVolume(); // volume of a pyramid
 
     Vector3d centerOfMass(); // center of mass of a pyramid
     
@@ -116,7 +116,7 @@ public:
 
     const Hexahedron &operator=(const Hexahedron &instance); // assignment operator for Pyramid
     
-    double calculateVolume();
+    float calculateVolume();
     Vector3d centerOfMass(); // center of mass of a hexahedron
 
 private:
