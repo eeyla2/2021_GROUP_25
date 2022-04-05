@@ -1,0 +1,96 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include <QMainWindow>
+
+#include <vtkSmartPointer.h>
+#include <vtkCubeSource.h>
+#include <vtkActor.h>
+#include <vtkProperty.h>
+#include <vtkCamera.h>
+#include <vtkPolyData.h>
+#include <vtkDataSetMapper.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
+#include <vtkGenericOpenGLRenderWindow.h>
+#include "QDebug.h"
+#include <QColorDialog>
+#include <QColor>
+#include <vtkSTLReader.h>
+#include <vtkCompositeDataPipeline.h>
+
+// Clip Filter
+#include <vtkPlane.h>
+#include <vtkClipDataSet.h>
+
+// Shrink Filter
+#include <vtkShrinkFilter.h>
+
+// Pyramid
+#include <vtkCellArray.h>
+#include <vtkPoints.h>
+#include <vtkPyramid.h>
+#include <vtkUnstructuredGrid.h>
+
+#include <QFileDialog>
+#include <QFile>
+
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget *parent = 0);
+
+
+	// Create a mapper that will hold the model's geometry in a format suitable for rendering
+	vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
+
+	// Create an actor that is used to set the cube's properties for rendering and place it in the window
+	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+
+    // Now need to create a VTK render window and link it to the QtVTK widget
+	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
+
+///	ui->qvtkWidget->SetRenderWindow( renderWindow );
+
+    // Create a mapper that will hold the cube's geometry in a format suitable for rendering
+//	vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
+
+//	actor->SetMapper(mapper);
+//	actor->GetProperty()->EdgeVisibilityOn();
+
+//	// Add the actor to the scene
+//	renderer->AddActor(actor);
+
+//	renderer->ResetCamera();
+//	renderer->GetActiveCamera()->Azimuth(30);
+//	renderer->GetActiveCamera()->Elevation(30);
+//	renderer->ResetCameraClippingRange();
+//	ui->qvtkWidget->GetRenderWindow()->Render(); // Load Model Instantly
+//	renderWindow->Render();
+
+    ~MainWindow();
+
+public slots:
+    void handleResetModelView();
+    void handleRenderCube();
+    void handleRenderPyramid();
+    void handleChangeModelColor();
+    void handleChangeBackgroundColor();
+    void on_clipFilter_clicked();
+    void on_shrinkFilter_clicked();
+    void on_actionFileOpen_triggered();
+
+private:
+    Ui::MainWindow *ui;
+};
+
+#endif // MAINWINDOW_H
