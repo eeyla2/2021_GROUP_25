@@ -4,10 +4,10 @@
 #define MODEL_HPP
 
 /** @file
-* This file contains the declarations of all exported functions.
+* Model header file
 */
 /** Brief description
-* This description will hopefully be picked up on by doxygen
+* Model class uses all other classes. It reads .mod files and stores the lists of vectors, materials and cells in lists of std::vector.
 */
 
 //Other classes of library

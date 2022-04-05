@@ -10,10 +10,10 @@
 //Reminder: Trig functions require arguments in radians
 
 /** @file
-* This file contains the declarations of all exported functions.
+* Matrix header file
 */
 /** Brief description
-* This description will hopefully be picked up on by doxygen
+* Matrix declaration useful for rotation operations
 */
 
 class Matrix3x3

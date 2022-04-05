@@ -20,10 +20,10 @@ computing the centre of the model - weighted average of the indiviudal centres?
 #include "model.hpp"
 
 /** @file
-* This file contains the declarations of all exported functions.
+* Implementation of model class
 */
 /** Brief description
-* This description will hopefully be picked up on by doxygen
+* Reading and alloacting of all infomation in the .mod file
 */
 
 // using namespace std;

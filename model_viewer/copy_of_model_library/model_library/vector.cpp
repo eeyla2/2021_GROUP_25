@@ -3,10 +3,10 @@
 #include "vector.hpp"
 
 /** @file
-* This file contains the declarations of all exported functions.
+* Implemetnation of vector class
 */
 /** Brief description
-* This description will hopefully be picked up on by doxygen
+* Vector class implementation and functions
 */
 
 /// Constructors

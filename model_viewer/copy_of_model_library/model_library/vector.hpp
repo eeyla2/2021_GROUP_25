@@ -3,10 +3,10 @@
 #define VECTOR_HPP
 
 /** @file
-* This file contains the declarations of all exported functions.
+* Declaration of vector class
 */
 /** Brief description
-* This description will hopefully be picked up on by doxygen
+* Constructors, operators, specific calcualtions (dot and cross product)
 */
 
 #include <iostream>
