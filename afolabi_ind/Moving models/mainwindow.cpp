@@ -47,9 +47,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 	//connect(ui->XCoordinate, QOverload<const QString&>::of(&QSpinBox::valueChanged), this, &MainWindow::handleXCoordinate);
 	//connect(ui->YCoordinate, QOverload<const QString&>::of(&QSpinBox::valueChanged), this, &MainWindow::handleYCoordinate);
 	//connect(ui->ZCoordinate, QOverload<const QString&>::of(&QSpinBox::valueChanged), this, &MainWindow::handleZCoordinate);
-	connect(ui->XCoordinate, QOverload<int>::of(&QSpinBox::valueChanged),[=](int x) { /* ... */ });
-	connect(ui->YCoordinate, QOverload<int>::of(&QSpinBox::valueChanged), [=](int y) { /* ... */ });
-	connect(ui->ZCoordinate, QOverload<int>::of(&QSpinBox::valueChanged), [=](int z) { /* ... */ });
+	connect(ui->ChangeCoordinates, &QPushButton::released, this, &MainWindow::handleMotion);
 
 
 
@@ -266,15 +264,12 @@ void MainWindow::handleSphereButton() {
 
 
 
-    void SetPosition(double x, double y, double z) {
-
-	this->Position[0] = x;
-	this->Position[1] = y;
-	this->Position[2] = z;
-	this->Modified();
-	this->IsIdentity = 0;
+void MainWindow::handleMotion() {
 
 
 
 
+
+	renderWindow->Render();
+    ui->qvtkWidget->GetRenderWindow()->Render();
 }

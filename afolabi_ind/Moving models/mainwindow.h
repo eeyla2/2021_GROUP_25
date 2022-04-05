@@ -62,14 +62,14 @@ public slots:
     void handleModelColor();
     void handleBackgroundColor();
     void handleCutShape();
-    void handleStoringXYZ();
-  //  void handleMoveObject();
+    void handleMotion();
+  
 
 
 
     void on_Shrink_Filter_toggled(bool Shrink_Filter_Status);
     void on_Clipper_Filter_toggled(bool Clipper_Filter_Status);
-    void vtkProp3D::SetPosition(double 	pos[3]);
+    
   
 
     // ---------------------------------------------------------------------
