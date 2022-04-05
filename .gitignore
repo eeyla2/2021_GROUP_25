@@ -1,5 +1,13 @@
 ###C++.gitignore 
 
+# html & latex due to doxygen
+html/*
+latex/*
+
+# Build directory
+build/*
+build/
+
 # Prerequisites
 *.d
 
