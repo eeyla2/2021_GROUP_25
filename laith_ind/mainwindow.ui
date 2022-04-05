@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>0</y>
+      <width>811</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>370</y>
+        <width>151</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QCheckBox" name="clipperFilter">
+         <property name="text">
+          <string>Clip</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="shrinkFilter">
+         <property name="text">
+          <string>Shrink</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>370</y>
+        <width>201</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="cube">
+         <property name="text">
+          <string>Cube</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="sphere">
+         <property name="text">
+          <string>Sphere</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>60</y>
+        <width>371</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="shapeColor">
+         <property name="text">
+          <string> Shape color</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="backgroundColor">
+         <property name="text">
+          <string>Background color</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QVTKOpenGLWidget" name="qvtkWidget">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>100</y>
+        <width>431</width>
+        <height>261</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>731</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QSplitter" name="splitter_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QSplitter" name="splitter">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QWidget" name="layoutWidget_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QPushButton" name="shapeColor_2">
+              <property name="text">
+               <string> Shape color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="backgroundColor_2">
+              <property name="text">
+               <string>Background color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QVTKOpenGLWidget" name="qvtkWidget2"/>
+          <widget class="QWidget" name="layoutWidget_6">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QCheckBox" name="clipperFilter_2">
+              <property name="text">
+               <string>Clip</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="shrinkFilter_2">
+              <property name="text">
+               <string>Shrink</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="layoutWidget_5">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QPushButton" name="cube_2">
+              <property name="text">
+               <string>Cube</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="sphere_2">
+              <property name="text">
+               <string>Sphere</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QSplitter" name="splitter_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QWidget" name="layoutWidget_9">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QPushButton" name="shapeColor_3">
+              <property name="text">
+               <string> Shape color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="backgroundColor_3">
+              <property name="text">
+               <string>Background color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QVTKOpenGLWidget" name="qvtkWidget3"/>
+          <widget class="QWidget" name="layoutWidget_8">
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QCheckBox" name="clipperFilter_3">
+              <property name="text">
+               <string>Clip</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="shrinkFilter_3">
+              <property name="text">
+               <string>Shrink</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_8">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="layoutWidget_7">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QPushButton" name="cube_3">
+              <property name="text">
+               <string>Cube</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="sphere_3">
+              <property name="text">
+               <string>Sphere</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="saveButton"/>
+    <addaction name="separator"/>
+    <addaction name="openFileButton"/>
+    <addaction name="separator"/>
+    <addaction name="helpButton"/>
+    <addaction name="separator"/>
+    <addaction name="printButton"/>
+    <addaction name="separator"/>
+    <addaction name="newWindowButton"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="saveButton">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="openFileButton">
+   <property name="text">
+    <string>Open file</string>
+   </property>
+  </action>
+  <action name="helpButton">
+   <property name="text">
+    <string>Help</string>
+   </property>
+  </action>
+  <action name="printButton">
+   <property name="text">
+    <string>Print</string>
+   </property>
+  </action>
+  <action name="newWindowButton">
+   <property name="text">
+    <string>New window</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKOpenGLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>qvtkopenglwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
