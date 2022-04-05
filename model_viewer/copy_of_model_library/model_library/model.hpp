@@ -3,6 +3,13 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
+/** @file
+* This file contains the declarations of all exported functions.
+*/
+/** Brief description
+* This description will hopefully be picked up on by doxygen
+*/
+
 //Other classes of library
 
 //Commented for the time being so they don't interfere with my tests   -no longer true
@@ -18,6 +25,8 @@
 //#include <string>   - included in material.hpp
 //#include <vector> - included in cell.hpp
 #include <memory> //for managing vector list of different classes for shared_ptr
+
+
 
 
 class Model

@@ -2,6 +2,13 @@
 #ifndef CELL_HPP
 #define CELL_HPP
 
+/** @file
+* This file contains the declarations of all exported functions.
+*/
+/** Brief description
+* This description will hopefully be picked up on by doxygen
+*/
+
 #include <vector>
 
 #include "material.hpp"

@@ -6,6 +6,13 @@
 
 #include "matrix.hpp"
 
+/** @file
+* This file contains the declarations of all exported functions.
+*/
+/** Brief description
+* This description will hopefully be picked up on by doxygen
+*/
+
 /// Constructors
 Matrix3x3::Matrix3x3() {}
 

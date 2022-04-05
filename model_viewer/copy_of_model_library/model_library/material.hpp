@@ -3,6 +3,13 @@
 #ifndef MATERIAL_HPP
 #define MATERIAL_HPP
 
+/** @file
+* This file contains the declarations of all exported functions.
+*/
+/** Brief description
+* This description will hopefully be picked up on by doxygen
+*/
+
 //Class definition, class member functions in Material.cpp
 #include <iostream>
 #include <string> 

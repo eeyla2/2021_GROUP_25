@@ -2,6 +2,13 @@
 
 #include "material.hpp"
 
+/** @file
+* This file contains the declarations of all exported functions.
+*/
+/** Brief description
+* This description will hopefully be picked up on by doxygen
+*/
+
 Material::Material() {} // constructor for when values arent known and we are creating list of materials
 
 Material::Material(int &materialIndex, float &materialDensity, std::string &materialColour, std::string &materialName)
