@@ -41,8 +41,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Connect the released() signal of the changeBackgroundColor object to the handleChangeBackgroundColor slot in this object
 	connect( ui->changeBackgroundColor, &QPushButton::released, this, &MainWindow::handleChangeBackgroundColor );
-
+    // Connect the released() signal of the cutobject object to the handleCutter slot in this object
     connect(ui->cutObject, &QPushButton::released, this, &MainWindow::handleCutter);
+    // Connect the released() signal of the changePosition object to the handlechangePosition slot in this object
+    connect(ui->changePosition, &QPushButton::released, this, &MainWindow::handleChangePosition);
 }
 
 MainWindow::~MainWindow()
@@ -338,7 +340,28 @@ void MainWindow::handleCutter() {
 
 
 }
+void MainWindow::handleChangePosition()
+{
+    x = ui->xCoordinate->value();  //getting coordinate values
+    y = ui->yCoordinate->value();
+    z = ui->zCoordinate->value();
 
+    qDebug() << "Spin Box Value: " << x; //Debugging
+
+        actor->SetMapper(mapper);
+
+    
+        actor->SetPosition(x,y,z);
+   //  actor->SetPosition(-0.287, 0, 0.9579);
+
+    renderWindow->Render();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+
+
+
+
+
+}
 /// Outline Filter
 void MainWindow::on_outlineFilter_stateChanged(int amp)
 {
@@ -385,6 +408,9 @@ void MainWindow::on_edgeVisibilityFilter_stateChanged(int amp)
 
     ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
 }
+
+
+
 
 // Reading STL File Type
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/

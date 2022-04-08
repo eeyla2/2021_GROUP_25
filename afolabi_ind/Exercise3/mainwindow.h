@@ -103,10 +103,11 @@ public slots:
     void handleChangeModelColor();
     void handleChangeOutlineColor();
     void handleChangeBackgroundColor();
-	//void handeMotion();
-	void handleCutter();
+	void handleChangePosition();
 
-    void on_clipFilter_stateChanged(int);
+
+	void handleCutter(); // will modify to fit format
+	void on_clipFilter_stateChanged(int);
     void on_shrinkFilter_stateChanged(int);
     void on_outlineFilter_stateChanged(int);
     void on_edgeVisibilityFilter_stateChanged(int);
@@ -114,6 +115,9 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+	int x;
+	int y;
+	int z;
 };
 
 #endif // MAINWINDOW_H
