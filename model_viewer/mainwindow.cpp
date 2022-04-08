@@ -328,12 +328,12 @@ void MainWindow::vtk_declare(Model &theModel)
 
             renderer->AddActor(listOfActors.at(i));
 
-            // renderer->ResetCamera();
-            // renderer->GetActiveCamera()->Azimuth(30);
-            // renderer->GetActiveCamera()->Elevation(30);
-            // renderer->ResetCameraClippingRange();
+            renderer->ResetCamera();
+            renderer->GetActiveCamera()->Azimuth(30);
+            renderer->GetActiveCamera()->Elevation(30);
+            renderer->ResetCameraClippingRange();
 
-            // renderWindow->Render();
+            renderWindow->Render();
         }
         
         if (theModel.get_listOfCells().at(i)->get_cellLetter() == 't')
