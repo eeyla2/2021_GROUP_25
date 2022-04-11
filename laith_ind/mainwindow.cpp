@@ -426,18 +426,26 @@ vtkOutputWindow::SetInstance(outputWindow);
 */
 
 void MainWindow::handleNewWindowButton(){
-
-
 	ui->stackedWidget->setCurrentIndex(1);
-	
-	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow2;
-	ui->qvtkWidget2->SetRenderWindow(renderWindow2);
-	renderer2 = vtkSmartPointer<vtkRenderer>::New();
-	ui->qvtkWidget2->GetRenderWindow()->AddRenderer(renderer2);
+
+	ui->qvtkWidget->SetRenderWindow(renderWindow);
+	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+	emit statusUpdateMessage(QString("STL File done loading new shape"), 0);
+}
+
+
+/*void seconndting(){
 	
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open STL File"), "/home", tr("STL Files (*.stl)"));
 		
-	
+	// Convert QString to standard C string
+	QByteArray STL = fileName.toLatin1();
+	const char* c_fileName = STL.data();
+
+	General = reader;
+	reader->SetFileName(c_fileName);
+	reader->Update();
+
 	// Code to display the STL file data
 	mapper->SetInputConnection(reader->GetOutputPort());
 
@@ -457,42 +465,7 @@ void MainWindow::handleNewWindowButton(){
 	renderer2->GetActiveCamera()->Elevation(30);
 	renderer2->ResetCameraClippingRange();
 
-	ui->qvtkWidget2->GetRenderWindow()->Render();
-	
-	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow3;
-	ui->qvtkWidget3->SetRenderWindow(renderWindow3);
-	renderer3 = vtkSmartPointer<vtkRenderer>::New();
-	ui->qvtkWidget3->GetRenderWindow()->AddRenderer(renderer3);
 
+	ui->qvtkWidget->GetRenderWindow()->Render();
 
-	// Convert QString to standard C string
-	QByteArray STL = fileName.toLatin1();
-	const char* c_fileName = STL.data();
-
-	General = reader;
-	reader->SetFileName(c_fileName);
-	reader->Update();
-
-	// Code to display the STL file data
-	mapper2->SetInputConnection(reader->GetOutputPort());
-
-	actor2->SetMapper(mapper2);
-	actor2->GetProperty()->EdgeVisibilityOn();
-
-	vtkSmartPointer<vtkNamedColors> colors2 = vtkSmartPointer<vtkNamedColors>::New();
-	actor2->GetProperty()->SetColor(colors2->GetColor3d("Red").GetData());
-
-	// Add the actor to the scene
-	renderer3->AddActor(actor2);
-	renderer3->SetBackground(colors2->GetColor3d("Blue").GetData());
-
-	// Setup the renderers's camera
-	renderer3->ResetCamera();
-	renderer3->GetActiveCamera()->Azimuth(30);
-	renderer3->GetActiveCamera()->Elevation(30);
-	renderer3->ResetCameraClippingRange();
-
-	emit statusUpdateMessage(QString("STL File done loading"), 0);
-	ui->qvtkWidget3->GetRenderWindow()->Render();
-
-}
+}*/

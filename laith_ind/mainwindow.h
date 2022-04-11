@@ -105,7 +105,6 @@ private:
     vtkSmartPointer<vtkGenericOpenGLRenderWindow> renderWindow2 = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
     vtkSmartPointer<vtkClipDataSet> Clipper_Filter2 = vtkSmartPointer<vtkClipDataSet>::New();
     vtkSmartPointer<vtkShrinkFilter> Shrink_Filter2 = vtkSmartPointer<vtkShrinkFilter>::New();
-    vtkSmartPointer<vtkRenderer> renderer3 = vtkSmartPointer<vtkRenderer>::New();
 
 };
 
