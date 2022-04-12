@@ -67,10 +67,11 @@ public slots:
     void on_sphere_released();
     void on_shrinkFilter_toggled(bool Shrink_Status);
     void on_clipperFilter_toggled(bool Clipper_Status);
+    void on_tabWidget_tabCloseRequested(int index);
+    
+    
 
     
-  
-
     // ---------------------------------------------------------------------
 
  /** signals

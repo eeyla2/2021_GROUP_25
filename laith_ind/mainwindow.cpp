@@ -1,5 +1,5 @@
 /** @file
- * This file contains the implementation of the gui of theh library.
+ * This file contains the implementation of the gui of the library.
  */
 
 /** VTK libraries
@@ -28,28 +28,7 @@
 #include <vtkSphereSource.h>
 #include <vtkAlgorithm.h>
 
-// For writing out the image.
-/*#include <vtkBMPWriter.h>
-#include <vtkImageWriter.h>
-#include <vtkJPEGWriter.h>
-#include <vtkPNGWriter.h>
-#include <vtkPNMWriter.h>
-#include <vtkPostScriptWriter.h>
-#include <vtkTIFFWriter.h>
-#include <vtkWindowToImageFilter.h>
 
-#include <algorithm>
-#include <array>
-#include <iomanip>
-#include <iostream>
-#include <iterator>
-#include <locale>
-#include <map>
-#include <set>
-#include <sstream>
-#include <string>
-#include <vector>
-*/
 
 /** Qt libraries
  * all necessary Qt headers inclusion for different libraries
@@ -62,13 +41,16 @@
 #include <QMessageBox>
 #include <QCheckBox>
 #include <QStatusBar>
-#include <QStackedWidget>
+#include <QTabWidget>
+#include <QString>
+
 
 /** include lheaders
  * all necessary includes for other files required 
  */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "tabcontent.h"
 
 /** Main Window
  * implementation of functions in the main window class
@@ -414,26 +396,6 @@ void MainWindow::on_sphere_released()
 	emit statusUpdateMessage(QString("Sphere displayed"), 0);
 }
 
-/*
-void MainWindow::splitter()
-{
-vtkSmartPointer<vtkWin32OutputWindow> outputWindow = vtkSmartPointer<vtkWin32OutputWindow>::New(); 
-outputWindow->SetSendToStdErr(true);
-vtkOutputWindow::SetInstance(outputWindow); 
-
-//apply splitter 
-}
-*/
-
-void MainWindow::handleNewWindowButton(){
-	ui->stackedWidget->setCurrentIndex(1);
-
-	ui->qvtkWidget->SetRenderWindow(renderWindow);
-	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
-	emit statusUpdateMessage(QString("STL File done loading new shape"), 0);
-}
-
-
 /*void seconndting(){
 	
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open STL File"), "/home", tr("STL Files (*.stl)"));
@@ -469,3 +431,17 @@ void MainWindow::handleNewWindowButton(){
 	ui->qvtkWidget->GetRenderWindow()->Render();
 
 }*/
+
+//closes any tab that is opened
+void MainWindow::on_tabWidget_tabCloseRequested(int index){
+
+ui->tabWidget->removeTab(index);
+
+}
+
+//create new tab 
+void MainWindow::handleNewWindowButton(){
+
+     ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
+	 ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+}
