@@ -1,5 +1,19 @@
 # 2021_GROUP_25
 
+UPDATED RAEDME 08/04/2022
+# Tasks for Gui
+
+- Integration of shrink, clip filter + at least 2 other VTK visual effect filters(**Pisit**)			
+- Load STL models and apply any combination of all filters(**Pisit**)						
+- Load MOD models and apply any combination of all filters(**Daniel**)						
+- Load/combine multiple models into same "world"(**Pisit**)						
+- Display model size / volume / weight / number of cell statistics, add measurements(**Afolabi**)					
+- Modify model geometry/materials. Could include being able to slice model / modify coordinates, etc.	(**Afolabi**)					
+- Save modfied/combined models to STL and MOD file formats(**Daniel**)					
+- Use of multiple tabs/windows for parallel viewing/editing of multiple models.(**Laith**)					
+- All GUI features work consistently without crashing, etc(**Pisit**)						
+- GUI appearance: excellent include use of features such as: toolsbars, recent file lists, splash screen, etc(**Pisit**)						
+
 Build instructions:
 
 The directory 'build' is not uploaded to github.
@@ -27,3 +41,8 @@ Save the model data to a new file in the same format as original.
 Capabilites of the matrix class.
 Creating various standard matricies, performing rotations of vectors, matrix multiplication etc..
 Determinant, inverse & transpose of matrix.
+
+
+
+
+
