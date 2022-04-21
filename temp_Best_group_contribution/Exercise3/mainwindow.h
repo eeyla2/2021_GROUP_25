@@ -39,6 +39,11 @@
 #include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
 
+// Printing to .PNG
+#include <vtkPNGWriter.h>
+#include <vtkVersion.h>
+#include <vtkWindowToImageFilter.h>
+
 namespace Ui {
 class MainWindow;
 }
@@ -90,6 +95,11 @@ public:
 
 	vtkSmartPointer<vtkGeometryFilter> convertToPolygonal = vtkSmartPointer<vtkGeometryFilter>::New();
 
+    // Screenshot
+    vtkNew<vtkWindowToImageFilter> windowToImageFilter;
+    vtkNew<vtkPNGWriter> writer;
+
+
     ~MainWindow();
 
 public slots:
@@ -105,6 +115,7 @@ public slots:
     void on_edgeVisibilityFilter_stateChanged(int);
     void on_actionFileOpen_triggered();
     void on_actionHelp_triggered();
+    void on_actionPrint_triggered();
 
 private:
     Ui::MainWindow *ui;
