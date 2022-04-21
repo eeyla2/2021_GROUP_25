@@ -448,3 +448,26 @@ void MainWindow::on_actionHelp_triggered()
                    Apply Edge Visibility: Apply edge to all the model(s) in the current window\n");
     msgBox.exec();
 }
+
+//Screenshot Draft 1
+void MainWindow::on_actionPrint_triggered()
+{
+    // Screenshot
+    windowToImageFilter->SetInput(renderWindow);
+    windowToImageFilter->SetScale(2); // image quality
+    //#else
+    //windowToImageFilter->SetMagnification(2); // image quality
+    //#endif
+    //windowToImageFilter->SetInputBufferTypeToRGBA(); // also record the alpha
+                                                       // (transparency) channel
+    windowToImageFilter->ReadFrontBufferOff();       // read from the back buffer
+    windowToImageFilter->Update();
+
+    writer->SetFileName("screenshot2.png");
+    writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+    writer->Write();
+
+    renderWindow->Render();
+    renderer->ResetCamera();
+    renderWindow->Render();
+}
