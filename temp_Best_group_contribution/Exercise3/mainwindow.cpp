@@ -75,13 +75,18 @@ void MainWindow::handleRenderCube() {
 	operationFilter = cubeSource;
 
 	actor->SetMapper(mapper);
+	actor2->SetMapper(mapper);
 
 	actor->GetProperty()->EdgeVisibilityOn();
+    actor2->GetProperty()->EdgeVisibilityOn();
+
+    actor2->SetPosition(0, 2, 0);
 
 	ui->qvtkWidget->renderWindow()->AddRenderer( renderer );									// ###### ask the QtVTKOpenGLWidget for its renderWindow ######
 
 	// Add the actor to the scene
 	renderer->AddActor(actor);
+	renderer->AddActor(actor2);
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -421,4 +426,3 @@ void MainWindow::on_actionFileOpen_triggered()
 	ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
 	renderWindow->Render();
 }
-
