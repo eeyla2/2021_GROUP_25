@@ -449,6 +449,7 @@ void MainWindow::on_actionHelp_triggered()
     msgBox.exec();
 }
 
+//Screenshot Draft 1
 void MainWindow::on_actionPrint_triggered()
 {
     // Screenshot
