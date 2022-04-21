@@ -58,6 +58,8 @@ public:
     // Create a mapper that will hold the cube's geometry in a format suitable for rendering
 	vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 
+	vtkNew<vtkActor> actor2;
+
 	// Create colors
     vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
 
