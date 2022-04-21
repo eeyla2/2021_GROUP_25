@@ -76,17 +76,21 @@ void MainWindow::handleRenderCube() {
 
 	actor->SetMapper(mapper);
 	actor2->SetMapper(mapper);
+	actor3->SetMapper(mapper);
 
 	actor->GetProperty()->EdgeVisibilityOn();
     actor2->GetProperty()->EdgeVisibilityOn();
+    actor3->GetProperty()->EdgeVisibilityOn();
 
     actor2->SetPosition(0, 2, 0);
+    actor3->SetPosition(0, 4, 0);
 
 	ui->qvtkWidget->renderWindow()->AddRenderer( renderer );									// ###### ask the QtVTKOpenGLWidget for its renderWindow ######
 
 	// Add the actor to the scene
 	renderer->AddActor(actor);
 	renderer->AddActor(actor2);
+	renderer->AddActor(actor3);
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -425,4 +429,22 @@ void MainWindow::on_actionFileOpen_triggered()
 	renderer->ResetCameraClippingRange();
 	ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
 	renderWindow->Render();
+}
+
+void MainWindow::on_actionHelp_triggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Help:\n\n\
+                   Open: Open STL File\n\
+                   Print: Take a snip of the window in .png\n\
+                   Change Model Color: Change Model Color from Color Dialog\n\
+                   Change Background Color: Change Background Color from Color Dialog\n\
+                   Change Outline Color: Change Color of the Outline from Color Dialog\n\
+                   Render Cube: Render a Cube from a Cube Source\n\
+                   Render Pyramid: Render a Pyramid from a Pyarmid Source\n\
+                   Apply Shrink Filter: Shrink all the model(s) in the current window\n\
+                   Apply Clip Filter: Clip all the model(s) in the current window\n\
+                   Apply Outline Filter: Outline all the model(s) in the current window\n\
+                   Apply Edge Visibility: Apply edge to all the model(s) in the current window\n");
+    msgBox.exec();
 }

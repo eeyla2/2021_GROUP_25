@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QWidget>
+#include <QMessageBox>
 
 #include <vtkSmartPointer.h>
 #include <vtkCubeSource.h>
@@ -59,6 +60,7 @@ public:
 	vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 
 	vtkNew<vtkActor> actor2;
+    vtkNew<vtkActor> actor3;
 
 	// Create colors
     vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
@@ -102,6 +104,7 @@ public slots:
     void on_outlineFilter_stateChanged(int);
     void on_edgeVisibilityFilter_stateChanged(int);
     void on_actionFileOpen_triggered();
+    void on_actionHelp_triggered();
 
 private:
     Ui::MainWindow *ui;
