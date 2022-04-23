@@ -36,6 +36,7 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkCutter.h>
 #include <vtkProp3d.h>
+#include <vtkMassProperties.h>
 
 #include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
@@ -73,8 +74,8 @@ public:
 	// Shrink Filter
 	vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
 
-	// Moving model
-	//vtkSmartPointer<vtkProp3D> this = vtkSmartPointer<vtkProp3D>::New(); 
+	// Model Properties
+	vtkSmartPointer<vtkMassProperties> modelProperties = vtkSmartPointer<vtkMassProperties>::New(); 
 
 	//Cutter
 	vtkSmartPointer<vtkCutter> planeCutter = vtkSmartPointer<vtkCutter>::New();
@@ -104,6 +105,7 @@ public slots:
     void handleChangeOutlineColor();
     void handleChangeBackgroundColor();
 	void handleChangePosition();
+	void handleDisplayProperties();
 
 
 	void handleCutter(); // will modify to fit format
@@ -115,9 +117,11 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+	
 	int x;
 	int y;
 	int z;
+//  double volume;
 };
 
 #endif // MAINWINDOW_H

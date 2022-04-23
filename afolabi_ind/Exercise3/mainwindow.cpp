@@ -362,6 +362,22 @@ void MainWindow::handleChangePosition()
 
 
 }
+
+void MainWindow::handleDisplayProperties()
+{
+   modelProperties->SetInputConnection(reader->GetOutputPort());
+   mapper->SetInputConnection(modelProperties->GetOutputPort());
+
+   
+
+   // qDebug() << "Model Volume: " << volume;->GetVolume() //Debugging
+   std::cout << "Volume: " << modelProperties->GetVolume() << std::endl
+       << "Area:   " << modelProperties->GetSurfaceArea() << std::endl;
+
+    renderWindow->Render();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+
+}
 /// Outline Filter
 void MainWindow::on_outlineFilter_stateChanged(int amp)
 {
