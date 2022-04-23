@@ -105,7 +105,7 @@ public slots:
     void handleChangeOutlineColor();
     void handleChangeBackgroundColor();
 	void handleChangePosition();
-	void handleDisplayProperties();
+//	void handleDisplayProperties();
 
 
 	void handleCutter(); // will modify to fit format
