@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->cutObject, &QPushButton::released, this, &MainWindow::handleCutter);
     // Connect the released() signal of the changePosition object to the handlechangePosition slot in this object
     connect(ui->changePosition, &QPushButton::released, this, &MainWindow::handleChangePosition);
+
+   // connect(ui->displayProperties, &QPushButton::released, this, &MainWindow::handleDisplayProperties);
 }
 
 MainWindow::~MainWindow()
@@ -362,6 +364,23 @@ void MainWindow::handleChangePosition()
 
 
 }
+
+/*void MainWindow::handleDisplayProperties()
+{
+   modelProperties->SetInputConnection(reader->GetOutputPort());
+ //  mapper->SetInputConnection(modelProperties->GetOutputPort());
+
+   
+
+   // qDebug() << "Model Volume: " << volume;->GetVolume() //Debugging
+   std::cout << "Volume: " << modelProperties->GetVolume() << std::endl
+       << "Area:   " << modelProperties->GetSurfaceArea() << std::endl;
+
+    renderWindow->Render();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+
+}
+*/
 /// Outline Filter
 void MainWindow::on_outlineFilter_stateChanged(int amp)
 {
