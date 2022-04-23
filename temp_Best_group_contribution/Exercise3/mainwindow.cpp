@@ -75,29 +75,29 @@ void MainWindow::handleRenderCube() {
 	operationFilter = cubeSource;
 
 	actor->SetMapper(mapper);
-	actor2->SetMapper(mapper);
-	actor3->SetMapper(mapper);
+	//actor2->SetMapper(mapper);
+	//actor3->SetMapper(mapper);
 
 	actor->GetProperty()->EdgeVisibilityOn();
-    actor2->GetProperty()->EdgeVisibilityOn();
-    actor3->GetProperty()->EdgeVisibilityOn();
+    	//actor2->GetProperty()->EdgeVisibilityOn();
+    	//actor3->GetProperty()->EdgeVisibilityOn();
 
-    actor2->SetPosition(0, 2, 0);
-    actor3->SetPosition(0, 4, 0);
+    	//actor2->SetPosition(0, 2, 0);
+    	//actor3->SetPosition(0, 4, 0);
 
 	ui->qvtkWidget->renderWindow()->AddRenderer( renderer );									// ###### ask the QtVTKOpenGLWidget for its renderWindow ######
 
 	// Add the actor to the scene
 	renderer->AddActor(actor);
-	renderer->AddActor(actor2);
-	renderer->AddActor(actor3);
+	//renderer->AddActor(actor2);
+	//renderer->AddActor(actor3);
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
 	renderer->GetActiveCamera()->Azimuth(0);
 	renderer->GetActiveCamera()->Elevation(0);
 	renderer->ResetCameraClippingRange();
-    ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
+    	ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
 }
 
 void MainWindow::handleRenderPyramid() {
