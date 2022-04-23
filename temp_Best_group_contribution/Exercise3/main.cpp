@@ -16,7 +16,7 @@ int main( int argc, char** argv )
 
   // Initialize Splash Screen
   QSplashScreen *splash = new QSplashScreen;
-  splash->setPixmap(QPixmap("C:/Users/ADMIN/Desktop/Splash.JPG")); // splash picture
+  splash->setPixmap(QPixmap("C:\Users\ADMIN\Documents\2046\2021_GROUP_25\temp_Best_group_contribution\Exercise3\Splash.JPG")); // splash picture
   splash->show();
 
   MainWindow window;
