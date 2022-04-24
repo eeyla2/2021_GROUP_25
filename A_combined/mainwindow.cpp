@@ -514,7 +514,7 @@ void MainWindow::on_actionFileOpen_triggered()
 
 
     auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin()+numSTL, reader);
-    
+
     // Assign 'reader' <vtkSTLReader> type to generic pointer 'modelData' <vtkAlgorithm> type
     //modelData = reader;
 
@@ -565,27 +565,44 @@ void MainWindow::on_actionHelp_triggered()
     msgBox.exec();
 }
 
-// Screenshot Draft 1
+//Screenshot
 void MainWindow::on_actionPrint_triggered()
 {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Take a Screenshot"), "./", tr("PNG (*.png)"));
+
+    QFile file(fileName);
+
+    QByteArray filePNG = fileName.toLatin1();
+    const char *c_str = filePNG.data();
+
     // Screenshot
+
+        // Problem: vtkWindowToImageFilter doesn't update models
+
+        // Solution:
+            // WARNING: vtkWindowToImageFilter
+                // A vtkWindow doesn't behave like other parts of the VTK pipeline:
+                // its modification time doesn't get updated when an image is rendered.
+                // As a result, naive use of vtkWindowToImageFilter will produce an image
+                // of the first image that the window rendered, but which is never updated
+                // on subsequent window updates. This behavior is unexpected and in general undesirable.
+                // To force an update of the output image, call vtkWindowToImageFilter's Modified method
+                // after rendering to the window.
+
+                // https://vtk.org/doc/nightly/html/classvtkWindowToImageFilter.html
+                // https://stackoverflow.com/questions/47436669/vtk-c-update-contour-from-contourfilter
+
+    windowToImageFilter->Modified();
     windowToImageFilter->SetInput(renderWindow);
-    windowToImageFilter->SetScale(2); // image quality
-    //#else
-    // windowToImageFilter->SetMagnification(2); // image quality
-    //#endif
-    // windowToImageFilter->SetInputBufferTypeToRGBA(); // also record the alpha
-    // (transparency) channel
-    windowToImageFilter->ReadFrontBufferOff(); // read from the back buffer
     windowToImageFilter->Update();
 
-    writer->SetFileName("screenshot2.png");
-    writer->SetInputConnection(windowToImageFilter->GetOutputPort());
-    writer->Write();
-
-    renderWindow->Render();
-    renderer->ResetCamera();
-    renderWindow->Render();
+    if (!fileName.isEmpty())
+    {
+        writer->SetFileName(c_str);
+        writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+        writer->Write();
+    }
+    file.close();
 }
 
 //closes any tab that is opened
@@ -596,13 +613,13 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
 
 }
 
-//create new tab 
+//create new tab
 void MainWindow::handleNewWindowButton()
 {
     //not fuly convinced this is the way to do tabs
-	
+
      //ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
-	 
+
      ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 
 }
