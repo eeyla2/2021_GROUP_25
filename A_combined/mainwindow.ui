@@ -42,17 +42,10 @@
         <x>620</x>
         <y>30</y>
         <width>202</width>
-        <height>466</height>
+        <height>531</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="QPushButton" name="insertObject">
-         <property name="text">
-          <string>Insert additional STLs into this world</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
@@ -69,12 +62,26 @@
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>STLs currently in this world</string>
+          <string>Manage STLs currently in this world</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QListView" name="currentSTLs"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="insertObject">
+         <property name="text">
+          <string>Insert additional STLs into this world</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeObject">
+         <property name="text">
+          <string>Remove selected STL</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">

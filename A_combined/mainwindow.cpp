@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     ui->qvtkWidget->setRenderWindow(renderWindow);
 
+    //for lists of stls currently visible
+   // ui->
+
     // Create an actor that is used to set the model's properties for rendering and place it in the window
     actor->SetMapper(mapper);
     actor->GetProperty()->EdgeVisibilityOn();
@@ -598,7 +601,8 @@ void MainWindow::handleNewWindowButton()
 {
     //not fuly convinced this is the way to do tabs
 	
-     ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
-	 ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+     //ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
+	 
+     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 
 }
