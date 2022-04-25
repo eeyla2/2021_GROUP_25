@@ -14,16 +14,18 @@ int main( int argc, char** argv )
 
   QApplication a( argc, argv );
 
+//TODO: could splash screen go into its own function?
+
   // Initialize Splash Screen
   QSplashScreen *splash = new QSplashScreen;
-  splash->setPixmap(QPixmap("C:\Users\ADMIN\Documents\2046\2021_GROUP_25\temp_Best_group_contribution\Exercise3\Splash.JPG")); // splash picture
+  splash->setPixmap(QPixmap("C:/Users/danie/Git/2021_GROUP_25/A_combined/Splash.JPG")); // splash picture
   splash->show();
+  // Initialize Timer To Show Splash Screen Before Running the Program
+  QTimer::singleShot(1000, splash,SLOT(close())); // Timer  
+  //2500 is nice for the real thing, reduced to 1000 for testing
 
   MainWindow window;
-
-  // Initialize Timer To Show Splash Screen Before Running the Program
-  QTimer::singleShot(2500, splash,SLOT(close())); // Timer
-  QTimer::singleShot(2500,&window,SLOT(show())); // Window
+  QTimer::singleShot(1000,&window,SLOT(show())); // Window
 
   // window.show();
 

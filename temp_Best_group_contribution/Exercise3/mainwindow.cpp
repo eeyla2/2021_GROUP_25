@@ -75,20 +75,29 @@ void MainWindow::handleRenderCube() {
 	operationFilter = cubeSource;
 
 	actor->SetMapper(mapper);
+	//actor2->SetMapper(mapper);
+	//actor3->SetMapper(mapper);
 
 	actor->GetProperty()->EdgeVisibilityOn();
+    	//actor2->GetProperty()->EdgeVisibilityOn();
+    	//actor3->GetProperty()->EdgeVisibilityOn();
+
+    	//actor2->SetPosition(0, 2, 0);
+    	//actor3->SetPosition(0, 4, 0);
 
 	ui->qvtkWidget->renderWindow()->AddRenderer( renderer );									// ###### ask the QtVTKOpenGLWidget for its renderWindow ######
 
 	// Add the actor to the scene
 	renderer->AddActor(actor);
+	//renderer->AddActor(actor2);
+	//renderer->AddActor(actor3);
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
 	renderer->GetActiveCamera()->Azimuth(0);
 	renderer->GetActiveCamera()->Elevation(0);
 	renderer->ResetCameraClippingRange();
-    ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
+    	ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
 }
 
 void MainWindow::handleRenderPyramid() {
@@ -422,3 +431,43 @@ void MainWindow::on_actionFileOpen_triggered()
 	renderWindow->Render();
 }
 
+void MainWindow::on_actionHelp_triggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Help:\n\n\
+                   Open: Open STL File\n\
+                   Print: Take a snip of the window in .png\n\
+                   Change Model Color: Change Model Color from Color Dialog\n\
+                   Change Background Color: Change Background Color from Color Dialog\n\
+                   Change Outline Color: Change Color of the Outline from Color Dialog\n\
+                   Render Cube: Render a Cube from a Cube Source\n\
+                   Render Pyramid: Render a Pyramid from a Pyarmid Source\n\
+                   Apply Shrink Filter: Shrink all the model(s) in the current window\n\
+                   Apply Clip Filter: Clip all the model(s) in the current window\n\
+                   Apply Outline Filter: Outline all the model(s) in the current window\n\
+                   Apply Edge Visibility: Apply edge to all the model(s) in the current window\n");
+    msgBox.exec();
+}
+
+//Screenshot Draft 1
+void MainWindow::on_actionPrint_triggered()
+{
+    // Screenshot
+    windowToImageFilter->SetInput(renderWindow);
+    windowToImageFilter->SetScale(2); // image quality
+    //#else
+    //windowToImageFilter->SetMagnification(2); // image quality
+    //#endif
+    //windowToImageFilter->SetInputBufferTypeToRGBA(); // also record the alpha
+                                                       // (transparency) channel
+    windowToImageFilter->ReadFrontBufferOff();       // read from the back buffer
+    windowToImageFilter->Update();
+
+    writer->SetFileName("screenshot2.png");
+    writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+    writer->Write();
+
+    renderWindow->Render();
+    renderer->ResetCamera();
+    renderWindow->Render();
+}

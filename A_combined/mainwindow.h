@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStatusBar>
 #include <QFileDialog>
 #include <QFile>
 #include <QColorDialog>
 #include <QColor>
 #include <QDebug>
 #include <QApplication>
+#include <QString>
 #include <QWidget>
 #include <QMessageBox>
 
@@ -35,6 +37,9 @@
 #include <vtkPoints.h>
 #include <vtkPyramid.h>
 #include <vtkUnstructuredGrid.h>
+#include <vtkCutter.h>
+#include <vtkProp3d.h>
+#include <vtkMassProperties.h>
 
 #include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
@@ -43,6 +48,9 @@
 #include <vtkPNGWriter.h>
 #include <vtkVersion.h>
 #include <vtkWindowToImageFilter.h>
+
+//list of current STLs and recent files
+#include <QAbstractListModel>
 
 namespace Ui {
 class MainWindow;
@@ -64,9 +72,6 @@ public:
     // Create a mapper that will hold the cube's geometry in a format suitable for rendering
 	vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 
-	vtkNew<vtkActor> actor2;
-    vtkNew<vtkActor> actor3;
-
 	// Create colors
     vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
 
@@ -80,8 +85,15 @@ public:
 	// Shrink Filter
 	vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
 
+	// Model Properties
+	vtkSmartPointer<vtkMassProperties> modelProperties = vtkSmartPointer<vtkMassProperties>::New(); 
+
+	//Cutter
+	vtkSmartPointer<vtkCutter> planeCutter = vtkSmartPointer<vtkCutter>::New();
+	vtkSmartPointer<vtkPlane> plane = vtkSmartPointer<vtkPlane>::New();
+
 	// Load and Render STL
-	vtkSmartPointer<vtkAlgorithm> operationFilter;      // Generic Pointer
+	vtkSmartPointer<vtkAlgorithm> modelData;      // Generic Pointer  - prev called operation filter
 
 	vtkNew<vtkOutlineFilter> outlineFilter;
 
@@ -95,10 +107,9 @@ public:
 
 	vtkSmartPointer<vtkGeometryFilter> convertToPolygonal = vtkSmartPointer<vtkGeometryFilter>::New();
 
-    // Screenshot
+	// Screenshot
     vtkNew<vtkWindowToImageFilter> windowToImageFilter;
     vtkNew<vtkPNGWriter> writer;
-
 
     ~MainWindow();
 
@@ -108,17 +119,50 @@ public slots:
     void handleChangeModelColor();
     void handleChangeOutlineColor();
     void handleChangeBackgroundColor();
+	
+	void handleChangePosition();
+//	void handleDisplayProperties();
+	void handleCutter(); // will modify to fit format
 
-    void on_clipFilter_stateChanged(int);
+	void handleInsertObject();
+
+	void on_clipFilter_stateChanged(int);
     void on_shrinkFilter_stateChanged(int);
     void on_outlineFilter_stateChanged(int);
     void on_edgeVisibilityFilter_stateChanged(int);
+
     void on_actionFileOpen_triggered();
     void on_actionHelp_triggered();
     void on_actionPrint_triggered();
 
+	void handleNewWindowButton();
+	void on_tabWidget_tabCloseRequested(int index);
+
+signals:
+	void statusUpdateMessage( const QString & message, int timeout );
+
 private:
     Ui::MainWindow *ui;
+	
+	int x;
+	int y;
+	int z;
+//  double volume;
+
+
+    int numSTL=0;
+    std::vector<vtkSmartPointer<vtkSTLReader>> listOfSTLReaders;
+    std::vector<vtkSmartPointer<vtkDataSetMapper>> listOfSTLMappers;
+    std::vector<vtkSmartPointer<vtkActor>> listOfSTLActors;
 };
+
+//class for list of stl
+
+// class currentModelList : public QAbstractListModel
+// {
+//     Q_OBJECT
+// public:
+// 	// Constructor
+//     explicit currentModelList(QObject *parent = 0) : QAbstractListModel(parent) {}
 
 #endif // MAINWINDOW_H
