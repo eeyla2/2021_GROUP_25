@@ -521,8 +521,6 @@ void MainWindow::handleInsertObject()
     const char *c_str = ba.data();
     std::cout << c_str << "\n";
 
-   
-
     //start reading 
     vtkNew<vtkSTLReader> _reader;
 
@@ -553,10 +551,15 @@ void MainWindow::handleInsertObject()
 
     numSTL++;
 
-    //add to recent and current STLs list
-    listCurrentSTLs(fileName);
+    //extract file name from its path to 
+    QFileInfo fileInfo(fileName);
+    QString fileShortName (fileInfo.fileName());
 
-    listRecentSTLs(fileName);
+
+    //add to recent and current STLs list
+    listCurrentSTLs(fileShortName);
+
+    listRecentSTLs(fileShortName);
 
 
 }
