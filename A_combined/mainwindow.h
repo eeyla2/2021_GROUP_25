@@ -51,6 +51,9 @@
 
 //list of current STLs and recent files
 #include <QAbstractListModel>
+#include "currentandrecentstl.h"
+
+
 
 namespace Ui {
 class MainWindow;
@@ -111,6 +114,8 @@ public:
     vtkNew<vtkWindowToImageFilter> windowToImageFilter;
     vtkNew<vtkPNGWriter> writer;
 
+	void listCurrentSTLs(const QString& fileName);
+
     ~MainWindow();
 
 public slots:
@@ -154,6 +159,9 @@ private:
     std::vector<vtkSmartPointer<vtkSTLReader>> listOfSTLReaders;
     std::vector<vtkSmartPointer<vtkDataSetMapper>> listOfSTLMappers;
     std::vector<vtkSmartPointer<vtkActor>> listOfSTLActors;
+
+	CurrentAndRecentSTL nameList;
+	
 };
 
 //class for list of stl
