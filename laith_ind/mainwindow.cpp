@@ -190,7 +190,7 @@ int greatestBound=-1000000;
 }
 	*/
 
-/** handleOpenfile
+/** handleSavefile
  * function that saves an STL files after making changes to it
  */
 void MainWindow::handleSaveButton()

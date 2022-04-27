@@ -2,12 +2,19 @@
 #include "ui_mainwindow.h"
 
 #include "tabcontent.h"
+#include "currentandrecentstl.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
 {
+
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
+
+    // Link the ListModel to the ListView
+    ui->currentSTLs->setModel(&nameList);
+    // Tell this list view to only accept single selections
+    ui->currentSTLs->setSelectionBehavior(QAbstractItemView::SelectItems);
 
     ui->qvtkWidget->setRenderWindow(renderWindow);
 
@@ -451,6 +458,9 @@ void MainWindow::handleInsertObject()
     const char *c_str = ba.data();
     std::cout << c_str << "\n";
 
+   
+
+    //start reading 
     vtkNew<vtkSTLReader> _reader;
 
     _reader->SetFileName(c_str);
@@ -479,8 +489,29 @@ void MainWindow::handleInsertObject()
     renderWindow->Render();
 
     numSTL++;
+
+    listCurrentSTLs(fileName);
 }
 
+void MainWindow::listCurrentSTLs( const QString &fileName){
+
+//Add new object to the List 
+    QModelIndexList selectedList;
+    selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
+    if (selectedList.length() == 0) //no items have been added yet so we want to add rather than insert
+    {
+        nameList.addItem(fileName);
+        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+    }
+    if (selectedList.length() == 1)
+    {
+        // selectedList is a list of all selected items in the listView. Since we set its
+        // behaviour to single selection, were only interested in the first selecteded item.
+        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+        nameList.insertItem(fileName, selectedList[0]);
+    }
+
+}
 
 
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/
