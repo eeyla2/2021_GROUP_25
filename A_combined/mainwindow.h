@@ -51,7 +51,8 @@
 
 //list of current STLs and recent files
 #include <QAbstractListModel>
-#include "currentandrecentstl.h"
+#include "currentstl.h"
+#include "recentstl.h"
 
 
 
@@ -115,6 +116,7 @@ public:
     vtkNew<vtkPNGWriter> writer;
 
 	void listCurrentSTLs(const QString& fileName);
+	void listRecentSTLs(const QString& fileName);
 
     ~MainWindow();
 
@@ -160,7 +162,8 @@ private:
     std::vector<vtkSmartPointer<vtkDataSetMapper>> listOfSTLMappers;
     std::vector<vtkSmartPointer<vtkActor>> listOfSTLActors;
 
-	CurrentAndRecentSTL nameList;
+	CurrentSTL nameListCurrent;
+	RecentSTL nameListRecent;
 	
 };
 

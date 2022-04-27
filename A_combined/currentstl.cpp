@@ -1,6 +1,6 @@
-#include "currentandrecentstl.h"
+#include "currentstl.h"
 
-int CurrentAndRecentSTL::rowCount(const QModelIndex &parent) const
+int CurrentSTL::rowCount(const QModelIndex &parent) const
 {
     return modelNames.size();
 }
@@ -8,7 +8,7 @@ int CurrentAndRecentSTL::rowCount(const QModelIndex &parent) const
 // function allows the listView to request data at index
 // QVariant is just Qt's way of defining a variable that could be any
 // basic type (int, float, double, string, ... )
-QVariant CurrentAndRecentSTL::data(const QModelIndex &index, int role) const
+QVariant CurrentSTL::data(const QModelIndex &index, int role) const
 {
     // Check that the index is valid
     if (!index.isValid())
@@ -30,7 +30,7 @@ QVariant CurrentAndRecentSTL::data(const QModelIndex &index, int role) const
 }
 
 // To allow modifying stored list
-void CurrentAndRecentSTL::addItem(const QString &newName)
+void CurrentSTL::addItem(const QString &newName )
 {
     // This emits a signal to warn the listView that extra rows will be added
     emit beginInsertRows(QModelIndex(), modelNames.size(), modelNames.size() );
@@ -40,7 +40,7 @@ void CurrentAndRecentSTL::addItem(const QString &newName)
     emit endInsertRows();
 }
 
-void CurrentAndRecentSTL::insertItem(const QString &newName, const QModelIndex &index)
+void CurrentSTL::insertItem(const QString &newName, const QModelIndex &index)
 {
     //?? (same as add item)
     //we want to add at a certain index 
@@ -66,7 +66,7 @@ void CurrentAndRecentSTL::insertItem(const QString &newName, const QModelIndex &
     emit endInsertRows();
 }
 
-void CurrentAndRecentSTL::removeItem(const QModelIndex &index)
+void CurrentSTL::removeItem(const QModelIndex &index)
 {
     //?? (~ same as add item)
     //int currentRow = index.row();

@@ -2,7 +2,9 @@
 #include "ui_mainwindow.h"
 
 #include "tabcontent.h"
-#include "currentandrecentstl.h"
+#include "currentstl.h"
+#include "recentstl.h"
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
@@ -11,8 +13,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
 
-    // Link the ListModel to the ListView
-    ui->currentSTLs->setModel(&nameList);
+    // Link the nameListCurrent to the currentSTLs
+    ui->currentSTLs->setModel(&nameListCurrent);
+
+    // Link the reentFiles to the nameListRecent
+    ui->recentFiles->setModel(&nameListRecent);
     // Tell this list view to only accept single selections
     ui->currentSTLs->setSelectionBehavior(QAbstractItemView::SelectItems);
 
@@ -490,7 +495,10 @@ void MainWindow::handleInsertObject()
 
     numSTL++;
 
+    //add to recent and current STLs list
     listCurrentSTLs(fileName);
+
+    listRecentSTLs(fileName);
 }
 
 void MainWindow::listCurrentSTLs( const QString &fileName){
@@ -500,7 +508,7 @@ void MainWindow::listCurrentSTLs( const QString &fileName){
     selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
     if (selectedList.length() == 0) //no items have been added yet so we want to add rather than insert
     {
-        nameList.addItem(fileName);
+        nameListCurrent.addItem(fileName);
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
     }
     if (selectedList.length() == 1)
@@ -508,8 +516,20 @@ void MainWindow::listCurrentSTLs( const QString &fileName){
         // selectedList is a list of all selected items in the listView. Since we set its
         // behaviour to single selection, were only interested in the first selecteded item.
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
-        nameList.insertItem(fileName, selectedList[0]);
+        nameListCurrent.insertItem(fileName, selectedList[0]);
     }
+
+}
+
+void MainWindow::listRecentSTLs( const QString &fileName){
+
+//Add new object to the List 
+    QModelIndexList selectedList;
+    selectedList = ui->recentFiles->selectionModel()->selectedIndexes();
+    
+        nameListRecent.addItem(fileName);
+        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+
 
 }
 
