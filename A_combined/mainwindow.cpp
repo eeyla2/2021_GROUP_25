@@ -63,13 +63,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     // Connect the released() signal of the cutobject object to the handleCutter slot in this object
     connect(ui->cutObject, &QPushButton::released, this, &MainWindow::handleCutter);
 
-    // Connect the released() signal of the changePosition object to the handlechangePosition slot in this object
+    // Connect the released() signal of the changePosition object to the handleChangePosition slot in this object
     connect(ui->changePosition, &QPushButton::released, this, &MainWindow::handleChangePosition);
 
     // connect(ui->displayProperties, &QPushButton::released, this, &MainWindow::handleDisplayProperties);
 
+    // Connect the released() signal of the insertObject object to the handleInsertObject slot in this object
     connect(ui->insertObject, &QPushButton::released, this, &MainWindow::handleInsertObject);
 
+    // Connect the released() signal of the removeObject object to the handleRemoveObject slot in this object
+    connect(ui->removeObject, &QPushButton::released, this, &MainWindow::handleRemoveObject);
+
+// Connect the released() signal of the newWindowButton object to the handleNewWindowButton slot in this object
     connect(ui->newWindowButton, &QAction::triggered, this, &MainWindow::handleNewWindowButton);
 }
 
@@ -448,6 +453,59 @@ void MainWindow::handleChangePosition()
 }
 */
 
+
+//adds new items to current stls list
+void MainWindow::listCurrentSTLs( const QString &fileName){
+
+//Add new object to the List 
+    QModelIndexList selectedList;
+    selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
+    if (selectedList.length() == 0) //no items have been added yet so we want to add rather than insert
+    {
+        nameListCurrent.addItem(fileName);
+        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+    }
+    if (selectedList.length() == 1)
+    {
+        // selectedList is a list of all selected items in the listView. Since we set its
+        // behaviour to single selection, were only interested in the first selecteded item.
+        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+        nameListCurrent.insertItem(fileName, selectedList[0]);
+    }
+
+}
+
+//adds items to recent STLs files
+void MainWindow::listRecentSTLs( const QString &fileName){
+
+//Add new object to the List 
+    QModelIndexList selectedList;
+    selectedList = ui->recentFiles->selectionModel()->selectedIndexes();
+    
+        nameListRecent.addItem(fileName);
+        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+
+
+}
+
+//removes chosen item from currenSTLs list
+void MainWindow::removeCurrentSTLs()
+{
+    QModelIndexList selectedList;
+    selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
+    if (selectedList.length() == 1)
+    {
+        // selectedList is a list of all selected items in the listView. Since we set its
+        // behaviour to single selection, were only interested in the first selecteded item.
+        emit statusUpdateMessage(QString("Remove button was clicked"), 0);
+        nameListCurrent.removeItem(selectedList[0]);
+    }
+    else
+    {
+        emit statusUpdateMessage(QString("No item selected to remove!"), 0);
+    }
+}
+
 void MainWindow::handleInsertObject()
 {
     //we want to use this button to add multiple STLs to same world
@@ -499,36 +557,15 @@ void MainWindow::handleInsertObject()
     listCurrentSTLs(fileName);
 
     listRecentSTLs(fileName);
-}
 
-void MainWindow::listCurrentSTLs( const QString &fileName){
-
-//Add new object to the List 
-    QModelIndexList selectedList;
-    selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
-    if (selectedList.length() == 0) //no items have been added yet so we want to add rather than insert
-    {
-        nameListCurrent.addItem(fileName);
-        emit statusUpdateMessage(QString("Add button was clicked"), 0);
-    }
-    if (selectedList.length() == 1)
-    {
-        // selectedList is a list of all selected items in the listView. Since we set its
-        // behaviour to single selection, were only interested in the first selecteded item.
-        emit statusUpdateMessage(QString("Add button was clicked"), 0);
-        nameListCurrent.insertItem(fileName, selectedList[0]);
-    }
 
 }
 
-void MainWindow::listRecentSTLs( const QString &fileName){
+void MainWindow::handleRemoveObject(){
 
-//Add new object to the List 
-    QModelIndexList selectedList;
-    selectedList = ui->recentFiles->selectionModel()->selectedIndexes();
-    
-        nameListRecent.addItem(fileName);
-        emit statusUpdateMessage(QString("Add button was clicked"), 0);
+
+
+removeCurrentSTLs();
 
 
 }

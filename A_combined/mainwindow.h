@@ -115,8 +115,10 @@ public:
     vtkNew<vtkWindowToImageFilter> windowToImageFilter;
     vtkNew<vtkPNGWriter> writer;
 
+//add and removing from list
 	void listCurrentSTLs(const QString& fileName);
 	void listRecentSTLs(const QString& fileName);
+    void removeCurrentSTLs();
 
     ~MainWindow();
 
@@ -132,6 +134,7 @@ public slots:
 	void handleCutter(); // will modify to fit format
 
 	void handleInsertObject();
+	void handleRemoveObject();
 
 	void on_clipFilter_stateChanged(int);
     void on_shrinkFilter_stateChanged(int);
