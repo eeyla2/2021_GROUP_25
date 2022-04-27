@@ -57,8 +57,10 @@ add_executable( QtVTKExample MACOSX_BUNDLE
                                 tabcontent.cpp
                                 tabcontent.h
                                 tabcontent.ui
-                                currentandrecentstl.cpp
-                                currentandrecentstl.h
+                                currentstl.cpp
+                                currentstl.h
+                                recentstl.cpp
+                                recentstl.h
 				${UI_Srcs}
 				${QRC_Srcs}
 				)
