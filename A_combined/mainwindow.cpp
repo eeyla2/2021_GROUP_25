@@ -606,7 +606,7 @@ void MainWindow::on_actionFileOpen_triggered()
     auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, reader);
 
     // Assign 'reader' <vtkSTLReader> type to generic pointer 'modelData' <vtkAlgorithm> type
-    // modelData = reader;
+    modelData = reader;
 
     // Create a mapper that will hold the cube's geometry in a format suitable for rendering
     mapper->SetInputConnection(reader->GetOutputPort());
