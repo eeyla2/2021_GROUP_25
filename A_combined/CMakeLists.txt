@@ -70,12 +70,17 @@ include( ${VTK_USE_FILE} )
 
 # Define the executable output and its sources
 add_executable( QtVTKExample MACOSX_BUNDLE
-				main.cpp mainwindow.cpp 
+				main.cpp 
+				mainwindow.cpp 
 				mainwindow.h 
 				mainwindow.ui
                                 tabcontent.cpp
                                 tabcontent.h
                                 tabcontent.ui
+				currentstl.cpp
+                                currentstl.h
+                                recentstl.cpp
+                                recentstl.h
 				${UI_Srcs}
 				${QRC_Srcs}
 				)
