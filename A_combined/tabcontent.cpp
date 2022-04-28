@@ -1,3 +1,13 @@
+//tabcontent.cpp
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
+
 #include "tabcontent.h"
 #include "ui_tabcontent.h"
 #include "mainwindow.h"

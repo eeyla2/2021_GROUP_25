@@ -1,5 +1,13 @@
+//tabcontent.h
 #ifndef TABCONTENT_H
 #define TABCONTENT_H
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
 
 #include <QWidget>
 

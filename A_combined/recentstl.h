@@ -1,5 +1,15 @@
+//recentstl.h
 #ifndef RECENTSTL_H
 #define RECENTSTL_H
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
+
 #include <QAbstractListModel>
 
 class RecentSTL : public QAbstractListModel

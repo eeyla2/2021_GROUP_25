@@ -1,4 +1,13 @@
-// main.cpp-------------------------------------------------------------------
+// main.cpp
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
+
 #include <QApplication>
 #include <QSurfaceFormat>
 #include <QVTKOpenGLWidget.h>

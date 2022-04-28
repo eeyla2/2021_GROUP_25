@@ -1,3 +1,13 @@
+//currentstl.cpp
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
+
 #include "currentstl.h"
 
 int CurrentSTL::rowCount(const QModelIndex &parent) const

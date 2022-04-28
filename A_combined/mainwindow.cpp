@@ -1,3 +1,13 @@
+//mainwindow.cpp
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 

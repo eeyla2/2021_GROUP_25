@@ -1,5 +1,16 @@
+//currentstl.h
 #ifndef CURRENTSTL_H
 #define CURRENTSTL_H
+
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
+
 #include <QAbstractListModel>
 
 class CurrentSTL : public QAbstractListModel
