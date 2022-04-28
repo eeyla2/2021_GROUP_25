@@ -1,5 +1,15 @@
+//mainwindow.h
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
+/** @file
+* This file contains the necessary Qt and VTK libraries for the program to run.
+*/
+
+/** Brief description
+* The declaration of how things (actors, mappers etc.) will be stored.
+* Declaration of the various functions that will be called when buttons are pressed in the GUI.
+*/
 
 #include <QMainWindow>
 #include <QStatusBar>

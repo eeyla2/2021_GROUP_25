@@ -5,7 +5,6 @@
 #include "currentstl.h"
 #include "recentstl.h"
 
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
 {
@@ -23,8 +22,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     ui->qvtkWidget->setRenderWindow(renderWindow);
 
-    //for lists of stls currently visible
-   // ui->
+    // for lists of stls currently visible
+    // ui->
 
     // Create an actor that is used to set the model's properties for rendering and place it in the window
     actor->SetMapper(mapper);
@@ -43,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->changeModelColor->setEnabled(false);
     ui->changeOutlineColor->setEnabled(false);
 
-    connect(this, &MainWindow::statusUpdateMessage, ui->statusBar, &QStatusBar::showMessage);   //status bar
+    connect(this, &MainWindow::statusUpdateMessage, ui->statusBar, &QStatusBar::showMessage); // status bar
 
     // Connect the released() signal of the renderCube object to the handleRenderCube slot in this object
     connect(ui->renderCube, &QPushButton::released, this, &MainWindow::handleRenderCube);
@@ -74,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     // Connect the released() signal of the removeObject object to the handleRemoveObject slot in this object
     connect(ui->removeObject, &QPushButton::released, this, &MainWindow::handleRemoveObject);
 
-// Connect the released() signal of the newWindowButton object to the handleNewWindowButton slot in this object
+    // Connect the released() signal of the newWindowButton object to the handleNewWindowButton slot in this object
     connect(ui->newWindowButton, &QAction::triggered, this, &MainWindow::handleNewWindowButton);
 }
 
@@ -453,14 +452,14 @@ void MainWindow::handleChangePosition()
 }
 */
 
+// adds new items to current stls list
+void MainWindow::listCurrentSTLs(const QString &fileName)
+{
 
-//adds new items to current stls list
-void MainWindow::listCurrentSTLs( const QString &fileName){
-
-//Add new object to the List 
+    // Add new object to the List
     QModelIndexList selectedList;
     selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
-    if (selectedList.length() == 0) //no items have been added yet so we want to add rather than insert
+    if (selectedList.length() == 0) // no items have been added yet so we want to add rather than insert
     {
         nameListCurrent.addItem(fileName);
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
@@ -472,23 +471,21 @@ void MainWindow::listCurrentSTLs( const QString &fileName){
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
         nameListCurrent.insertItem(fileName, selectedList[0]);
     }
-
 }
 
-//adds items to recent STLs files
-void MainWindow::listRecentSTLs( const QString &fileName){
+// adds items to recent STLs files
+void MainWindow::listRecentSTLs(const QString &fileName)
+{
 
-//Add new object to the List 
+    // Add new object to the List
     QModelIndexList selectedList;
     selectedList = ui->recentFiles->selectionModel()->selectedIndexes();
-    
-        nameListRecent.addItem(fileName);
-        emit statusUpdateMessage(QString("Add button was clicked"), 0);
 
-
+    nameListRecent.addItem(fileName);
+    emit statusUpdateMessage(QString("Add button was clicked"), 0);
 }
 
-//removes chosen item from currenSTLs list
+// removes chosen item from currenSTLs list
 void MainWindow::removeCurrentSTLs()
 {
     QModelIndexList selectedList;
@@ -508,8 +505,8 @@ void MainWindow::removeCurrentSTLs()
 
 void MainWindow::handleInsertObject()
 {
-    //we want to use this button to add multiple STLs to same world
-    //when we open a file we are replacing the current object with a new one, when in
+    // we want to use this button to add multiple STLs to same world
+    // when we open a file we are replacing the current object with a new one, when in
     emit statusUpdateMessage(QString("Inserting object into this world"), 0);
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "../", tr("(*.stl)")); // filename gives entire path
@@ -521,27 +518,27 @@ void MainWindow::handleInsertObject()
     const char *c_str = ba.data();
     std::cout << c_str << "\n";
 
-    //start reading 
+    // start reading
     vtkNew<vtkSTLReader> _reader;
 
     _reader->SetFileName(c_str);
     _reader->Update();
 
-    auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin()+numSTL, _reader);
+    auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, _reader);
 
     vtkNew<vtkDataSetMapper> STLmapper;
     STLmapper->SetInputConnection(_reader->GetOutputPort());
 
-    auto itM = listOfSTLMappers.insert(listOfSTLMappers.begin()+numSTL, STLmapper);
+    auto itM = listOfSTLMappers.insert(listOfSTLMappers.begin() + numSTL, STLmapper);
 
     vtkNew<vtkActor> STLActor;
     STLActor->SetMapper(STLmapper);
     STLActor->GetProperty()->EdgeVisibilityOn();
 
-    auto itA = listOfSTLActors.insert(listOfSTLActors.begin()+numSTL, STLActor);
+    auto itA = listOfSTLActors.insert(listOfSTLActors.begin() + numSTL, STLActor);
 
-    //add all actors to renderer
-    for (int i=0; i<listOfSTLActors.size(); i++)
+    // add all actors to renderer
+    for (int i = 0; i < listOfSTLActors.size(); i++)
     {
         renderer->AddActor(listOfSTLActors.at(i));
     }
@@ -551,28 +548,21 @@ void MainWindow::handleInsertObject()
 
     numSTL++;
 
-    //extract file name from its path to 
+    // extract file name from its path to
     QFileInfo fileInfo(fileName);
-    QString fileShortName (fileInfo.fileName());
+    QString fileShortName(fileInfo.fileName());
 
-
-    //add to recent and current STLs list
+    // add to recent and current STLs list
     listCurrentSTLs(fileShortName);
 
     listRecentSTLs(fileShortName);
-
-
 }
 
-void MainWindow::handleRemoveObject(){
+void MainWindow::handleRemoveObject()
+{
 
-
-
-removeCurrentSTLs();
-
-
+    removeCurrentSTLs();
 }
-
 
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/
 void MainWindow::on_actionFileOpen_triggered()
@@ -603,22 +593,21 @@ void MainWindow::on_actionFileOpen_triggered()
 
     reader->Update();
 
-
-    auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin()+numSTL, reader);
+    auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, reader);
 
     // Assign 'reader' <vtkSTLReader> type to generic pointer 'modelData' <vtkAlgorithm> type
-    //modelData = reader;
+    // modelData = reader;
 
     // Create a mapper that will hold the cube's geometry in a format suitable for rendering
     mapper->SetInputConnection(reader->GetOutputPort());
 
-    auto itM = listOfSTLMappers.insert(listOfSTLMappers.begin()+numSTL, mapper);
+    auto itM = listOfSTLMappers.insert(listOfSTLMappers.begin() + numSTL, mapper);
 
     // Create an actor that is used to set the cube's properties for rendering and place it in the window
     actor->SetMapper(mapper);
     actor->GetProperty()->EdgeVisibilityOn();
 
-    auto itA = listOfSTLActors.insert(listOfSTLActors.begin()+numSTL, actor);
+    auto itA = listOfSTLActors.insert(listOfSTLActors.begin() + numSTL, actor);
 
     // Create a renderer, and render window
     vtkNew<vtkRenderWindow> renderWindow;
@@ -656,7 +645,7 @@ void MainWindow::on_actionHelp_triggered()
     msgBox.exec();
 }
 
-//Screenshot
+// Screenshot
 void MainWindow::on_actionPrint_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Take a Screenshot"), "./", tr("PNG (*.png)"));
@@ -668,20 +657,20 @@ void MainWindow::on_actionPrint_triggered()
 
     // Screenshot
 
-        // Problem: vtkWindowToImageFilter doesn't update models
+    // Problem: vtkWindowToImageFilter doesn't update models
 
-        // Solution:
-            // WARNING: vtkWindowToImageFilter
-                // A vtkWindow doesn't behave like other parts of the VTK pipeline:
-                // its modification time doesn't get updated when an image is rendered.
-                // As a result, naive use of vtkWindowToImageFilter will produce an image
-                // of the first image that the window rendered, but which is never updated
-                // on subsequent window updates. This behavior is unexpected and in general undesirable.
-                // To force an update of the output image, call vtkWindowToImageFilter's Modified method
-                // after rendering to the window.
+    // Solution:
+    // WARNING: vtkWindowToImageFilter
+    // A vtkWindow doesn't behave like other parts of the VTK pipeline:
+    // its modification time doesn't get updated when an image is rendered.
+    // As a result, naive use of vtkWindowToImageFilter will produce an image
+    // of the first image that the window rendered, but which is never updated
+    // on subsequent window updates. This behavior is unexpected and in general undesirable.
+    // To force an update of the output image, call vtkWindowToImageFilter's Modified method
+    // after rendering to the window.
 
-                // https://vtk.org/doc/nightly/html/classvtkWindowToImageFilter.html
-                // https://stackoverflow.com/questions/47436669/vtk-c-update-contour-from-contourfilter
+    // https://vtk.org/doc/nightly/html/classvtkWindowToImageFilter.html
+    // https://stackoverflow.com/questions/47436669/vtk-c-update-contour-from-contourfilter
 
     windowToImageFilter->Modified();
     windowToImageFilter->SetInput(renderWindow);
@@ -696,21 +685,19 @@ void MainWindow::on_actionPrint_triggered()
     file.close();
 }
 
-//closes any tab that is opened
+// closes any tab that is opened
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
 
     ui->tabWidget->removeTab(index);
-
 }
 
-//create new tab
+// create new tab
 void MainWindow::handleNewWindowButton()
 {
-    //not fuly convinced this is the way to do tabs
+    // not fuly convinced this is the way to do tabs
 
-     //ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
+    ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
 
-     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
-
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }
