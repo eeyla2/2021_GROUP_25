@@ -441,6 +441,8 @@ void MainWindow::handleChangePosition()
     actor->SetPosition(x, y, z);
     //  actor->SetPosition(-0.287, 0, 0.9579);
 
+    outlineActor->SetPosition(x, y, z);
+
     renderWindow->Render();
     ui->qvtkWidget->renderWindow()->Render();
 }
