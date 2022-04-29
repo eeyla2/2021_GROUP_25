@@ -1,4 +1,12 @@
-//Model class - Daniel
+//model.cpp
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
 
 /*
 Current status:

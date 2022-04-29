@@ -1,6 +1,14 @@
-//Cell header - Laith
+//cell.hpp
 #ifndef CELL_HPP
 #define CELL_HPP
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
 
 #include <vector>
 

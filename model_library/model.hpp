@@ -1,7 +1,14 @@
-//Model header - Daniel
-
+//model.hpp
 #ifndef MODEL_HPP
 #define MODEL_HPP
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
 
 //Other classes of library
 

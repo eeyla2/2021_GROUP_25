@@ -1,4 +1,14 @@
-//Matrix header - Best & Daniel
+//matrix.hpp
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
 #include <iostream>
 #include <math.h>
 #include "vector.hpp"
@@ -83,3 +93,5 @@ public:
 private:
     float matrix[3][3];
 };
+
+#endif

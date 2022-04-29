@@ -1,6 +1,14 @@
-//Vector header - Best
+//vector.hpp
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
+
+/** @file
+* This file contains..........
+*/
+
+/** Brief description
+* The description..............
+*/
 
 #include <iostream>
 using namespace std;
