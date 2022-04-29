@@ -1,12 +1,12 @@
-//mainwindow.cpp
+// mainwindow.cpp
 
 /** @file
-* This file contains..........
-*/
+ * This file contains..........
+ */
 
 /** Brief description
-* The description..............
-*/
+ * The description..............
+ */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -579,64 +579,100 @@ void MainWindow::handleRemoveObject()
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/
 void MainWindow::on_actionFileOpen_triggered()
 {
-    ui->clipFilter->setEnabled(true);
-    ui->shrinkFilter->setEnabled(true);
-    ui->outlineFilter->setEnabled(true);
-    ui->changeModelColor->setEnabled(true);
-    ui->edgeVisibilityFilter->setEnabled(true);
+    emit statusUpdateMessage(QString("Open was clicked"), 0);
 
-    ui->clipFilter->setChecked(false);
-    ui->shrinkFilter->setChecked(false);
-    ui->outlineFilter->setChecked(false);
-    ui->edgeVisibilityFilter->setChecked(true);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "../", tr("Model Files(*.stl *.mod)")); // filename gives entire path
 
-    // Remove Outline Filter From Previous Model
-    renderer->RemoveActor(outlineActor);
+    if (fileName.isEmpty())
+        return;
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open STL File"), "./", tr("STL Files (*.stl)"));
+    emit statusUpdateMessage(QString(fileName), 0);
 
-    // const char *c_str = fileName.toLatin1().data();
+    QByteArray ba = fileName.toLatin1();
+    const char *c_str = ba.data();
+    std::cout << c_str << "\n";
 
-    // https://www.cnblogs.com/wxl845235800/p/10796840.html
-    QByteArray fileSTL = fileName.toLatin1();
-    const char *c_str = fileSTL.data();
+    //--------------------------Reading in file-----------Now we change what we are doing based on .stl or .mod
 
-    reader->SetFileName(c_str);
+    lastCharacterOfFile = c_str[strlen(c_str) - 1]; // last character of file will be 'l' for stl, 'd' for mod
+    std::cout << lastCharacterOfFile << "\n" << endl;
 
-    reader->Update();
 
-    auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, reader);
+    if (lastCharacterOfFile != 'l' && lastCharacterOfFile != 'd')
+    {
+        emit statusUpdateMessage(QString("Invalid file"), 0);
+        return;
+    }
 
-    // Assign 'reader' <vtkSTLReader> type to generic pointer 'modelData' <vtkAlgorithm> type
-    modelData = reader;
+    else if (lastCharacterOfFile == 'l')
+    {
 
-    // Create a mapper that will hold the cube's geometry in a format suitable for rendering
-    mapper->SetInputConnection(reader->GetOutputPort());
+        ui->clipFilter->setEnabled(true);
+        ui->shrinkFilter->setEnabled(true);
+        ui->outlineFilter->setEnabled(true);
+        ui->changeModelColor->setEnabled(true);
+        ui->edgeVisibilityFilter->setEnabled(true);
 
-    auto itM = listOfSTLMappers.insert(listOfSTLMappers.begin() + numSTL, mapper);
+        ui->clipFilter->setChecked(false);
+        ui->shrinkFilter->setChecked(false);
+        ui->outlineFilter->setChecked(false);
+        ui->edgeVisibilityFilter->setChecked(true);
 
-    // Create an actor that is used to set the cube's properties for rendering and place it in the window
-    actor->SetMapper(mapper);
-    actor->GetProperty()->EdgeVisibilityOn();
+        // Remove Outline Filter From Previous Model
+        renderer->RemoveActor(outlineActor);
 
-    auto itA = listOfSTLActors.insert(listOfSTLActors.begin() + numSTL, actor);
+        //QString fileName = QFileDialog::getOpenFileName(this, tr("Open STL File"), "./", tr("STL Files (*.stl)"));
 
-    // Create a renderer, and render window
-    vtkNew<vtkRenderWindow> renderWindow;
-    ui->qvtkWidget->renderWindow()->AddRenderer(renderer); // ###### ask the QtVTKOpenGLWidget for its renderWindow ######
+        // const char *c_str = fileName.toLatin1().data();
 
-    // Add the actor to the scene
-    renderer->AddActor(actor);
+        // https://www.cnblogs.com/wxl845235800/p/10796840.html
+        
+        //QByteArray fileSTL = fileName.toLatin1(); //now done above
+        //const char *c_str = fileSTL.data();
 
-    // Setup the renderers's camera
-    renderer->ResetCamera();
-    renderer->GetActiveCamera()->Azimuth(0);
-    renderer->GetActiveCamera()->Elevation(0);
-    renderer->ResetCameraClippingRange();
-    ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
-    renderWindow->Render();
+        reader->SetFileName(c_str);
 
-    numSTL++;
+        reader->Update();
+
+        auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, reader);
+
+        // Assign 'reader' <vtkSTLReader> type to generic pointer 'modelData' <vtkAlgorithm> type
+        modelData = reader;
+
+        // Create a mapper that will hold the cube's geometry in a format suitable for rendering
+        mapper->SetInputConnection(reader->GetOutputPort());
+
+        auto itM = listOfSTLMappers.insert(listOfSTLMappers.begin() + numSTL, mapper);
+
+        // Create an actor that is used to set the cube's properties for rendering and place it in the window
+        actor->SetMapper(mapper);
+        actor->GetProperty()->EdgeVisibilityOn();
+
+        auto itA = listOfSTLActors.insert(listOfSTLActors.begin() + numSTL, actor);
+
+        // Create a renderer, and render window
+        vtkNew<vtkRenderWindow> renderWindow;
+        ui->qvtkWidget->renderWindow()->AddRenderer(renderer); // ###### ask the QtVTKOpenGLWidget for its renderWindow ######
+
+        // Add the actor to the scene
+        renderer->AddActor(actor);
+
+        // Setup the renderers's camera
+        renderer->ResetCamera();
+        renderer->GetActiveCamera()->Azimuth(0);
+        renderer->GetActiveCamera()->Elevation(0);
+        renderer->ResetCameraClippingRange();
+        ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
+        renderWindow->Render();
+
+        numSTL++;
+    }
+
+    else if (lastCharacterOfFile == 'd')
+    {
+        // tried to open mod file
+        std::cout << "Opening mod file\n";
+    }
 }
 
 void MainWindow::on_actionHelp_triggered()
@@ -709,7 +745,7 @@ void MainWindow::handleNewWindowButton()
 {
     // not fuly convinced this is the way to do tabs
 
-    ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() +1 ) );//still need to know how to make the tab have the name of the filer
+    ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() + 1)); // still need to know how to make the tab have the name of the filer
 
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }

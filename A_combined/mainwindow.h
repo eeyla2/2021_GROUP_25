@@ -169,6 +169,11 @@ private:
 	int z;
 //  double volume;
 
+	QString fileName; 
+
+
+    char lastCharacterOfFile;
+
 
     int numSTL=0;
     std::vector<vtkSmartPointer<vtkSTLReader>> listOfSTLReaders;

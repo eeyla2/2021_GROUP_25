@@ -1,1 +1,7 @@
 Make splash screen path not hard coded
+
+make more variables private
+
+comment everything with doxygen
+
+copy across needed files when building?
