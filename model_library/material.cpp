@@ -1,12 +1,11 @@
 //material.cpp
 
 /** @file
-* This file contains the necessary Qt and VTK libraries for the program to run.
+* File defining functions for setting and getting the material properties of the Model.
 */
 
 /** Brief description
-* The declaration of how things (actors, mappers etc.) will be stored.
-* Declaration of the various functions that will be called when buttons are pressed in the GUI.
+* Will be called from Model class.
 */
 
 

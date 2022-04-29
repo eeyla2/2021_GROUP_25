@@ -3,11 +3,12 @@
 #define MODEL_HPP
 
 /** @file
-* This file contains..........
+* Header file of the model class
 */
 
 /** Brief description
-* The description..............
+* The model class is the largest and uses all of the others
+* Lists of material, vectors and cells are defined and stored in the model
 */
 
 //Other classes of library

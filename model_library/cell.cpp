@@ -1,10 +1,12 @@
+//cell.cpp
+
 /** @file
-* This file contains the necessary Qt and VTK libraries for the program to run.
+* File for definining the three types of shapes defined in .mod files.
 */
 
 /** Brief description
-* The declaration of how things (actors, mappers etc.) will be stored.
-* Declaration of the various functions that will be called when buttons are pressed in the GUI.
+* The cell class is the parent of the tetrahedron, pyramid & hexahedron class
+* Instances of these classes are called to create the Model
 */
 
 #include "cell.hpp"

@@ -1,11 +1,12 @@
 // mainwindow.cpp
 
 /** @file
- * This file contains..........
+ * The mainwindow of the ModelViewer control how the user interacts with the GUI
  */
 
 /** Brief description
- * The description..............
+ * Links buttons defined in UI file to the system
+ * Defines what functions are executed when different buttons are pressed
  */
 
 #include "mainwindow.h"

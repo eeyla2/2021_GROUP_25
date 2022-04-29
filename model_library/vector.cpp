@@ -1,11 +1,11 @@
 //vector.cpp
 
 /** @file
-* This file contains..........
+* File of the vector class
 */
 
 /** Brief description
-* The description..............
+* Definesthe vector class &  vector operations
 */
 
 #include "vector.hpp"

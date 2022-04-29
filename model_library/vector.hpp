@@ -3,11 +3,12 @@
 #define VECTOR_HPP
 
 /** @file
-* This file contains..........
+* Header file for vector class
 */
 
 /** Brief description
-* The description..............
+* Declaration of class constructors, operators etc.
+* The vector class is a friend of the matrix class
 */
 
 #include <iostream>

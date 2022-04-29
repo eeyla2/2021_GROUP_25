@@ -3,12 +3,11 @@
 #define MATERIAL_HPP
 
 /** @file
-* This file contains the necessary Qt and VTK libraries for the program to run.
+* Header file for material
 */
 
 /** Brief description
-* The declaration of how things (actors, mappers etc.) will be stored.
-* Declaration of the various functions that will be called when buttons are pressed in the GUI.
+* Contains class declaration for the material class
 */
 
 //Class definition, class member functions in Material.cpp

@@ -3,17 +3,18 @@
 #define MATRIX_HPP
 
 /** @file
-* This file contains..........
+* Header file for matrix
 */
 
 /** Brief description
-* The description..............
+* Contains class declartion for the Matrix calss
+* Reminder: Trig functions require arguments in radians
 */
+
 #include <iostream>
 #include <math.h>
 #include "vector.hpp"
 
-//Reminder: Trig functions require arguments in radians
 
 class Matrix3x3
 {

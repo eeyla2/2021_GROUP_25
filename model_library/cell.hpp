@@ -3,11 +3,13 @@
 #define CELL_HPP
 
 /** @file
-* This file contains..........
+* Header file for cell class
 */
 
 /** Brief description
-* The description..............
+* Declaration of the cell calss
+* Uses inheritance, cell is the parent of the classes for the 3 shape types
+* Calculations about the cell are also defined
 */
 
 #include <vector>
