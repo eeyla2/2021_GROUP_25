@@ -1,5 +1,5 @@
 // Test executable - Daniel
-#include "../src/model.hpp"
+#include "../model_library/model.hpp"
 
 int main()
 {
@@ -27,7 +27,7 @@ int main()
 	
 	cout << "\n\n-------------------Reading file & decalring objects-----------------\n";
 
-	string filePath = "../proprietary_files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
 
 	Model myModel = Model(filePath);
 
