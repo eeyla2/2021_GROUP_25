@@ -65,6 +65,7 @@
 #include "recentstl.h"
 
 
+//#include "../model_library/model.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -152,6 +153,8 @@ public slots:
     void on_edgeVisibilityFilter_stateChanged(int);
 
     void on_actionFileOpen_triggered();
+	//void vtk_declare(Model &theModel);
+
     void on_actionHelp_triggered();
     void on_actionPrint_triggered();
 
@@ -179,6 +182,11 @@ private:
     std::vector<vtkSmartPointer<vtkSTLReader>> listOfSTLReaders;
     std::vector<vtkSmartPointer<vtkDataSetMapper>> listOfSTLMappers;
     std::vector<vtkSmartPointer<vtkActor>> listOfSTLActors;
+
+
+    std::vector<vtkSmartPointer<vtkDataSetMapper>> listOfMappers;
+    std::vector<vtkSmartPointer<vtkActor>> listOfActors;
+    std::vector<vtkSmartPointer<vtkUnstructuredGrid>> listOfUnstructuredGrids;
 
 	CurrentSTL nameListCurrent;
 	RecentSTL nameListRecent;

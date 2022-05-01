@@ -7,3 +7,5 @@ comment everything with doxygen
 copy across needed files when building?
 
 organise into inc & src folders?
+
+check hardcoded paths!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

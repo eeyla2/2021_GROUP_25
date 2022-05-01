@@ -673,8 +673,178 @@ void MainWindow::on_actionFileOpen_triggered()
     {
         // tried to open mod file
         std::cout << "Opening mod file\n";
+        /*
+        std::string filePath = c_str;
+
+        Model myModel = Model(filePath);
+
+        vtk_declare(myModel);
+        */
     }
 }
+
+/*
+void MainWindow::vtk_declare(Model &theModel)
+{
+    std::cout << "Test\n";
+    std::string nameOfMaterial0 = theModel.get_listOfMaterials().at(0).get_materialName();
+    std::cout << "\n\nName of material 0: " << nameOfMaterial0 << "\n\n";
+
+
+    int numHex=0;
+
+    for (int i = 0; i < theModel.get_numCells(); i++) // loop over all the cells in the list
+    {
+        if (theModel.get_listOfCells().at(i)->get_cellLetter() == 'h')
+        {
+
+            std::cout << "First vector id: " << theModel.get_listOfCells().at(i)->get_cellp0().get_vectorID() << "\n";
+
+            std::vector<std::array<double, 3>> pointCoordinates;
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp0().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp0().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp0().get_z()}});
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp1().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp1().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp1().get_z()}});
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp2().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp2().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp2().get_z()}});
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp3().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp3().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp3().get_z()}});
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp4().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp4().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp4().get_z()}}); 
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp5().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp5().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp5().get_z()}});
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp6().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp6().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp6().get_z()}});
+            pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp7().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp7().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp7().get_z()}});
+
+
+            vtkNew<vtkPoints> hexPoints;
+
+            // declare hexahedron
+            vtkNew<vtkHexahedron> hex; // will need a list of hexahedra
+
+            
+            for (auto j = 0; j < pointCoordinates.size(); ++j)
+            {
+                hexPoints->InsertNextPoint(pointCoordinates[j].data());
+                hex->GetPointIds()->SetId(j, j);
+            }
+
+            //-----
+            vtkNew<vtkCellArray> listOfHexs;
+            listOfHexs->InsertNextCell(hex);   //add to list of cells
+
+            vtkNew<vtkUnstructuredGrid> hexUGrid;
+            hexUGrid->SetPoints(hexPoints);
+            hexUGrid->InsertNextCell(hex->GetCellType(), hex->GetPointIds());
+
+            //add this UG to list of UG
+            /////////auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, reader);
+            auto itUG = listOfUnstructuredGrids.insert(listOfUnstructuredGrids.begin()+numHex, hexUGrid);
+
+
+            vtkNew<vtkDataSetMapper> _mapper;
+
+            auto itMapper = listOfMappers.insert(listOfMappers.begin()+numHex, _mapper);
+
+            listOfMappers.at(numHex)->SetInputData(listOfUnstructuredGrids.at(numHex));
+            //_mapper->SetInputData(hexUGrid);
+
+            vtkNew<vtkActor> _actor;
+
+            auto itActor = listOfActors.insert(listOfActors.begin()+numHex, _actor);
+
+            listOfActors.at(numHex)->GetProperty()->SetColor(colors->GetColor3d("PeachPuff").GetData());
+            listOfActors.at(numHex)->SetMapper(_mapper);
+
+            // _actor->GetProperty()->SetColor(colors->GetColor3d("PeachPuff").GetData());
+            // _actor->SetMapper(_mapper);
+
+            renderer->AddActor(listOfActors.at(numHex));
+
+
+           numHex++;
+        }
+
+        
+        if (theModel.get_listOfCells().at(i)->get_cellLetter() == 't')
+        {
+            // declare tetra
+
+            vtkNew<vtkPoints> tetraPoints; // how are we going to make sure this isnt overwrtten when declaring many tetra
+
+            tetraPoints->InsertNextPoint(theModel.get_listOfCells().at(i)->get_cellp0().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp0().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp0().get_z());
+
+            tetraPoints->InsertNextPoint(theModel.get_listOfCells().at(i)->get_cellp1().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp1().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp1().get_z());
+
+            tetraPoints->InsertNextPoint(theModel.get_listOfCells().at(i)->get_cellp2().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp2().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp2().get_z());
+
+            tetraPoints->InsertNextPoint(theModel.get_listOfCells().at(i)->get_cellp3().get_x(),
+                                         theModel.get_listOfCells().at(i)->get_cellp3().get_y(),
+                                         theModel.get_listOfCells().at(i)->get_cellp3().get_z());
+
+
+
+            vtkNew<vtkUnstructuredGrid> tetraUGrid;
+            // unstructuredGrid1->SetPoints(tetraPoints);
+
+            listOfUnstructuredGrids.push_back(tetraUGrid);
+            // listOfUnstructuredGrids.at(i) = tetraUGrid;
+            listOfUnstructuredGrids.at(i)->SetPoints(tetraPoints);
+
+            // cout << "Num points: " << tetraPoints->GetNumberOfPoints() << "\n";
+
+            // cout << "ID: " << theModel.get_listOfCells().at(i)->get_cellp0().get_vectorID() << "\n";
+
+            vtkIdType ptIds[] = {0, 1, 2, 3};
+
+            std::cout << "Value of i: " << i << " Assigning tetra\n";
+
+            listOfUnstructuredGrids.at(i)->InsertNextCell(VTK_TETRA, 4, ptIds);
+            // unstructuredGrid1->InsertNextCell({8,9,10,11});
+
+            // need to create a list of actors and mappers to manage multiple things at once
+            //-----------------------------------------------
+            vtkNew<vtkDataSetMapper> tetraMapper;
+            listOfMappers.push_back(tetraMapper);
+
+            listOfMappers.at(i)->SetInputData(listOfUnstructuredGrids.at(i));
+
+            vtkNew<vtkActor> tetraActor;
+            listOfActors.push_back(tetraActor);
+
+            listOfActors.at(i)->SetMapper(listOfMappers.at(i));
+            listOfActors.at(i)->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
+
+            renderer->AddActor(listOfActors.at(i));
+
+
+        }
+        
+    }
+    renderer->ResetCamera();
+    renderer->GetActiveCamera()->Azimuth(30);
+    renderer->GetActiveCamera()->Elevation(30);
+    renderer->ResetCameraClippingRange();
+
+    renderWindow->Render();
+}
+*/
 
 void MainWindow::on_actionHelp_triggered()
 {
