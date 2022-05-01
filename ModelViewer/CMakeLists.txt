@@ -129,6 +129,24 @@ COMPONENT applications
         )
 
 
+install(DIRECTORY installerfiles/files
+        DESTINATION files
+        COMPONENT files
+        )
+
+install(DIRECTORY installerfiles/model_library
+        DESTINATION lib
+        COMPONENT libraries
+)
+
+install(FILES installerfiles/README.md
+        DESTINATION documentation
+        COMPONENT files
+)
+            
+
+
+
 install(FILES
         ${CMAKE_DIR}/bin/Qt6Cored.dll
         ${CMAKE_DIR}/bin/Qt6Guid.dll
