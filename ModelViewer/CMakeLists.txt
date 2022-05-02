@@ -1,43 +1,32 @@
 
-foreach(p
-    CMP0071 # 3.10: Let AUTOMOC and AUTOUIC process GENERATED files
-    )
-  if(POLICY ${p})
-    cmake_policy(SET ${p} NEW)
-  endif()
-endforeach()
 
-
-
-#set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
-if (MSVC_VERSION EQUAL 1930 AND MSVC_TOOLSET_VERSION EQUAL 142)
-	cmake_host_system_information(RESULT VS_DIR QUERY VS_17_DIR)
-	file(GLOB MSVC_REDIST_LIBRARIES "${VS_DIR}/VC/Redist/MSVC/*/${MSVC_C_ARCHITECTURE_ID}/Microsoft.VC143.CRT/*.dll")
-	list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${MSVC_REDIST_LIBRARIES}")
-	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_NO_WARNINGS TRUE)
-endif()
-
-
-
-include(InstallRequiredSystemLibraries)
    
 
 
 include(CTest)
 
-if(${BUILD_INSTALLER})
+if(WIN32)
    set(CPACK_GENERATOR "NSIS")
    else()
    set(CPACK_GENERATOR "ZIP")
 
 endif()
 
-include(CPack)
+
 
 find_package(VTK COMPONENTS 
   vtkCommonColor
   vtkCommonCore
   vtkCommonDataModel
+  vtkCommonExecutionModel
+  vtkFiltersCore
+  vtkFiltersGeneral
+  vtkFiltersGeometry
+  vtkFiltersSources
+  vtkIoImage
+  vtkFiltersModelling
+  vtkGuiSupport
+  vtkIoGeometry
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
   vtkRenderingCore
@@ -60,13 +49,17 @@ set( CMAKE_AUTOUIC ON )
 
 # Find the Qt widgets package. This locates the relevant include and
 # lib directories, and the necessary static libraries for linking.
-find_package( Qt6Widgets )
+find_package( Qt6 REQUIRED COMPONENTS Widgets
+Gui
+Core
+ )
 
 set( UIS mainwindow.ui )
 qt6_wrap_ui( UI_Srcs ${UIS} )
 
 set( ICONS Icons/icons.qrc )
 qt6_add_resources( QRC_Srcs ${ICONS} )
+
 
 
 # Also link to VTK
@@ -91,7 +84,10 @@ add_executable( ModelViewer25 MACOSX_BUNDLE
 				)
 
 # Tell CMake that the executable depends on the Qt::Widget libraries.
-target_link_libraries( ModelViewer25 Qt6::Widgets )
+target_link_libraries( ModelViewer25 Qt6::Widgets
+Qt6::Gui
+Qt6::Core
+ )
 
 # Tell CMake that the executable depends on the VTK libraries
 target_link_libraries( ModelViewer25 ${VTK_LIBRARIES} )
@@ -103,17 +99,16 @@ target_link_libraries( ModelViewer25 ${VTK_LIBRARIES} )
 
 
 
-
  
 
 
- if ( ${MODELVIEWER25} OR ${BUILD_INSTALLERS} )
+# if ( ${BUILD_MODELVIEWER25} OR ${BUILD_INSTALLERS} )
 # These two lines set the path for the transfer of the libraries needed to run the application it varies from system to system.
-#  set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
-#  set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
- endif()
+  
+# endif()
 
-
+set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
+  set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
 
 # Installer code
 
@@ -177,10 +172,17 @@ install(FILES
         ${VTK_DIR}/bin/Debug/vtktiff-9.1d.dll
         ${VTK_DIR}/bin/Debug/vtkzlib-9.1d.dll
        
-        C:/Windows/SysWOW64/MSVCP140D.dll 
-        C:/Windows/SysWOW64/VCRUNTIME140D.dll 
-        C:/Windows/SysWOW64/UCRTBASED.dll 
-        C:/Windows/SysWOW64/KERNEL32.dll 
+        C:/Windows/System32/MSVCP140D.dll 
+        C:/Windows/System32/VCRUNTIME140D.dll 
+        C:/Windows/System32/GDI32.dll
+        C:/Windows/System32/KERNEL32.dll
+        C:/Windows/System32/OLE32.dll 
+        C:/Windows/System32/SHELL32.dll
+        C:/Windows/System32/ADVAPI32.dll
+        C:/Windows/System32/COMCTL32.dll
+        C:/Windows/System32/USER32.dll
+
+      
 
 	
         DESTINATION bin
@@ -197,6 +199,8 @@ install(FILES
         ${ModelViewer25_SOURCE_DIR}/model_library/material.cpp;
         ${ModelViewer25_SOURCE_DIR}/model_library/vector.hpp;
         ${ModelViewer25_SOURCE_DIR}/model_library/vector.cpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/cell.hpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/cell.cpp;
       
 
         DESTINATION include
@@ -217,6 +221,48 @@ install(FILES
         COMPONENT model_files
         )
 
+
+
+set(CPACK_PACKAGE_NAME "ModelViewer25")
+
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "ModelViewer25")
+
+
+ # Define components and their display names
+    set(CPACK_COMPONENTS_ALL applications model_files libraries headers)
+    set(CPACK_COMPONENT_APPLICATIONS_DISPLAY_NAME "Applications")
+    set(CPACK_COMPONENT_MODEL_FILES_DISPLAY_NAME "Model Files")
+    set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Libraries")
+    set(CPACK_COMPONENT_HEADERS_DISPLAY_NAME "Header Files")
+
+
+
+
+
+
+   # Define dependencies between components
+    set(CPACK_COMPONENT_APPLICATIONS_DEPENDS libraries)
+    set(CPACK_COMPONENT_HEADERS_DEPENDS libraries)
+
+    # Define groups
+    set(CPACK_COMPONENT_APPLICATIONS_GROUP "Runtime")
+    set(CPACK_COMPONENT_MODEL_FILES_GROUP "Runtime")
+    set(CPACK_COMPONENT_LIBRARIES_GROUP "Runtime")
+    set(CPACK_COMPONENT_HEADERS_GROUP "Development")
+
+
+
+
+ # Define NSIS installation types
+    set(CPACK_ALL_INSTALL_TYPES Everything "Applications With Libraries" Developer)
+    set(CPACK_COMPONENT_APPLICATIONS_INSTALL_TYPES Everything "Applications With Libraries")
+    set(CPACK_COMPONENT_MODEL_FILES_INSTALL_TYPES Everything)
+    set(CPACK_COMPONENT_LIBRARIES_INSTALL_TYPES Everything "Applications With Libraries" Developer)
+    set(CPACK_COMPONENT_HEADERS_INSTALL_TYPES Everything Developer)
+    
+    
+    include(CPack)
+    include(InstallRequiredSystemLibraries)
 
 
   
