@@ -188,6 +188,8 @@ private:
     std::vector<vtkSmartPointer<vtkActor>> listOfActors;
     std::vector<vtkSmartPointer<vtkUnstructuredGrid>> listOfUnstructuredGrids;
 
+    QModelIndex selectedIndexAdd;
+    QModelIndex selectedIndexRemove;
 	CurrentSTL nameListCurrent;
 	RecentSTL nameListRecent;
 	
