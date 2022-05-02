@@ -7,7 +7,7 @@
 */
 
 /** Brief description
-* Declaration of the cell calss
+* Declaration of the cell class
 * Uses inheritance, cell is the parent of the classes for the 3 shape types
 * Calculations about the cell are also defined
 */

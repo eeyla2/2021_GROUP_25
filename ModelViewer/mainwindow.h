@@ -22,6 +22,7 @@
 #include <QString>
 #include <QWidget>
 #include <QMessageBox>
+#include <QModelIndex>
 
 #include <vtkSmartPointer.h>
 #include <vtkCubeSource.h>
