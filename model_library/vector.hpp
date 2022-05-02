@@ -25,7 +25,7 @@ public:
    Vector3d();
 
    /**
-    *  Constructor for storing ID of each Model for identification 
+    *  Constructor for storing ID of each Model for identification
     *  and its x,y,x coordinates accoridngly to set up a
     *  a Vector3d Class
     */
@@ -41,12 +41,16 @@ public:
     */
    Vector3d(const Vector3d &V);
 
+   /** Destructor
+    */
+   ~Vector3d() {}
+
    /** Assignment Operator which assigns the values of the variables of the Vector3d "V"
     * to the Vector3d class on the right hand side of the operand
     */
    Vector3d &operator=(const Vector3d &V);
 
-   /** Mutators which sets the value for private variable vectorID to be that of the variable
+   /** Mutator which sets the value for private variable vectorID to be that of the variable "_vectorID"
     */
    void set_vectorID(int _vectorID);
 
@@ -121,10 +125,6 @@ public:
    /** function that Prints Result in Vector Format
     */
    void print();
-
-   /** Destructor
-    */
-   ~Vector3d() {}
 
 private:
    int vectorID; /*!< an integer vectorID that stores the vector Id for each model */
