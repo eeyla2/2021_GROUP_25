@@ -25,7 +25,7 @@ public:
    Vector3d();
 
    /**
-    *  Constructor for identifying each Model through its ID
+    *  Constructor for storing ID of each Model for identification 
     *  and its x,y,x coordinates accoridngly to set up a
     *  a Vector3d Class
     */
@@ -94,7 +94,7 @@ public:
     */
    Vector3d &operator-=(const Vector3d &V);
 
-   /** tells multiplication operand how to subtract vector3d classes from each other
+   /** tells multiplication operand how to multiply vector3d classes with each other
     */
    Vector3d operator*(const Vector3d &V); // const Vector3d& V, float num
 
