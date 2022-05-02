@@ -470,30 +470,25 @@ void MainWindow::listCurrentSTLs(const QString &fileName)
 {
 
     // Add new object to the List
-    QModelIndexList selectedList;
-    selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
-    if (selectedList.length() == 0) // no items have been added yet so we want to add rather than insert
+    selectedIndexAdd = ui->currentSTLs->selectionModel()->selectedIndexes();
+    if (selectedIndexAdd.length() == 0) // no items have been added yet so we want to add rather than insert
     {
         nameListCurrent.addItem(fileName);
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
     }
-    if (selectedList.length() == 1)
+    if (selectedIndexAdd.length() == 1)
     {
         // selectedList is a list of all selected items in the listView. Since we set its
         // behaviour to single selection, were only interested in the first selecteded item.
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
-        nameListCurrent.insertItem(fileName, selectedList[0]);
+        nameListCurrent.insertItem(fileName, selectedIndexAdd[0]);
     }
 }
+
 
 // adds items to recent STLs files
 void MainWindow::listRecentSTLs(const QString &fileName)
 {
-
-    // Add new object to the List
-    QModelIndexList selectedList;
-    selectedList = ui->recentFiles->selectionModel()->selectedIndexes();
-
     nameListRecent.addItem(fileName);
     emit statusUpdateMessage(QString("Add button was clicked"), 0);
 }
@@ -501,14 +496,13 @@ void MainWindow::listRecentSTLs(const QString &fileName)
 // removes chosen item from currenSTLs list
 void MainWindow::removeCurrentSTLs()
 {
-    QModelIndexList selectedList;
-    selectedList = ui->currentSTLs->selectionModel()->selectedIndexes();
-    if (selectedList.length() == 1)
+    selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
+    if (selectedIndexRemove.length() == 1)
     {
         // selectedList is a list of all selected items in the listView. Since we set its
         // behaviour to single selection, were only interested in the first selecteded item.
         emit statusUpdateMessage(QString("Remove button was clicked"), 0);
-        nameListCurrent.removeItem(selectedList[0]);
+        nameListCurrent.removeItem(selectedIndexRemove[0]);
     }
     else
     {
@@ -573,7 +567,26 @@ void MainWindow::handleInsertObject()
 
 void MainWindow::handleRemoveObject()
 {
+    // Add new object to the List
+    selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
 
+    renderer->RemoveActor(listOfSTLActors.at(selectedIndexRemove[0].row()));
+
+    listOfSTLActors.erase(listOfSTLActors.begin() + selectedIndexRemove[0].row());
+
+    // add all actors to renderer
+    // add all actors to renderer
+    /*
+    for (int i = 0; i < listOfSTLActors.size(); i++)
+    {
+        renderer->AddActor(listOfSTLActors.at(i));
+    }
+    */
+    // rotate(listOfSTLActors.begin(), listOfSTLActors.begin()+1, listOfSTLActors.end());
+    ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
+    renderWindow->Render();
+
+    numSTL--;
     removeCurrentSTLs();
 }
 
@@ -596,8 +609,8 @@ void MainWindow::on_actionFileOpen_triggered()
     //--------------------------Reading in file-----------Now we change what we are doing based on .stl or .mod
 
     lastCharacterOfFile = c_str[strlen(c_str) - 1]; // last character of file will be 'l' for stl, 'd' for mod
-    std::cout << lastCharacterOfFile << "\n" << endl;
-
+    std::cout << lastCharacterOfFile << "\n"
+              << endl;
 
     if (lastCharacterOfFile != 'l' && lastCharacterOfFile != 'd')
     {
@@ -622,14 +635,14 @@ void MainWindow::on_actionFileOpen_triggered()
         // Remove Outline Filter From Previous Model
         renderer->RemoveActor(outlineActor);
 
-        //QString fileName = QFileDialog::getOpenFileName(this, tr("Open STL File"), "./", tr("STL Files (*.stl)"));
+        // QString fileName = QFileDialog::getOpenFileName(this, tr("Open STL File"), "./", tr("STL Files (*.stl)"));
 
         // const char *c_str = fileName.toLatin1().data();
 
         // https://www.cnblogs.com/wxl845235800/p/10796840.html
-        
-        //QByteArray fileSTL = fileName.toLatin1(); //now done above
-        //const char *c_str = fileSTL.data();
+
+        // QByteArray fileSTL = fileName.toLatin1(); //now done above
+        // const char *c_str = fileSTL.data();
 
         reader->SetFileName(c_str);
 
@@ -667,6 +680,15 @@ void MainWindow::on_actionFileOpen_triggered()
         renderWindow->Render();
 
         numSTL++;
+
+        // extract file name from its path to
+        QFileInfo fileInfo(fileName);
+        QString fileShortName(fileInfo.fileName());
+
+        // add to recent and current STLs list
+        listCurrentSTLs(fileShortName);
+
+        listRecentSTLs(fileShortName);
     }
 
     else if (lastCharacterOfFile == 'd')
