@@ -27,7 +27,7 @@ int main()
 	
 	cout << "\n\n-------------------Reading file & decalring objects-----------------\n";
 
-	string filePath = "../files/ExampleModel1.mod"; //  ExampleModel1.mod  //  testFile.mod
+	string filePath = "../files/ExampleModel3.mod"; //  ExampleModel1.mod  //  testFile.mod
 
 	Model myModel = Model(filePath);
 
@@ -68,6 +68,14 @@ int main()
 	cout << "\tCentre of " << cell0_letter << ": ";
 	centreH.print();
 
+	double totalVolume=0;
+
+	for(int i=0; i<myModel.get_numCells(); i++)
+	{
+		totalVolume += myModel.get_listOfCells().at(i)->calculateVolume();
+	}
+
+	cout << "\n\nTotal volume: " << totalVolume << "\n\n";
 
 
 	//Tetrahedron Test

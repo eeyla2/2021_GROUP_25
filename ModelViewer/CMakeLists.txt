@@ -1,8 +1,3 @@
-
-
-   
-
-
 include(CTest)
 
 if(WIN32)
@@ -92,8 +87,14 @@ Qt6::Core
 # Tell CMake that the executable depends on the VTK libraries
 target_link_libraries( ModelViewer25 ${VTK_LIBRARIES} )
 
+link_directories(${ModelViewer25_SOURCE_DIR}/model_library)
+#link to model_library
+#target_link_libraries(ModelViewer model_library)
 
 
+#copy across files for easy access to open
+file(GLOB MY_FILES "*.txt" ${ModelViewer25_SOURCE_DIR}/files)
+file(COPY ${MY_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 
@@ -108,7 +109,7 @@ target_link_libraries( ModelViewer25 ${VTK_LIBRARIES} )
 # endif()
 
 set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
-  set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
+ set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
 
 # Installer code
 

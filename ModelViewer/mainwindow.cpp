@@ -468,7 +468,7 @@ void MainWindow::handleChangePosition()
 // adds new items to current stls list
 void MainWindow::listCurrentSTLs(const QString &fileName)
 {
-
+/*
     // Add new object to the List
     selectedIndexAdd = ui->currentSTLs->selectionModel()->selectedIndexes();
     if (selectedIndexAdd.length() == 0) // no items have been added yet so we want to add rather than insert
@@ -483,6 +483,7 @@ void MainWindow::listCurrentSTLs(const QString &fileName)
         emit statusUpdateMessage(QString("Add button was clicked"), 0);
         nameListCurrent.insertItem(fileName, selectedIndexAdd[0]);
     }
+    */
 }
 
 
@@ -496,6 +497,7 @@ void MainWindow::listRecentSTLs(const QString &fileName)
 // removes chosen item from currenSTLs list
 void MainWindow::removeCurrentSTLs()
 {
+   /*
     selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
     if (selectedIndexRemove.length() == 1)
     {
@@ -508,6 +510,7 @@ void MainWindow::removeCurrentSTLs()
     {
         emit statusUpdateMessage(QString("No item selected to remove!"), 0);
     }
+    */
 }
 
 void MainWindow::handleInsertObject()
@@ -567,6 +570,7 @@ void MainWindow::handleInsertObject()
 
 void MainWindow::handleRemoveObject()
 {
+/*
     // Add new object to the List
     selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
 
@@ -576,18 +580,19 @@ void MainWindow::handleRemoveObject()
 
     // add all actors to renderer
     // add all actors to renderer
-    /*
-    for (int i = 0; i < listOfSTLActors.size(); i++)
-    {
-        renderer->AddActor(listOfSTLActors.at(i));
-    }
-    */
+    
+    // for (int i = 0; i < listOfSTLActors.size(); i++)
+    // {
+    //     renderer->AddActor(listOfSTLActors.at(i));
+    // }
+    
     // rotate(listOfSTLActors.begin(), listOfSTLActors.begin()+1, listOfSTLActors.end());
     ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
     renderWindow->Render();
 
     numSTL--;
     removeCurrentSTLs();
+*/
 }
 
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/
@@ -938,7 +943,7 @@ void MainWindow::handleNewWindowButton()
 {
     // not fuly convinced this is the way to do tabs
 
-    ui->tabWidget->addTab(new tabcontent(), QString("Tab %0").arg(ui->tabWidget->count() + 1)); // still need to know how to make the tab have the name of the filer
+    ui->tabWidget->addTab(new MainWindow(), QString("Tab %0").arg(ui->tabWidget->count() + 1)); // still need to know how to make the tab have the name of the filer
 
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }

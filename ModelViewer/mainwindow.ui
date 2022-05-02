@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1003</width>
-    <height>863</height>
+    <height>940</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>861</width>
-      <height>771</height>
+      <height>811</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -143,13 +143,6 @@
           <widget class="QPushButton" name="cutObject">
            <property name="text">
             <string>Cutter</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="displayProperties">
-           <property name="text">
-            <string>Display properties</string>
            </property>
           </widget>
          </item>
@@ -423,13 +416,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>640</x>
         <y>570</y>
-        <width>144</width>
-        <height>80</height>
+        <width>151</width>
+        <height>156</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -465,6 +458,20 @@
          </item>
          <item>
           <widget class="QLCDNumber" name="lcd_cell"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Model volume</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLCDNumber" name="lcd_vol"/>
          </item>
         </layout>
        </item>
