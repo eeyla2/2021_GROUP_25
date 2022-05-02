@@ -19,7 +19,6 @@ class Vector3d
    friend class Matrix3x3;
 
 public:
-   /// Constructor
    /**
     * Blank constructor for creating a new empty Vector class
     */
@@ -33,7 +32,7 @@ public:
    Vector3d(int _vectorID, float _x, float _y, float _z);
 
    /**
-    *  //constructor for when doing maths and not interested in ID only the
+    *  constructor for when doing maths and not interested in ID only the
     *  x,y, and z coordinates and accoridngly to set up a Vector3d Class
     */
    Vector3d(float _x, float _y, float _z);
@@ -128,11 +127,11 @@ public:
    ~Vector3d() {}
 
 private:
-   int vectorID; /*!< a private integer that stores vector Id for each model */
+   int vectorID; /*!< an integer vectorID that stores the vector Id for each model */
 
-   float x; /*!< a private float that stores x for each model */
-   float y; /*!< a private integer that stores y for each model */
-   float z; /*!< a private integer that stores z for each model */
+   float x; /*!< a float x that stores x coordinate for each model */
+   float y; /*!< a float y float that stores y coordinate for each model */
+   float z; /*!< a float z that stores z coordinate for each model */
 };
 
 #endif
