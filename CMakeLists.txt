@@ -12,7 +12,7 @@ set(BUILD_MODEL_LIBRARY TRUE)	#I would run this once with true, then change to f
 
 set(BUILD_MODELVIEWER25 TRUE)	#while we are developing GUI this is true
 
-set(BUILD_INSTALLER FALSE)	#for now, we don't want to build the installer every time
+set(BUILD_INSTALLER TRUE)	#for now, we don't want to build the installer every time
 
 
 
