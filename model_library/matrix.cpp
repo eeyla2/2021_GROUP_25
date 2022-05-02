@@ -48,7 +48,7 @@ Matrix3x3::Matrix3x3(char letter, float theta)
         }
         break;
     case 'i':
-        //identitiy matrix
+        //identity matrix
         matrix[0][0] = 1;
         matrix[0][1] = 0;
         matrix[0][2] = 0;
