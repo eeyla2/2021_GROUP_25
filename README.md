@@ -1,6 +1,6 @@
 # 2021_GROUP_25
 
-UPDATED RAEDME 08/04/2022
+UPDATED README 03/05/2022
 # Tasks for Gui
 
 - Integration of shrink, clip filter + at least 2 other VTK visual effect filters(**Pisit**)			
