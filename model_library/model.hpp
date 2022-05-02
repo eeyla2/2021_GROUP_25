@@ -114,50 +114,30 @@ public:
 
 private:
 
-/**
-* variable that indictaes line position for reading
-*/
-  int currentLine = 1;
+  int currentLine = 1;/*!< a int currentLine which is used to make sure we are reading from the beginning of the line */
 
 
   //std::vector is a convenient way of dynamically allocating arrays & manipulating
-/**
-* Tells us which line in the file the desired letters are for material to read from
-*/
-  vector<int> materialLineIndexes;
 
-/**
-* Tells us which line in the file the desired letters are for vector to read from
-*/
-  vector<int> vectorLineIndexes;
+  vector<int> materialLineIndexes;/*!< a vector materialLineIndexes which tells us which line in the file the desired letters are for, for material to read from */
 
-/**
-* Tells us which line in the file the desired letters are for vector to read from
-*/
-  vector<int> cellLineIndexes;
 
-/**
-* List to store the Material for the object  created once data is read from file
-*/
+  vector<int> vectorLineIndexes;/*!< a vector cellLineIndexes which tells us which line in the file the desired letters are for, for vector to read from */
+
+
+  vector<int> cellLineIndexes;/*!< a vector cellLineIndexes which tells us which line in the file the desired letters are for, for cell to read from */
   
-  vector<Material> listOfMaterials;
+  vector<Material> listOfMaterials;/*!< a vector listofMaterials that stores the Materials for the object created once data is read from file */
 
-/**
-* List to store the vectors for the object created once data is read from file
-*/
-  vector<Vector3d> listOfVectors;
 
-/**
-* List to store the Cells for the object created once data is read from file
-*/
-  vector<shared_ptr<Cell>> listOfCells;
+  vector<Vector3d> listOfVectors;/*!< a vector listofvectors that stores the vectors for the object created once data is read from file */
+
+  vector<shared_ptr<Cell>> listOfCells; /*!< a vector listofCells that stores the Cells for the object created once data is read from file */
   
   
-  //Once we have read file and know how many of each object there are, we will need to resize above vector
-/**
-* Stores the number of different material vectors and Cells
-*/
-  int numMaterials = 0, numVectors = 0, numCells = 0;
+  int numMaterials = 0; /*!< a float numMaterials that stores number of materials */
+  int numVectors = 0; /*!< a float numVectors that stores number of vectors */
+  int numCells = 0; /*!< a float numCells that stores number of cells */
 };
 
 
