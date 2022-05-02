@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
 foreach(p
     CMP0071 # 3.10: Let AUTOMOC and AUTOUIC process GENERATED files
@@ -8,7 +7,7 @@ foreach(p
   endif()
 endforeach()
 
-PROJECT( ModelViewer )
+
 
 #set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
 if (MSVC_VERSION EQUAL 1930 AND MSVC_TOOLSET_VERSION EQUAL 142)
@@ -17,23 +16,22 @@ if (MSVC_VERSION EQUAL 1930 AND MSVC_TOOLSET_VERSION EQUAL 142)
 	list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${MSVC_REDIST_LIBRARIES}")
 	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_NO_WARNINGS TRUE)
 endif()
+
+
+
 include(InstallRequiredSystemLibraries)
+   
 
 
-
-
-
-
-
-
-# Add to top of file CPACK stuff
 include(CTest)
 
-if(WIN32)
-set(CPACK_GENERATOR "NSIS")
-else()
-set(CPACK_GENERATOR "ZIP")
+if(${BUILD_INSTALLER})
+   set(CPACK_GENERATOR "NSIS")
+   else()
+   set(CPACK_GENERATOR "ZIP")
+
 endif()
+
 include(CPack)
 
 find_package(VTK COMPONENTS 
@@ -76,7 +74,7 @@ find_package( VTK REQUIRED )
 include( ${VTK_USE_FILE} )
 
 # Define the executable output and its sources
-add_executable( ModelViewer MACOSX_BUNDLE
+add_executable( ModelViewer25 MACOSX_BUNDLE
 				main.cpp 
 				mainwindow.cpp 
 				mainwindow.h 
@@ -93,28 +91,10 @@ add_executable( ModelViewer MACOSX_BUNDLE
 				)
 
 # Tell CMake that the executable depends on the Qt::Widget libraries.
-target_link_libraries( ModelViewer Qt6::Widgets )
+target_link_libraries( ModelViewer25 Qt6::Widgets )
 
 # Tell CMake that the executable depends on the VTK libraries
-target_link_libraries( ModelViewer ${VTK_LIBRARIES} )
-
-# /calc_cmake/CMakeLists.txt
-
-set( BUILD_MODEL_TEST_CODE 	TRUE )
-set( BUILD_OBSERVER 		TRUE ) 
-set( BUILD_INSTALLERS		TRUE )
-
-
-
-
-
-
-#if ( ${BUILD_OBSERVER} OR ${BUILD_INSTALLERS} )
-   # add_subdirectory ( ModelViewer )
-    #These two lines set the path for QT and VTK dll files transfered below.
-set(CMAKE_DIR "C:/Qt/6.3.0/msvc2019_64") 
-set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build") 
-#endif()
+target_link_libraries( ModelViewer25 ${VTK_LIBRARIES} )
 
 
 
@@ -122,35 +102,31 @@ set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
 
 
 
-install(TARGETS ModelViewer
+
+
+ 
+
+
+ if ( ${MODELVIEWER25} OR ${BUILD_INSTALLERS} )
+# These two lines set the path for the transfer of the libraries needed to run the application it varies from system to system.
+#  set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
+#  set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
+ endif()
+
+
+
+# Installer code
+
+install(TARGETS ModelViewer25
 RUNTIME
-DESTINATION bin
+DESTINATION applications
 COMPONENT applications
         )
 
-
-install(DIRECTORY installerfiles/files
-        DESTINATION files
-        COMPONENT files
-        )
-
-install(DIRECTORY installerfiles/model_library
-        DESTINATION lib
-        COMPONENT libraries
-)
-
-install(FILES installerfiles/README.md
-        DESTINATION documentation
-        COMPONENT files
-)
-            
-
-
-
 install(FILES
-        ${CMAKE_DIR}/bin/Qt6Cored.dll
-        ${CMAKE_DIR}/bin/Qt6Guid.dll
-        ${CMAKE_DIR}/bin/Qt6Widgetsd.dll
+        ${QT_DIR}/bin/Qt6Cored.dll
+        ${QT_DIR}/bin/Qt6Guid.dll
+        ${QT_DIR}/bin/Qt6Widgetsd.dll
         ${VTK_DIR}/bin/Debug/vtkRenderingGL2PSOpenGL2-9.1d.dll
      
         ${VTK_DIR}/bin/Debug/vtkCommonColor-9.1d.dll
@@ -210,3 +186,41 @@ install(FILES
         DESTINATION bin
         COMPONENT libraries
         )
+
+
+    install(FILES 
+        ${ModelViewer25_SOURCE_DIR}/model_library/model.hpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/model.cpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/matrix.hpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/matrix.cpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/material.hpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/material.cpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/vector.hpp;
+        ${ModelViewer25_SOURCE_DIR}/model_library/vector.cpp;
+      
+
+        DESTINATION include
+        COMPONENT headers
+        )
+
+  install(FILES 
+        ${ModelViewer25_SOURCE_DIR}/files/a-10-thunderbolt-mk2.stl
+        ${ModelViewer25_SOURCE_DIR}/files/airbus_a400m.stl
+        ${ModelViewer25_SOURCE_DIR}/files/bawar_plane.stl
+        ${ModelViewer25_SOURCE_DIR}/files/cube.stl
+        ${ModelViewer25_SOURCE_DIR}/files/he111.stl
+        ${ModelViewer25_SOURCE_DIR}/files/sphere.stl
+        ${ModelViewer25_SOURCE_DIR}/files/ExampleModel1.mod
+        ${ModelViewer25_SOURCE_DIR}/files/ExampleModel2.mod
+        ${ModelViewer25_SOURCE_DIR}/files/ExampleModel3.mod
+        DESTINATION model_files
+        COMPONENT model_files
+        )
+
+
+
+  
+
+
+
+   
