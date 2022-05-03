@@ -13,6 +13,7 @@
  */
 
 #include <vector>
+#include <cmath>
 
 #include "material.hpp"
 #include "vector.hpp"
