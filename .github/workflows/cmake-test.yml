@@ -10,7 +10,7 @@ on:
 # List of jobs to do
 jobs:
   # The job that will build worksheet 7
-  build-the_test_programs:
+  build-library_test_program:
 
     # Defines the operating system for the virtual computer
     runs-on: ubuntu-latest

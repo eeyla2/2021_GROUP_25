@@ -1,3 +1,35 @@
+include(CTest)
+
+if(WIN32)
+   set(CPACK_GENERATOR "NSIS")
+   else()
+   set(CPACK_GENERATOR "ZIP")
+
+endif()
+
+
+
+find_package(VTK COMPONENTS 
+  vtkCommonColor
+  vtkCommonCore
+  vtkCommonDataModel
+  vtkCommonExecutionModel
+  vtkFiltersCore
+  vtkFiltersGeneral
+  vtkFiltersGeometry
+  vtkFiltersSources
+  vtkIoImage
+  vtkFiltersModelling
+  vtkGuiSupport
+  vtkIoGeometry
+  vtkInteractionStyle
+  vtkRenderingContextOpenGL2
+  vtkRenderingCore
+  vtkRenderingFreeType
+  vtkRenderingGL2PSOpenGL2
+  vtkRenderingOpenGL2
+  QUIET
+)
 
 # The CMake build process might generate some new files in the current
 # directory. This makes sure they can be found.
@@ -33,30 +65,6 @@ qt6_add_resources( QRC_Srcs ${ICONS} )
 # Also link to VTK
 find_package( VTK REQUIRED )
 include( ${VTK_USE_FILE} )
-
-
-find_package(VTK COMPONENTS 
-  vtkCommonColor
-  vtkCommonCore
-  vtkCommonDataModel
-  vtkCommonExecutionModel
-  vtkFiltersCore
-  vtkFiltersGeneral
-  vtkFiltersGeometry
-  vtkFiltersSources
-  vtkIoImage
-  vtkFiltersModelling
-  vtkGuiSupport
-  vtkIoGeometry
-  vtkInteractionStyle
-  vtkRenderingContextOpenGL2
-  vtkRenderingCore
-  vtkRenderingFreeType
-  vtkRenderingGL2PSOpenGL2
-  vtkRenderingOpenGL2
-  QUIET
-)
-
 
 # Define the executable output and its sources
 add_executable( ModelViewer25 MACOSX_BUNDLE
@@ -97,12 +105,6 @@ file(COPY Splash.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 
-if(WIN32)
-   set(CPACK_GENERATOR "NSIS")
-   else()
-   set(CPACK_GENERATOR "ZIP")
-
-endif()
 
  
 
@@ -112,8 +114,8 @@ endif()
   
 # endif()
 
-#set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
- #set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
+set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
+ set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
 
 # Installer code
 
