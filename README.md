@@ -49,6 +49,6 @@ Creating various standard matricies, performing rotations of vectors, matrix mul
 Determinant, inverse & transpose of matrix.
 
 
+#Screen Clippings
 
-
-
+![alt text](https://github.com/Daniel-Ischebeck/2021_GROUP_25/ModelViewer/images/mod_and_stl.png "ModelViewer25 display a .mod and .stl file")

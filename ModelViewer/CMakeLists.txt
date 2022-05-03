@@ -101,7 +101,7 @@ target_link_libraries(ModelViewer25 the_model_library)
 file(GLOB MY_FILES "*.txt" ${ModelViewer25_SOURCE_DIR}/files)
 file(COPY ${MY_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-file(COPY Splash.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY images/Splash.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 
