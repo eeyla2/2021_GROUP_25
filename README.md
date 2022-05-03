@@ -53,15 +53,16 @@ Determinant, inverse & transpose of matrix.
 
 
 # Screen Clippings
-
+  * ModelViewer25 display a .mod and .stl file
 ![alt text](https://github.com/Daniel-Ischebeck/2021_GROUP_25/blob/main/ModelViewer/images/mod_and_stl.png "ModelViewer25 display a .mod and .stl file")
 
-![alt text](https://github.com/Daniel-Ischebeck/2021_GROUP_25/blob/main/ModelViewer/images/two_planes.png "ModelViewer25 display a .mod and .stl file")
+  * Displaying two stls with filters applied
+![alt text](https://github.com/Daniel-Ischebeck/2021_GROUP_25/blob/main/ModelViewer/images/two_planes.png "Displaying two stls with filters applied")
 
 
 
-Group members:
-Azim Adebisi  (Afolabi)
-Laith Al Far  (Laith)
-Daniel Ischebeck (Daniel)
-Pisitpong Tiwatmuncharoen (Best)
+# Group members:
+  * Azim Adebisi  (Afolabi)
+  * Laith Al Far  (Laith)
+  * Daniel Ischebeck (Daniel)
+  * Pisitpong Tiwatmuncharoen (Best)
