@@ -17,7 +17,7 @@ set(BUILD_INSTALLER TRUE)	#for now, we don't want to build the installer every t
 
 
 if(${BUILD_MODEL_LIBRARY})
-  add_subdirectory(test_programs)
+  #add_subdirectory(test_programs)
   add_subdirectory(model_library)
 
 #this may vary
