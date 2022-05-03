@@ -54,7 +54,8 @@ set( CMAKE_AUTOUIC ON )
 find_package( Qt6Widgets )
 
 set( UIS mainwindow.ui )
-qt6_wrap_ui( UI_Srcs ${UIS} )
+#qt6_wrap_ui( UI_Srcs ${UIS} )
+qt_wrap_ui( UI_Srcs ${UIS} )
 
 set( ICONS Icons/icons.qrc )
 qt6_add_resources( QRC_Srcs ${ICONS} )

@@ -21,7 +21,7 @@ if(${BUILD_MODEL_LIBRARY})
   add_subdirectory(model_library)
 
 #this may vary
-  list(APPEND CMAKE_PREFIX_PATH "C:/Qt/6.2.3/msvc2019_64")
+  #list(APPEND CMAKE_PREFIX_PATH "C:/Qt/6.2.3/msvc2019_64")
 endif()
 
 
