@@ -19,6 +19,9 @@ set(BUILD_INSTALLER TRUE)	#for now, we don't want to build the installer every t
 if(${BUILD_MODEL_LIBRARY})
   add_subdirectory(test_programs)
   add_subdirectory(model_library)
+
+#this may vary
+  set(CMAKE_DIR "C:\Qt\6.2.3\msvc2019_64")
 endif()
 
 
