@@ -13,7 +13,6 @@
 // Class definition, class member functions in Material.cpp
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Material
 {
@@ -28,7 +27,7 @@ public:
      *  and its density, color and Name to accoridngly to set up a
      *  a Material Class
      */
-    Material(int &materialIndex, float &materialDensity, string &materialColour, string &materialName);
+    Material(int &materialIndex, float &materialDensity, std::string &materialColour, std::string &materialName);
 
     /** Destructor
      */
@@ -44,11 +43,11 @@ public:
 
     /** Accessor which gets the value stored in the private variable "materialName" wthout affecting its value
      */
-    string get_materialName();
+    std::string get_materialName();
 
     /** Accessor which gets the value stored in the private variable "materialColour" wthout affecting its value
      */
-    string get_materialColour();
+    std::string get_materialColour();
 
     /** Mutator which sets the value for private variable materialIndex to be that of the variable "index"
      */
@@ -60,20 +59,20 @@ public:
 
     /** Mutator which sets the value for private variable materialColour to be that of the variable "colour"
      */
-    void set_materialColour(string colour);
+    void set_materialColour(std::string colour);
 
     /** Mutator which sets the value for private variable materialName to be that of the variable "Name"
      */
-    void set_materialName(string name);
+    void set_materialName(std::string name);
 
 private:
     int materialIndex; /*!< an integer materialIndex that stores the index for each material */
 
     float materialDensity; /*!< a float materialDensity that stores the density for each material */
 
-    string materialName; /*!< a string materialName that stores the Name for each material */
+    std::string materialName; /*!< a string materialName that stores the Name for each material */
 
-    string materialColour; /*!< a string materialColour that stores the Colour for each material */
+    std::string materialColour; /*!< a string materialColour that stores the Colour for each material */
 };
 
 #endif

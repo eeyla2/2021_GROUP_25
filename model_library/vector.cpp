@@ -130,7 +130,7 @@ Vector3d Vector3d::crossProduct(const Vector3d &Va, const Vector3d &Vb)
 /// Print Result in Vector Format
 void Vector3d::print()
 {
-    cout << "[" << x << "," << y << "," << z << "]\n";
+    std::cout << "[" << x << "," << y << "," << z << "]\n";
 }
 
 //------------------------------------------------------------------------------

@@ -89,7 +89,7 @@ target_link_libraries( ModelViewer25 ${VTK_LIBRARIES} )
 
 link_directories(${ModelViewer25_SOURCE_DIR}/model_library)
 #link to model_library
-#target_link_libraries(ModelViewer model_library)
+target_link_libraries(ModelViewer25 the_model_library)
 
 
 #copy across files for easy access to open

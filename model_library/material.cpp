@@ -13,7 +13,7 @@
 
 Material::Material() {} //constructor for when values arent known and we are creating list of materials
 
-Material::Material(int &materialIndex, float &materialDensity, string &materialColour, string &materialName)
+Material::Material(int &materialIndex, float &materialDensity, std::string &materialColour, std::string &materialName)
 {
     this->materialIndex = materialIndex;
     this->materialDensity = materialDensity;
@@ -26,14 +26,14 @@ Material::~Material() {} //Destructor code does nothing - good practice
 //Accessor functions
 int Material::get_materialIndex() { return this->materialIndex; }
 float Material::get_materialDensity() { return this->materialDensity; }
-string Material::get_materialColour() { return this->materialColour; }
-string Material::get_materialName() { return this->materialName; }
+std::string Material::get_materialColour() { return this->materialColour; }
+std::string Material::get_materialName() { return this->materialName; }
 
 //Mutuator functions
 void Material ::set_materialIndex(int index) { this->materialIndex = index; }
 void Material ::set_materialDensity(float density) { this->materialDensity = density; }
-void Material ::set_materialColour(string colour) { this->materialColour = colour; }
-void Material ::set_materialName(string name) { this->materialName = name; }
+void Material ::set_materialColour(std::string colour) { this->materialColour = colour; }
+void Material ::set_materialName(std::string name) { this->materialName = name; }
 
 
 /*
@@ -42,6 +42,6 @@ int main()
 {
     Material myMaterial;
     myMaterial.set_materialColour("Green");
-    cout << myMaterial.get_materialColour() << "\n";
+    std::cout << myMaterial.get_materialColour() << "\n";
 }
 */

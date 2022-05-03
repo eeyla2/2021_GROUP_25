@@ -44,7 +44,7 @@ public:
 *  and declares the objects accordingly setting up 
 *  a Model Class
 */
-  Model(string &filePath); 
+  Model(std::string &filePath); 
 /**
 *  //Model Destructor
 */  
@@ -53,28 +53,28 @@ public:
 /**
 * reads file from the string of the file path or name
 */
-  int readFile(string &filePath); 
+  int readFile(std::string &filePath); 
 
 
 /**
 * saves file to a certin name assigned by the string argument 
 */
-  int saveToFile(string &newFilePath);
+  int saveToFile(std::string &newFilePath);
 
 /*
 * Once it is known how many of each letter we have, we declare Materials using this function
 */
-  int declareMaterials(string &filePath);
+  int declareMaterials(std::string &filePath);
 
 /*
 * Once it is known how many of each letter we have, we declare Vectors using this function
 */
-  int declareVectors(string &filePath);
+  int declareVectors(std::string &filePath);
 
 /*
 * Once it is known how many of each letter we have, we declare Cells using this function
 */
-  int declareCells(string &filePath);
+  int declareCells(std::string &filePath);
 
 
   //Accessor functions
@@ -82,17 +82,17 @@ public:
   /**
   * Gets value for the private listOfMaterials Variable
   */
-  vector<Material> get_listOfMaterials();
+  std::vector<Material> get_listOfMaterials();
 
   /**
   * Gets value for the private listOVectors Variable
   */
-  vector<Vector3d> get_listOfVectors();
+  std::vector<Vector3d> get_listOfVectors();
 
   /**
   * Gets values for the private listOfCells Variable
   */
-  vector<shared_ptr<Cell>> get_listOfCells();
+  std::vector<std::shared_ptr<Cell>> get_listOfCells();
 
 /**
 * Gets values for the private numMaterials Variable
@@ -119,20 +119,20 @@ private:
 
   //std::vector is a convenient way of dynamically allocating arrays & manipulating
 
-  vector<int> materialLineIndexes;/*!< a vector materialLineIndexes which tells us which line in the file the desired letters are for, for material to read from */
+  std::vector<int> materialLineIndexes;/*!< a vector materialLineIndexes which tells us which line in the file the desired letters are for, for material to read from */
 
 
-  vector<int> vectorLineIndexes;/*!< a vector cellLineIndexes which tells us which line in the file the desired letters are for, for vector to read from */
+  std::vector<int> vectorLineIndexes;/*!< a vector cellLineIndexes which tells us which line in the file the desired letters are for, for vector to read from */
 
 
-  vector<int> cellLineIndexes;/*!< a vector cellLineIndexes which tells us which line in the file the desired letters are for, for cell to read from */
+  std::vector<int> cellLineIndexes;/*!< a vector cellLineIndexes which tells us which line in the file the desired letters are for, for cell to read from */
   
-  vector<Material> listOfMaterials;/*!< a vector listofMaterials that stores the Materials for the object created once data is read from file */
+  std::vector<Material> listOfMaterials;/*!< a vector listofMaterials that stores the Materials for the object created once data is read from file */
 
 
-  vector<Vector3d> listOfVectors;/*!< a vector listofvectors that stores the vectors for the object created once data is read from file */
+  std::vector<Vector3d> listOfVectors;/*!< a vector listofvectors that stores the vectors for the object created once data is read from file */
 
-  vector<shared_ptr<Cell>> listOfCells; /*!< a vector listofCells that stores the Cells for the object created once data is read from file */
+  std::vector<std::shared_ptr<Cell>> listOfCells; /*!< a vector listofCells that stores the Cells for the object created once data is read from file */
   
   
   int numMaterials = 0; /*!< a float numMaterials that stores number of materials */

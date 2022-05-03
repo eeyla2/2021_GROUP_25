@@ -299,7 +299,7 @@ float Pyramid::calculateVolume()
 
     // the base's area has to be calculated which is 2D
     //a vector of vertices is made for easier implementation
-    vector<Vector3d> points;
+    std::vector<Vector3d> points;
 
     //points are entered into the vector
     points.push_back(this->p0);
@@ -363,7 +363,7 @@ Vector3d Pyramid::centerOfMass()
     // the center for the Y, X and Z
     // summation method has to be applied twice, once for the area of the base and once for use in the centroid equation
 
-    vector<Vector3d> points;    //a vector of vertices is made for easier implementation
+    std::vector<Vector3d> points;    //a vector of vertices is made for easier implementation
     points.push_back(this->p0); //points are entered into the vector
     points.push_back(this->p1);
     points.push_back(this->p2);
@@ -545,7 +545,7 @@ float Hexahedron::calculateVolume()
 
     // three implementations of a triple product have to be implemented then added
 
-    vector<Vector3d> firstTriple; // a vector is declared to store the three parts of the first triple product inside
+    std::vector<Vector3d> firstTriple; // a vector is declared to store the three parts of the first triple product inside
 
     firstTriple.push_back(this->p6 - this->p0);
     firstTriple.push_back(this->p1 - this->p0);
@@ -557,7 +557,7 @@ float Hexahedron::calculateVolume()
 
     // implementation of the second triple product
     // a vector is declared to store the three parts of the second triple product inside
-    vector<Vector3d> secondTriple;
+    std::vector<Vector3d> secondTriple;
 
     secondTriple.push_back(this->p6 - this->p0);
     secondTriple.push_back(this->p4 - this->p0);
@@ -569,7 +569,7 @@ float Hexahedron::calculateVolume()
     //implementation of the third triple product
     // a vector is declared to store the three parts of the third triple product inside
 
-    vector<Vector3d> thirdTriple;
+    std::vector<Vector3d> thirdTriple;
 
     thirdTriple.push_back(this->p6 - this->p0);
     thirdTriple.push_back(this->p3 - this->p0);
@@ -594,7 +594,7 @@ Vector3d Hexahedron::centerOfMass()
     // has to be applied twice, once for the area of the base and once for use in the centroid equation
 
     //a vector of vertices is made for easier implementation
-    vector<Vector3d> points;
+    std::vector<Vector3d> points;
     points.push_back(this->p0);
     points.push_back(this->p1);
     points.push_back(this->p2);
@@ -742,8 +742,8 @@ Vector3d Hexahedron::centerOfMass()
         if (1 == ((isnan(centerOfMass.get_x())) || (isnan(centerOfMass.get_y())) || (isnan(centerOfMass.get_z()))))
         {
 
-            cout << "Error in center of mass calculation !\n"
-                 << endl;
+            std::cout << "Error in center of mass calculation !\n"
+                 << std::endl;
 
             //set values
             centerOfMass.set_x(0);

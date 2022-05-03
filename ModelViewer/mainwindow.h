@@ -66,7 +66,7 @@
 #include "recentstl.h"
 
 
-//#include "../model_library/model.hpp"
+#include "../model_library/model.hpp"
 
 namespace Ui {
 class MainWindow;

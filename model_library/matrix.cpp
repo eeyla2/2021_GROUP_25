@@ -11,7 +11,6 @@
 
 
 #include <iostream>
-using namespace std;
 
 #include "matrix.hpp"
 
@@ -263,7 +262,7 @@ Matrix3x3 Matrix3x3::inverse()
     float det = this->det3x3();
     if (det == 0)
     {
-        cout << "This matrix has no inverse (det is zero)";
+        std::cout << "This matrix has no inverse (det is zero)";
         return inverseMatrix; //this is currently not ideal
     }
     else
@@ -286,9 +285,9 @@ Matrix3x3 Matrix3x3::inverse()
 /// Print Result in Matrix Format
 void Matrix3x3::printMatrix()
 {
-    cout << "[" << matrix[0][0] << "," << matrix[0][1] << "," << matrix[0][2] << " \n";
-    cout << " " << matrix[1][0] << "," << matrix[1][1] << "," << matrix[1][2] << " \n";
-    cout << " " << matrix[2][0] << "," << matrix[2][1] << "," << matrix[2][2] << "]\n";
+    std::cout << "[" << matrix[0][0] << "," << matrix[0][1] << "," << matrix[0][2] << " \n";
+    std::cout << " " << matrix[1][0] << "," << matrix[1][1] << "," << matrix[1][2] << " \n";
+    std::cout << " " << matrix[2][0] << "," << matrix[2][1] << "," << matrix[2][2] << "]\n";
 }
 
 Matrix3x3::~Matrix3x3() {}  //destructor
