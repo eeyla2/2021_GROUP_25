@@ -101,7 +101,7 @@ target_link_libraries(ModelViewer25 the_model_library)
 file(GLOB MY_FILES "*.txt" ${ModelViewer25_SOURCE_DIR}/files)
 file(COPY ${MY_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-file(COPY images/Splash.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY images/Splash.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 
 
@@ -114,8 +114,8 @@ file(COPY images/Splash.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
   
 # endif()
 
-set(QT_DIR "C:/Qt/6.3.0/msvc2019_64") 
- set(VTK_DIR "C:/VTK-9.1.0/VTK-9.1.0/build")
+set(QT_DIR "C:/Qt/6.2.3/msvc2019_64") 
+set(VTK_DIR "C:/VTK/VTK_MSVC_9.1.0")
 
 # Installer code
 
@@ -129,8 +129,6 @@ install(FILES
         ${QT_DIR}/bin/Qt6Cored.dll
         ${QT_DIR}/bin/Qt6Guid.dll
         ${QT_DIR}/bin/Qt6Widgetsd.dll
-        ${VTK_DIR}/bin/Debug/vtkRenderingGL2PSOpenGL2-9.1d.dll
-     
         ${VTK_DIR}/bin/Debug/vtkCommonColor-9.1d.dll
         ${VTK_DIR}/bin/Debug/vtkCommonComputationalGeometry-9.1d.dll
         ${VTK_DIR}/bin/Debug/vtkCommonCore-9.1d.dll
@@ -228,6 +226,11 @@ install(FILES
         COMPONENT model_files
         )
 
+install(FILES
+	${ModelViewer25_SOURCE_DIR}/ModelViewer/images/Splash.JPG
+	DESTINATION images
+	COMPONENT   model_files
+	)
 
 
 set(CPACK_PACKAGE_NAME "ModelViewer25")
