@@ -1,3 +1,7 @@
+cmake_minimum_required( VERSION 3.1 )
+project(ModelViewer25)
+
+
 include(CTest)
 
 if(WIN32)

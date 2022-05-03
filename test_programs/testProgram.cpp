@@ -91,7 +91,7 @@ int main()
 	centreT.print();
 
 	//Saving data to file
-	std::string newFilePath = "../proprietary_files/saveFile.mod";
+	std::string newFilePath = "../files/saveFile.mod";
 
 	myModel.saveToFile(newFilePath);
 
