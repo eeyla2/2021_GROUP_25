@@ -739,7 +739,7 @@ Vector3d Hexahedron::centerOfMass()
         Vector3d centerOfMass = centerBase + centerDistanceFromBase; //add the distance to the center of Base to get the coordinates
 
         //error check for center of masses that don't work
-        if (1 == ((isnan(centerOfMass.get_x())) || (isnan(centerOfMass.get_y())) || (isnan(centerOfMass.get_z()))))
+        if (1 == ((std::isnan(centerOfMass.get_x())) || (std::isnan(centerOfMass.get_y())) || (std::isnan(centerOfMass.get_z()))))
         {
 
             std::cout << "Error in center of mass calculation !\n"
