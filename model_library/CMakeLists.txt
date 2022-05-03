@@ -12,4 +12,4 @@ add_executable(the_test_programs testProgram.cpp)
 
 target_link_libraries(the_test_programs the_model_library)
 
-add_test(Library_test testProgram.cpp)
+add_test(Library_test the_test_programs)
