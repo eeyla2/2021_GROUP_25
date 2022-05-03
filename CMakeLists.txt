@@ -21,7 +21,7 @@ if(${BUILD_MODEL_LIBRARY})
   add_subdirectory(model_library)
 
 #this may vary
-  set(CMAKE_DIR "C:\Qt\6.2.3\msvc2019_64")
+  set(CMAKE_DIR "C:/Qt/6.2.3/msvc2019_64")
 endif()
 
 
