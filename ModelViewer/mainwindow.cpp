@@ -448,27 +448,11 @@ void MainWindow::handleChangePosition()
     ui->qvtkWidget->renderWindow()->Render();
 }
 
-/*void MainWindow::handleDisplayProperties()
-{
-   modelProperties->SetInputConnection(reader->GetOutputPort());
- //  mapper->SetInputConnection(modelProperties->GetOutputPort());
-
-
-
-   // qDebug() << "Model Volume: " << volume;->GetVolume() //Debugging
-   std::cout << "Volume: " << modelProperties->GetVolume() << std::endl
-       << "Area:   " << modelProperties->GetSurfaceArea() << std::endl;
-
-    renderWindow->Render();
-    ui->qvtkWidget->renderWindow()->Render();
-
-}
-*/
 
 // adds new items to current stls list
 void MainWindow::listCurrentSTLs(const QString &fileName)
 {
-    /*
+    
         // Add new object to the List
         selectedIndexAdd = ui->currentSTLs->selectionModel()->selectedIndexes();
         if (selectedIndexAdd.length() == 0) // no items have been added yet so we want to add rather than insert
@@ -483,7 +467,7 @@ void MainWindow::listCurrentSTLs(const QString &fileName)
             emit statusUpdateMessage(QString("Add button was clicked"), 0);
             nameListCurrent.insertItem(fileName, selectedIndexAdd[0]);
         }
-        */
+        
 }
 
 // adds items to recent STLs files
@@ -496,7 +480,7 @@ void MainWindow::listRecentSTLs(const QString &fileName)
 // removes chosen item from currenSTLs list
 void MainWindow::removeCurrentSTLs()
 {
-    /*
+    
      selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
      if (selectedIndexRemove.length() == 1)
      {
@@ -509,7 +493,7 @@ void MainWindow::removeCurrentSTLs()
      {
          emit statusUpdateMessage(QString("No item selected to remove!"), 0);
      }
-     */
+     
 }
 
 void MainWindow::handleInsertObject()
@@ -569,7 +553,7 @@ void MainWindow::handleInsertObject()
 
 void MainWindow::handleRemoveObject()
 {
-    /*
+    
         // Add new object to the List
         selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
 
@@ -591,7 +575,7 @@ void MainWindow::handleRemoveObject()
 
         numSTL--;
         removeCurrentSTLs();
-    */
+    
 }
 
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/
@@ -726,7 +710,7 @@ void MainWindow::vtk_declare(Model &theModel)
     ui->edgeVisibilityFilter->setChecked(true);
 */
     // Remove Outline Filter From Previous Model
-    renderer->RemoveActor(outlineActor);
+    renderer->RemoveActor(actor);
 
     int numHex = 0;
 
@@ -735,7 +719,7 @@ void MainWindow::vtk_declare(Model &theModel)
         if (theModel.get_listOfCells().at(i)->get_cellLetter() == 'h')
         {
 
-            std::cout << "First vector id: " << theModel.get_listOfCells().at(i)->get_cellp0().get_vectorID() << "\n";
+            //std::cout << "Vector id: " << theModel.get_listOfCells().at(i)->get_cellp0().get_vectorID() << "\n";
 
             std::vector<std::array<double, 3>> pointCoordinates;
             pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp0().get_x(),

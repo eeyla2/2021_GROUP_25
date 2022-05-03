@@ -91,7 +91,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-
+/*
     // Now need to create a VTK render window and link it to the QtVTK widget
 	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
 
@@ -139,6 +139,7 @@ public:
 	// Screenshot
     vtkNew<vtkWindowToImageFilter> windowToImageFilter;
     vtkNew<vtkPNGWriter> writer;
+*/
 
 //add and removing from list
 	void listCurrentSTLs(const QString& fileName);
@@ -181,6 +182,55 @@ signals:
 private:
     Ui::MainWindow *ui;
 	
+	    // Now need to create a VTK render window and link it to the QtVTK widget
+	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
+
+	// Create an actor that is used to set the model's properties for rendering and place it in the window
+	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+
+    // Create a mapper that will hold the cube's geometry in a format suitable for rendering
+	vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
+
+	// Create colors
+    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+
+    // Create a renderer, and render window
+	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+
+	// Clip Filter
+	vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
+	vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+
+	// Shrink Filter
+	vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
+
+	// Model Properties
+	vtkSmartPointer<vtkMassProperties> modelProperties = vtkSmartPointer<vtkMassProperties>::New(); 
+
+	//Cutter
+	vtkSmartPointer<vtkCutter> planeCutter = vtkSmartPointer<vtkCutter>::New();
+	vtkSmartPointer<vtkPlane> plane = vtkSmartPointer<vtkPlane>::New();
+
+	// Load and Render STL
+	vtkSmartPointer<vtkAlgorithm> modelData;      // Generic Pointer  - prev called operation filter
+
+	vtkNew<vtkOutlineFilter> outlineFilter;
+
+	vtkNew<vtkDataSetMapper> outlineMapper;
+
+	vtkNew<vtkActor> outlineActor;
+
+	vtkNew<vtkSTLReader> reader;
+
+	vtkSmartPointer<vtkCubeSource> cubeSource = vtkSmartPointer<vtkCubeSource>::New();
+
+	vtkSmartPointer<vtkGeometryFilter> convertToPolygonal = vtkSmartPointer<vtkGeometryFilter>::New();
+
+	// Screenshot
+    vtkNew<vtkWindowToImageFilter> windowToImageFilter;
+    vtkNew<vtkPNGWriter> writer;
+
+
 	int x;
 	int y;
 	int z;
@@ -202,8 +252,8 @@ private:
     std::vector<vtkSmartPointer<vtkActor>> listOfActors;
     std::vector<vtkSmartPointer<vtkUnstructuredGrid>> listOfUnstructuredGrids;
 
-    QModelIndex selectedIndexAdd;
-    QModelIndex selectedIndexRemove;
+    QModelIndexList selectedIndexAdd;
+    QModelIndexList selectedIndexRemove;
 	CurrentSTL nameListCurrent;
 	RecentSTL nameListRecent;
 	

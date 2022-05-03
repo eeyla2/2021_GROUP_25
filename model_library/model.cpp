@@ -47,7 +47,7 @@ Model::Model(std::string &filePath)
   int modelResultC = declareCells(filePath);
   if (!(modelResultM && modelResultV && modelResultC)) //if above declare functions all returned zero
   {
-    std::cout << "\nSuccessfuly declared materials, std::vectors & cells\n";
+    std::cout << "\nSuccessfuly declared materials, vectors & cells\n";
   }
 }
 
