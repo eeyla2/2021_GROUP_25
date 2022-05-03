@@ -66,6 +66,19 @@
 #include "recentstl.h"
 
 
+#include <vtkClipDataSet.h>
+#include <vtkPlane.h>
+
+#include <array>    //for list of actor example?
+//vectr included via library
+
+#include <vtkHexahedron.h>
+
+#include <vtkUnstructuredGridBase.h>
+
+#include <QLCDNumber>
+
+
 #include "../model_library/model.hpp"
 
 namespace Ui {
@@ -154,7 +167,7 @@ public slots:
     void on_edgeVisibilityFilter_stateChanged(int);
 
     void on_actionFileOpen_triggered();
-	//void vtk_declare(Model &theModel);
+	void vtk_declare(Model &theModel);
 
     void on_actionHelp_triggered();
     void on_actionPrint_triggered();

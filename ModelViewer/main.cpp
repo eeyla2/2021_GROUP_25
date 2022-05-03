@@ -27,7 +27,7 @@ int main( int argc, char** argv )
 
   // Initialize Splash Screen
   QSplashScreen *splash = new QSplashScreen;
-  splash->setPixmap(QPixmap("C:/Users/danie/Git/2021_GROUP_25/A_combined/Splash.JPG")); // splash picture
+  splash->setPixmap(QPixmap("../Splash.JPG")); // splash picture
   splash->show();
   // Initialize Timer To Show Splash Screen Before Running the Program
   QTimer::singleShot(1000, splash,SLOT(close())); // Timer  

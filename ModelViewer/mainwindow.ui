@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>861</width>
-      <height>811</height>
+      <height>851</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -39,10 +39,10 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>620</x>
-        <y>30</y>
+        <x>610</x>
+        <y>0</y>
         <width>202</width>
-        <height>531</height>
+        <height>381</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -54,7 +54,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QListView" name="currentSTLs"/>
+        <widget class="QListView" name="currentSTLs">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>120</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="insertObject">
@@ -75,6 +82,9 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Minimum</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
@@ -91,7 +101,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QListView" name="recentFiles"/>
+        <widget class="QListView" name="recentFiles">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>120</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -99,7 +116,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>460</y>
+        <y>440</y>
         <width>601</width>
         <height>25</height>
        </rect>
@@ -131,7 +148,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>580</y>
+        <y>560</y>
         <width>601</width>
         <height>61</height>
        </rect>
@@ -176,8 +193,14 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>10</number>
+           </property>
            <item>
             <widget class="QSpinBox" name="xCoordinate">
              <property name="maximum">
@@ -237,7 +260,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>490</y>
+        <y>470</y>
         <width>601</width>
         <height>25</height>
        </rect>
@@ -269,7 +292,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>20</y>
+        <y>0</y>
         <width>602</width>
         <height>434</height>
        </rect>
@@ -349,7 +372,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>520</y>
+        <y>500</y>
         <width>601</width>
         <height>26</height>
        </rect>
@@ -388,9 +411,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>550</y>
+        <y>530</y>
         <width>601</width>
-        <height>25</height>
+        <height>21</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -420,7 +443,7 @@
       <property name="geometry">
        <rect>
         <x>640</x>
-        <y>570</y>
+        <y>400</y>
         <width>151</width>
         <height>156</height>
        </rect>

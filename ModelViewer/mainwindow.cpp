@@ -468,24 +468,23 @@ void MainWindow::handleChangePosition()
 // adds new items to current stls list
 void MainWindow::listCurrentSTLs(const QString &fileName)
 {
-/*
-    // Add new object to the List
-    selectedIndexAdd = ui->currentSTLs->selectionModel()->selectedIndexes();
-    if (selectedIndexAdd.length() == 0) // no items have been added yet so we want to add rather than insert
-    {
-        nameListCurrent.addItem(fileName);
-        emit statusUpdateMessage(QString("Add button was clicked"), 0);
-    }
-    if (selectedIndexAdd.length() == 1)
-    {
-        // selectedList is a list of all selected items in the listView. Since we set its
-        // behaviour to single selection, were only interested in the first selecteded item.
-        emit statusUpdateMessage(QString("Add button was clicked"), 0);
-        nameListCurrent.insertItem(fileName, selectedIndexAdd[0]);
-    }
-    */
+    /*
+        // Add new object to the List
+        selectedIndexAdd = ui->currentSTLs->selectionModel()->selectedIndexes();
+        if (selectedIndexAdd.length() == 0) // no items have been added yet so we want to add rather than insert
+        {
+            nameListCurrent.addItem(fileName);
+            emit statusUpdateMessage(QString("Add button was clicked"), 0);
+        }
+        if (selectedIndexAdd.length() == 1)
+        {
+            // selectedList is a list of all selected items in the listView. Since we set its
+            // behaviour to single selection, were only interested in the first selecteded item.
+            emit statusUpdateMessage(QString("Add button was clicked"), 0);
+            nameListCurrent.insertItem(fileName, selectedIndexAdd[0]);
+        }
+        */
 }
-
 
 // adds items to recent STLs files
 void MainWindow::listRecentSTLs(const QString &fileName)
@@ -497,20 +496,20 @@ void MainWindow::listRecentSTLs(const QString &fileName)
 // removes chosen item from currenSTLs list
 void MainWindow::removeCurrentSTLs()
 {
-   /*
-    selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
-    if (selectedIndexRemove.length() == 1)
-    {
-        // selectedList is a list of all selected items in the listView. Since we set its
-        // behaviour to single selection, were only interested in the first selecteded item.
-        emit statusUpdateMessage(QString("Remove button was clicked"), 0);
-        nameListCurrent.removeItem(selectedIndexRemove[0]);
-    }
-    else
-    {
-        emit statusUpdateMessage(QString("No item selected to remove!"), 0);
-    }
-    */
+    /*
+     selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
+     if (selectedIndexRemove.length() == 1)
+     {
+         // selectedList is a list of all selected items in the listView. Since we set its
+         // behaviour to single selection, were only interested in the first selecteded item.
+         emit statusUpdateMessage(QString("Remove button was clicked"), 0);
+         nameListCurrent.removeItem(selectedIndexRemove[0]);
+     }
+     else
+     {
+         emit statusUpdateMessage(QString("No item selected to remove!"), 0);
+     }
+     */
 }
 
 void MainWindow::handleInsertObject()
@@ -570,29 +569,29 @@ void MainWindow::handleInsertObject()
 
 void MainWindow::handleRemoveObject()
 {
-/*
-    // Add new object to the List
-    selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
+    /*
+        // Add new object to the List
+        selectedIndexRemove = ui->currentSTLs->selectionModel()->selectedIndexes();
 
-    renderer->RemoveActor(listOfSTLActors.at(selectedIndexRemove[0].row()));
+        renderer->RemoveActor(listOfSTLActors.at(selectedIndexRemove[0].row()));
 
-    listOfSTLActors.erase(listOfSTLActors.begin() + selectedIndexRemove[0].row());
+        listOfSTLActors.erase(listOfSTLActors.begin() + selectedIndexRemove[0].row());
 
-    // add all actors to renderer
-    // add all actors to renderer
-    
-    // for (int i = 0; i < listOfSTLActors.size(); i++)
-    // {
-    //     renderer->AddActor(listOfSTLActors.at(i));
-    // }
-    
-    // rotate(listOfSTLActors.begin(), listOfSTLActors.begin()+1, listOfSTLActors.end());
-    ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
-    renderWindow->Render();
+        // add all actors to renderer
+        // add all actors to renderer
 
-    numSTL--;
-    removeCurrentSTLs();
-*/
+        // for (int i = 0; i < listOfSTLActors.size(); i++)
+        // {
+        //     renderer->AddActor(listOfSTLActors.at(i));
+        // }
+
+        // rotate(listOfSTLActors.begin(), listOfSTLActors.begin()+1, listOfSTLActors.end());
+        ui->qvtkWidget->renderWindow()->Render(); // Load Model Instantly
+        renderWindow->Render();
+
+        numSTL--;
+        removeCurrentSTLs();
+    */
 }
 
 // Source: https://kitware.github.io/vtk-examples/site/Cxx/IO/ReadSTL/
@@ -700,25 +699,36 @@ void MainWindow::on_actionFileOpen_triggered()
     {
         // tried to open mod file
         std::cout << "Opening mod file\n";
-        /*
+
         std::string filePath = c_str;
 
         Model myModel = Model(filePath);
 
         vtk_declare(myModel);
-        */
     }
 }
 
-/*
 void MainWindow::vtk_declare(Model &theModel)
 {
     std::cout << "Test\n";
     std::string nameOfMaterial0 = theModel.get_listOfMaterials().at(0).get_materialName();
     std::cout << "\n\nName of material 0: " << nameOfMaterial0 << "\n\n";
+/*
+    ui->clipFilter->setEnabled(true);
+    ui->shrinkFilter->setEnabled(true);
+    ui->outlineFilter->setEnabled(true);
+    ui->changeModelColor->setEnabled(true);
+    ui->edgeVisibilityFilter->setEnabled(true);
 
+    ui->clipFilter->setChecked(false);
+    ui->shrinkFilter->setChecked(false);
+    ui->outlineFilter->setChecked(false);
+    ui->edgeVisibilityFilter->setChecked(true);
+*/
+    // Remove Outline Filter From Previous Model
+    renderer->RemoveActor(outlineActor);
 
-    int numHex=0;
+    int numHex = 0;
 
     for (int i = 0; i < theModel.get_numCells(); i++) // loop over all the cells in the list
     {
@@ -742,7 +752,7 @@ void MainWindow::vtk_declare(Model &theModel)
                                          theModel.get_listOfCells().at(i)->get_cellp3().get_z()}});
             pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp4().get_x(),
                                          theModel.get_listOfCells().at(i)->get_cellp4().get_y(),
-                                         theModel.get_listOfCells().at(i)->get_cellp4().get_z()}}); 
+                                         theModel.get_listOfCells().at(i)->get_cellp4().get_z()}});
             pointCoordinates.push_back({{theModel.get_listOfCells().at(i)->get_cellp5().get_x(),
                                          theModel.get_listOfCells().at(i)->get_cellp5().get_y(),
                                          theModel.get_listOfCells().at(i)->get_cellp5().get_z()}});
@@ -753,13 +763,11 @@ void MainWindow::vtk_declare(Model &theModel)
                                          theModel.get_listOfCells().at(i)->get_cellp7().get_y(),
                                          theModel.get_listOfCells().at(i)->get_cellp7().get_z()}});
 
-
             vtkNew<vtkPoints> hexPoints;
 
             // declare hexahedron
             vtkNew<vtkHexahedron> hex; // will need a list of hexahedra
 
-            
             for (auto j = 0; j < pointCoordinates.size(); ++j)
             {
                 hexPoints->InsertNextPoint(pointCoordinates[j].data());
@@ -768,41 +776,45 @@ void MainWindow::vtk_declare(Model &theModel)
 
             //-----
             vtkNew<vtkCellArray> listOfHexs;
-            listOfHexs->InsertNextCell(hex);   //add to list of cells
+            listOfHexs->InsertNextCell(hex); // add to list of cells
+
 
             vtkNew<vtkUnstructuredGrid> hexUGrid;
             hexUGrid->SetPoints(hexPoints);
             hexUGrid->InsertNextCell(hex->GetCellType(), hex->GetPointIds());
 
-            //add this UG to list of UG
+            // add this UG to list of UG
             /////////auto itR = listOfSTLReaders.insert(listOfSTLReaders.begin() + numSTL, reader);
-            auto itUG = listOfUnstructuredGrids.insert(listOfUnstructuredGrids.begin()+numHex, hexUGrid);
+            auto itUG = listOfUnstructuredGrids.insert(listOfUnstructuredGrids.begin() + numHex, hexUGrid);
 
-
+            
+////4 slashes for lines ive just removed, before trying to apply filters to mod files
             vtkNew<vtkDataSetMapper> _mapper;
 
-            auto itMapper = listOfMappers.insert(listOfMappers.begin()+numHex, _mapper);
+            auto itMapper = listOfMappers.insert(listOfMappers.begin() + numHex, _mapper);
+
+            //auto itMapper = listOfMappers.insert(listOfMappers.begin() + numHex, mapper);
 
             listOfMappers.at(numHex)->SetInputData(listOfUnstructuredGrids.at(numHex));
             //_mapper->SetInputData(hexUGrid);
 
             vtkNew<vtkActor> _actor;
 
-            auto itActor = listOfActors.insert(listOfActors.begin()+numHex, _actor);
+            auto itActor = listOfActors.insert(listOfActors.begin() + numHex, _actor);
+            //auto itActor = listOfActors.insert(listOfActors.begin() + numHex, actor);
 
             listOfActors.at(numHex)->GetProperty()->SetColor(colors->GetColor3d("PeachPuff").GetData());
             listOfActors.at(numHex)->SetMapper(_mapper);
+            //listOfActors.at(numHex)->SetMapper(mapper);
 
             // _actor->GetProperty()->SetColor(colors->GetColor3d("PeachPuff").GetData());
             // _actor->SetMapper(_mapper);
 
             renderer->AddActor(listOfActors.at(numHex));
 
-
-           numHex++;
+            numHex++;
         }
 
-        
         if (theModel.get_listOfCells().at(i)->get_cellLetter() == 't')
         {
             // declare tetra
@@ -824,8 +836,6 @@ void MainWindow::vtk_declare(Model &theModel)
             tetraPoints->InsertNextPoint(theModel.get_listOfCells().at(i)->get_cellp3().get_x(),
                                          theModel.get_listOfCells().at(i)->get_cellp3().get_y(),
                                          theModel.get_listOfCells().at(i)->get_cellp3().get_z());
-
-
 
             vtkNew<vtkUnstructuredGrid> tetraUGrid;
             // unstructuredGrid1->SetPoints(tetraPoints);
@@ -859,19 +869,29 @@ void MainWindow::vtk_declare(Model &theModel)
             listOfActors.at(i)->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
 
             renderer->AddActor(listOfActors.at(i));
-
-
         }
-        
     }
+
+    ui->lcd_vec->display(theModel.get_numVectors());
+    ui->lcd_cell->display(theModel.get_numCells());
+    
+    double totalVolume=0;
+
+	for(int i=0; i<theModel.get_numCells(); i++)
+	{
+		totalVolume += theModel.get_listOfCells().at(i)->calculateVolume();
+	}
+    ui->lcd_vol->display(totalVolume);
+
     renderer->ResetCamera();
     renderer->GetActiveCamera()->Azimuth(30);
     renderer->GetActiveCamera()->Elevation(30);
     renderer->ResetCameraClippingRange();
 
     renderWindow->Render();
+
+    
 }
-*/
 
 void MainWindow::on_actionHelp_triggered()
 {
