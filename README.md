@@ -1,6 +1,6 @@
 # 2021_GROUP_25
 
-![Testing Status](https://github.com/Daniel-Ischebeck/2021_GROUP25/actions/workflows/cmake-test.yml/badge.svg)
+![Testing Status](https://github.com/Daniel-Ischebeck/2021_GROUP_25/actions/workflows/cmake-test.yml/badge.svg)
 
 
 
