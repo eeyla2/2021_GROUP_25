@@ -44,10 +44,14 @@ set( CMAKE_AUTOUIC ON )
 
 # Find the Qt widgets package. This locates the relevant include and
 # lib directories, and the necessary static libraries for linking.
-find_package( Qt6 REQUIRED COMPONENTS Widgets
-Gui
-Core
- )
+
+#below was what afolabi did - prob. needed for installer
+#find_package( Qt6 REQUIRED COMPONENTS Widgets
+#Gui
+#Core
+# )
+
+find_package( Qt6Widgets )
 
 set( UIS mainwindow.ui )
 qt6_wrap_ui( UI_Srcs ${UIS} )
