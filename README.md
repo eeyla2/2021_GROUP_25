@@ -3,6 +3,9 @@
 ![Testing Status](https://github.com/Daniel-Ischebeck/2021_GROUP_25/actions/workflows/cmake-test.yml/badge.svg)
 
 
+# Documentation
+[Project Documentation](https://daniel-ischebeck.github.io/2021_GROUP_25/)
+
 
 UPDATED README 03/05/2022
 # Tasks for Gui
@@ -49,6 +52,16 @@ Creating various standard matricies, performing rotations of vectors, matrix mul
 Determinant, inverse & transpose of matrix.
 
 
-#Screen Clippings
+# Screen Clippings
 
 ![alt text](https://github.com/Daniel-Ischebeck/2021_GROUP_25/blob/main/ModelViewer/images/mod_and_stl.png "ModelViewer25 display a .mod and .stl file")
+
+![alt text](https://github.com/Daniel-Ischebeck/2021_GROUP_25/blob/main/ModelViewer/images/two_planes.png "ModelViewer25 display a .mod and .stl file")
+
+
+
+Group members:
+Azim Adebisi  (Afolabi)
+Laith Al Far  (Laith)
+Daniel Ischebeck (Daniel)
+Pisitpong Tiwatmuncharoen (Best)
