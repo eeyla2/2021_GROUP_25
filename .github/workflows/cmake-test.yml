@@ -10,7 +10,7 @@ on:
 # List of jobs to do
 jobs:
   # The job that will build worksheet 7
-  build-worksheet7:
+  build-the_test_programs:
 
     # Defines the operating system for the virtual computer
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
 
     # Step 1: Run CMake on Worksheet7 folder
     - name: Configure CMake # A name for the step for analysis later
-      run: cmake -B ${{github.workspace}}/build # The command to run at this step
+      run: cmake -B ${{github.workspace}}/build test_programs/ # The command to run at this step
 
     # Step 2: Run make to build (remember - use Linux build command)
     - name: Build
