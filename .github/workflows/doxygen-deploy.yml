@@ -6,8 +6,8 @@ on:
     branches: [ main ]
 
 jobs:
-# The job that will build A_combined
-  deploy-A_combined:
+# The job that will build project
+  deploy-project:
 
     # Defines the operating system for the virtual computer
     runs-on: ubuntu-latest
