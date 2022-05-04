@@ -1,14 +1,5 @@
 //matrix.cpp
 
-/** @file
-* File for defining matricies and matrix operations.
-*/
-
-/** Brief description
-* Matrix operations are useful for manipulating vectors.
-* e.g. rotation 
-*/
-
 
 #include <iostream>
 

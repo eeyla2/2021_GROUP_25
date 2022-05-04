@@ -1,20 +1,10 @@
 // mainwindow.cpp
 
-/** @file
- * The mainwindow of the ModelViewer control how the user interacts with the GUI
- */
-
-/** Brief description
- * Links buttons defined in UI file to the system
- * Defines what functions are executed when different buttons are pressed
- */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "tabcontent.h"
-#include "currentstl.h"
-#include "recentstl.h"
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)

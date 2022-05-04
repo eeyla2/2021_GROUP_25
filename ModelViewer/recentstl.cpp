@@ -1,12 +1,5 @@
 //recentstl.h
 
-/** @file
-* This file contains..........
-*/
-
-/** Brief description
-* The description..............
-*/
 
 #include "recentstl.h"
 

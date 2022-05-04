@@ -1,13 +1,5 @@
 //cell.cpp
 
-/** @file
-* File for definining the three types of shapes defined in .mod files.
-*/
-
-/** Brief description
-* The cell class is the parent of the tetrahedron, pyramid & hexahedron class
-* Instances of these classes are called to create the Model
-*/
 
 #include "cell.hpp"
 

@@ -1,12 +1,5 @@
 //vector.cpp
 
-/** @file
-* File of the vector class
-*/
-
-/** Brief description
-* Definesthe vector class &  vector operations
-*/
 
 #include "vector.hpp"
 

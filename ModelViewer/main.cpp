@@ -1,11 +1,11 @@
 // main.cpp
 
 /** @file
-* This file contains..........
+* Responsible for setting up the mainwindow & splash screen.
 */
 
 /** Brief description
-* The description..............
+* This file sets up the Qapplication and loads the splash screen
 */
 
 #include <QApplication>

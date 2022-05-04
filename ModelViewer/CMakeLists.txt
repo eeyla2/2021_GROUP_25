@@ -71,10 +71,7 @@ add_executable( ModelViewer25 MACOSX_BUNDLE
 				main.cpp 
 				mainwindow.cpp 
 				mainwindow.h 
-				mainwindow.ui
-                                tabcontent.cpp
-                                tabcontent.h
-                                tabcontent.ui
+				mainwindow.ui              
 				currentstl.cpp
                                 currentstl.h
                                 recentstl.cpp

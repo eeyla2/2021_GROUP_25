@@ -1,12 +1,5 @@
 //material.cpp
 
-/** @file
-* File defining functions for setting and getting the material properties of the Model.
-*/
-
-/** Brief description
-* Will be called from Model class.
-*/
 
 
 #include "material.hpp"

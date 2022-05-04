@@ -1,14 +1,5 @@
 //model.cpp
 
-/** @file
-* File for declaring models.
-*
-*/
-
-/** Brief description
-* Model class opens file at a specified path, reads conents and declares lists of objects
-* Objects definied in file can then be used to display shapes in ModelViewer
-*/
 
 /*
 Current status:

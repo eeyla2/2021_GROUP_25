@@ -13,13 +13,17 @@
 - Load STL models and apply any combination of all filters(**Pisit**)					
 - Load MOD models (**Daniel**)						
 - Load/combine multiple models into same "world"(**Daniel**)						
-- Display .mod file statisitics (num. vectors, cell & vol)(**Daniel**)					
+- Display .mod file statisitics (num. vectors, cell & vol)(**Afolabi**,**Daniel**)		
 - Modify model geometry/materials. Slice model / modify coordinates	(**Afolabi**)		
 - Use of multiple tabs/windows for parallel viewing/editing of multiple models.(**Laith**)
 - Lists of recent and current STLs in the same world.(**Laith**)					
 - All GUI features work consistently without crashing, etc (**Pisit**,**Daniel**)		
 - GUI appearance: excellent include use of features such as: toolsbars, recent file lists, splash screen, etc(**Pisit**,**Laith**)	
-- Documentation (**Laith**,**Daniel**)					
+
+- Packaging & Binary Release (**Afolabi**,**Daniel**)
+- Documentation (**Laith**,**Daniel**)
+- Automated testing & documentation website (**Daniel**)				
+
 
 
 
