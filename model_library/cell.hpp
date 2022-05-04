@@ -21,47 +21,78 @@
 class Cell
 {
 public:
-    /**
-     * Blank constructor for creating a new empty Cell class
+    /** @brief Blank constructor for creating a new empty Cell class
+     *
      */
     Cell();
 
-    /**
+    /** @brief Cell constructor when object is a tetrahedron
+     *
      *  Constructor for storing letter, Index and coordintaes if its a tetrahedron accoridngly to set up a
      *  a Cell Class
+     *  @param cCellLetter the letter describing the cell type
+     *  @param cCellIndex cell index
+     *  @param cTheMaterial the material the cell is amde out of
+     *  @param cP0 the vector for p0
+     *  @param cP1 the vector for p1
+     *  @param cP2 the vector for p2
+     *  @param cP3 the vector for p3
      */
     Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3); // tetrahedron
 
-    /**
+    /** @brief Cell constructor when object is a pyramid
+     *
      *  Constructor for storing letter, Index and coordintaes if its a pyramid accoridngly to set up a
      *  a Cell Class
      */
     Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3, Vector3d &cP4); // pyramid
 
-    /**
+
+    /** @brief Cell constructor when object is a hexahedron
+     *
      *  Constructor for storing letter, Index and coordintaes if its a Hexahedron accoridngly to set up a
      *  a Cell Class
      */
     Cell(char &cCellLetter, int &cCellIndex, Material &cTheMaterial, Vector3d &cP0, Vector3d &cP1, Vector3d &cP2, Vector3d &cP3,
          Vector3d &cP4, Vector3d &cP5, Vector3d &cP6, Vector3d &cP7); // hexahedron
 
-    /** Destructor for Cell class
+
+    /** @brief Destructor for Cell class
      */
     ~Cell();
 
-    /** Accessor which gets the value stored in the private variable "cellIndex" wthout affecting its value
+    /** @brief Cell index accessor function
+     *
+     * Accessor which gets the value stored in the private variable "cellIndex" without affecting its value
+     *
+     *  @return the cell
      */
     int get_cellIndex() const;
 
-    /** Accessor which gets the value stored in the private variable "cellLetter" wthout affecting its value
+
+    /** @brief Cell letter accessor function
+     *
+     * Accessor which gets the value stored in the private variable "cellLetter" wthout affecting its value
+     *
+     *  @return the cell
      */
     char get_cellLetter() const;
 
-    /** Accessor which gets the value stored in the private variable "MaterialIndex" wthout affecting its value
+   
+    /** @brief Cell material index accessor function
+     *
+     *Accessor which gets the value stored in the private variable "MaterialIndex" wthout affecting its value
+     *
+     *  @return the cell
      */
     int get_cellMaterialIndex() const;
 
-    /** Accessor which gets the value stored in the private variable "p0" wthout affecting its value
+
+    /** @brief Cell material index accessor function
+     *
+     * Accessor which gets the value stored in the private variable "p0" wthout affecting its value
+     *
+     *  @return the cell
      */
     Vector3d get_cellp0() const;
 
@@ -93,23 +124,41 @@ public:
      */
     Vector3d get_cellp7() const;
 
-    /** Accessor which gets the value stored in the private class "theMaterial" wthout affecting its value
+
+    /** @brief Accessor of the cell's material
+     *
+     * Accessor which gets the value stored in the private class "theMaterial" wthout affecting its value
+
+     *  @return the instance of the cell's material
      */
     Material get_cellMaterial() const;
 
-    // virtual function allows the correct version of volume and center of mass to be called for each shape
 
-    /** virtual function which allows the correct version of volume to be called for each shape
+    /** @brief Function to calculate volume of cell
+     *
+     *     /** virtual function which allows the correct version of volume to be called for each shape
      * when inherited and kept empty as it depends on each shapes method of calculation
+     *
+     *  @param
+     *  @return the calcualted volume of the cell
      */
     virtual float calculateVolume();
 
-    /** virtual function which allows the correct version of center of mass to be called for each shape
-     * hen inherited and kept empty as it depends on each shapes method of calculation
+
+    /** @brief Centre of mass function
+     *
+     * virtual function which allows the correct version of center of mass to be called for each shape
+     * then inherited and kept empty as it depends on each shapes method of calculation
+     *
+     *  @param
+     *  @return vector point of calcualted centre of mass 
      */
     virtual Vector3d centerOfMass();
 
-    /** function which calculates the weight for each shape using its density and volume
+
+    /** @brief function which calculates the weight for each shape using its density and volume
+     *
+     *  @return the cell's weight
      */
     float weight();
 

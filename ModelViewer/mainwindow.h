@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <QMessageBox>
 #include <QModelIndex>
+#include <QLCDNumber>
 
 #include <vtkSmartPointer.h>
 #include <vtkCubeSource.h>
@@ -51,6 +52,9 @@
 #include <vtkCutter.h>
 #include <vtkProp3d.h>
 #include <vtkMassProperties.h>
+#include <vtkClipDataSet.h>
+#include <vtkPlane.h>
+#include <array>
 
 #include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
@@ -59,23 +63,13 @@
 #include <vtkPNGWriter.h>
 #include <vtkVersion.h>
 #include <vtkWindowToImageFilter.h>
+#include <vtkHexahedron.h>
+#include <vtkUnstructuredGridBase.h>
 
 // list of current STLs and recent files
 #include <QAbstractListModel>
 #include "currentstl.h"
 #include "recentstl.h"
-
-#include <vtkClipDataSet.h>
-#include <vtkPlane.h>
-
-#include <array> //for list of actor example?
-// vectr included via library
-
-#include <vtkHexahedron.h>
-
-#include <vtkUnstructuredGridBase.h>
-
-#include <QLCDNumber>
 
 #include "../model_library/model.hpp"
 
@@ -236,13 +230,5 @@ private:
 	RecentSTL nameListRecent;
 };
 
-// class for list of stl
-
-// class currentModelList : public QAbstractListModel
-// {
-//     Q_OBJECT
-// public:
-// 	// Constructor
-//     explicit currentModelList(QObject *parent = 0) : QAbstractListModel(parent) {}
 
 #endif // MAINWINDOW_H

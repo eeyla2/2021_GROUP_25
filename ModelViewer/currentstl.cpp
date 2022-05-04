@@ -1,12 +1,5 @@
 //currentstl.cpp
 
-/** @file
-* This file contains..........
-*/
-
-/** Brief description
-* The description..............
-*/
 
 #include "currentstl.h"
 

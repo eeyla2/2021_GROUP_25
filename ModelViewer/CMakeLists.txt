@@ -225,8 +225,16 @@ install(FILES
 
 install(FILES
 	${ModelViewer25_SOURCE_DIR}/ModelViewer/images/Splash.JPG
+        ${ModelViewer25_SOURCE_DIR}/ModelViewer/images/mod_and_stl.png
+        ${ModelViewer25_SOURCE_DIR}/ModelViewer/images/two_planes.png
 	DESTINATION images
 	COMPONENT   model_files
+	)
+
+install(FILES
+	${ModelViewer25_SOURCE_DIR}/ModelViewer/images/Documentation.html
+	DESTINATION applications
+	COMPONENT   applications
 	)
 
 

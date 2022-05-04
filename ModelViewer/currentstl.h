@@ -4,12 +4,9 @@
 
 
 /** @file
-* This file contains..........
+* The file for managingt the list of STLS currently present in 'world'
 */
 
-/** Brief description
-* The description..............
-*/
 
 #include <QAbstractListModel>
 
