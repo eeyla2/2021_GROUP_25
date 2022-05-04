@@ -13,14 +13,14 @@
 - Load STL models and apply any combination of all filters(**Pisit**)					
 - Load MOD models (**Daniel**)						
 - Load/combine multiple models into same "world"(**Daniel**)						
-- Display .mod file statisitics (num. vectors, cell & vol)(**Afolabi**,**Daniel**)		
-- Modify model geometry/materials. Slice model / modify coordinates	(**Afolabi**)		
+- Display .mod file statisitics (num. vectors, cell & vol)(**Azim**,**Daniel**)		
+- Modify model geometry/materials. Slice model / modify coordinates	(**Azim**)		
 - Use of multiple tabs/windows for parallel viewing/editing of multiple models.(**Laith**)
 - Lists of recent and current STLs in the same world.(**Laith**)					
 - All GUI features work consistently without crashing, etc (**Pisit**,**Daniel**)		
 - GUI appearance: excellent include use of features such as: toolsbars, recent file lists, splash screen, etc(**Pisit**,**Laith**)	
 
-- Packaging & Binary Release (**Afolabi**,**Daniel**)
+- Packaging & Binary Release (**Azim**,**Daniel**)
 - Documentation (**Laith**,**Daniel**)
 - Automated testing & documentation website (**Daniel**)				
 
@@ -43,6 +43,8 @@
 * (Creation of package may take up to a minute)
 * A ModelViewer25 installer application will have been generated in the build folder
 * Double click installer and follow installation instructions
+* Example images and documentation are included with the installer
+
 
 -------------------------------------------------------------------------------------------
 What the test program shows:
@@ -67,7 +69,7 @@ Determinant, inverse & transpose of matrix.
 
 
 # Group members:
-  * Azim Adebisi  (Afolabi)
-  * Laith Al Far  (Laith)
-  * Daniel Ischebeck (Daniel)
-  * Pisitpong Tiwatmuncharoen (Best)
+  * Azim Adebisi 
+  * Laith Al Far 
+  * Daniel Ischebeck 
+  * Pisitpong Tiwatmuncharoen 
